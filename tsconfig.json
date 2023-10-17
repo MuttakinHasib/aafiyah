@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@aafiyah/ui": ["libs/web/ui/src/*"],
+    }
+  }
+}

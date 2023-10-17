@@ -7,10 +7,11 @@ import {
   ShoppingBagIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
+import { Navigation } from './navigation';
 
 export const Header = () => {
   return (
-    <header>
+    <header className="shadow-[0_1px_3px_rgba(0,_0,_0,_.09)]">
       <TopBar />
       <div className="border-y border">
         <div className="container flex items-center justify-between gap-10">
@@ -48,8 +49,11 @@ export const Header = () => {
             </Link>
             <Link
               href="/wishlist"
-              className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3"
+              className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3 relative"
             >
+              <small className="absolute top-1 left-9 text-white min-w-[20px] flex items-center justify-center bg-red-500 rounded-full">
+                0
+              </small>
               <ShoppingBagIcon className="w-9 h-9" />
               <div className="-space-y-1">
                 <small className="text-gray-500">Shopping Cart</small>
@@ -59,6 +63,7 @@ export const Header = () => {
           </div>
         </div>
       </div>
+      <Navigation />
     </header>
   );
 };
