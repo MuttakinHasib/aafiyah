@@ -2,7 +2,7 @@ import { Bars3Icon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
-const NAVIGATIONS = [
+const NAVIGATION = [
   {
     label: 'Home',
     path: '/',
@@ -31,7 +31,7 @@ export const Navigation = () => {
           <ChevronDownIcon className="w-6 h-6 ml-3" />
         </button>
         <div className="flex items-center gap-2 pl-2 font-medium">
-          {NAVIGATIONS.map((nav) => (
+          {NAVIGATION.map((nav) => (
             <Link
               key={nav.label}
               className="py-2 px-3 transition duration-300 hover:bg-gray-100"
