@@ -25,7 +25,7 @@ export const Navigation = () => {
   return (
     <nav className="container py-2 flex justify-between items-center">
       <div className="flex items-center divide-x gap-x-2">
-        <button className="flex items-center gap-2 py-2 px-3 transition duration-300 hover:bg-red-500 hover:text-white">
+        <button className="flex items-center gap-2 py-2 px-3 transition duration-300 hover:bg-brand hover:text-white">
           <Bars3Icon className="w-6 h-6" />
           <span className="font-medium">Shop By Category</span>
           <ChevronDownIcon className="w-6 h-6 ml-3" />
