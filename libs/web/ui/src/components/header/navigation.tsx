@@ -33,6 +33,7 @@ export const Navigation = () => {
         <div className="flex items-center gap-2 pl-2 font-medium">
           {NAVIGATIONS.map((nav) => (
             <Link
+              key={nav.label}
               className="py-2 px-3 transition duration-300 hover:bg-gray-100"
               href={nav.path}
             >

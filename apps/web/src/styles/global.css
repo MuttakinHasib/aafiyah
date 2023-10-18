@@ -80,3 +80,19 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+.slick-dots {
+  @apply !bottom-7
+}
+.slick-dots li  {
+  @apply !w-3 !h-3
+}
+.slick-dots .slick-active button  {
+  @apply !bg-brand
+}
+.slick-dots li button {
+  @apply !w-full !h-full !bg-gray-400 rounded-full
+}
+.slick-dots li button::before {
+  @apply hidden
+}

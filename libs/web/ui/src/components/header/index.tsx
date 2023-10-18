@@ -44,7 +44,7 @@ export const Header = () => {
               <UserIcon className="w-9 h-9" />
               <div className="-space-y-1">
                 <small className="text-gray-500">Hello, Login In</small>
-                <div className="text-lg font-medium">My Account</div>
+                <p className="text-lg font-medium">My Account</p>
               </div>
             </Link>
             <Link
@@ -57,7 +57,7 @@ export const Header = () => {
               <ShoppingBagIcon className="w-9 h-9" />
               <div className="-space-y-1">
                 <small className="text-gray-500">Shopping Cart</small>
-                <div className="text-lg font-medium">$250</div>
+                <p className="text-lg font-medium">$250</p>
               </div>
             </Link>
           </div>
