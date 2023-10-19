@@ -11,18 +11,18 @@ import { Navigation } from './navigation';
 
 export const Header = () => {
   return (
-    <header className="shadow-[0_1px_3px_rgba(0,_0,_0,_.09)]">
+    <header className="shadow-header">
       <TopBar />
       <div className="border-y border">
         <div className="container flex items-center justify-between gap-10">
-          <div className="flex items-center gap-10">
+          <div className="flex items-center gap-10 flex-1">
             <Link href="/" className="h-24 block aspect-video relative">
               <Image src="/aafiyah-logo.svg" fill alt="Aafiyah Logo" />
             </Link>
-            <div className="relative">
+            <div className="relative max-w-lg w-full">
               <input
                 type="text"
-                className="bg-gray-100 border-gray-100 min-w-[512px] px-3 py-2 rounded focus:ring-0 focus:border-gray-300 focus:bg-white focus:outline-none"
+                className="bg-gray-100 w-full border-gray-100 px-3 py-2 rounded focus:ring-0 focus:border-gray-300 focus:bg-white focus:outline-none"
                 placeholder="Search anything you want"
               />
               <div className="absolute right-3 top-1/2 -translate-y-1/2 z-20 cursor-pointer">

@@ -24,6 +24,9 @@ module.exports = {
         center: true,
         padding: '1rem',
       },
+      boxShadow: {
+        header: '0 1px 3px rgba(0, 0, 0, .09)',
+      },
       colors: {
         brand: '#F58E2B',
         border: 'hsl(var(--border))',
