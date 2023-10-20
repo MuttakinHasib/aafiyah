@@ -1,8 +1,7 @@
 import { Slideshow } from '@aafiyah/ui';
-import type { NextPage } from 'next';
 import React from 'react';
 
-const HomePage = (props: NextPage) => {
+const HomePage = () => {
   return (
     <React.Fragment>
       <Slideshow />
