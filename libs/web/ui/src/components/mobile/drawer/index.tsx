@@ -37,23 +37,23 @@ const NAVIGATION = [
       },
       {
         label: 'Edit Profile',
-        path: '/edit-profile',
+        path: '/dashboard/edit-profile',
       },
       {
         label: 'Order History',
-        path: '/order-history',
+        path: '/dashboard/order-history',
       },
       {
         label: 'Address Book',
-        path: '/address-book',
+        path: '/dashboard/address-book',
       },
       {
         label: 'Edit Address',
-        path: '/edit-address',
+        path: '/dashboard/edit-address',
       },
       {
         label: 'Change Password',
-        path: '/change-password',
+        path: '/dashboard/change-password',
       },
     ],
   },

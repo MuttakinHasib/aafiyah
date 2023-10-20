@@ -13,11 +13,9 @@ const informationNav = [
 const accountNav = [
   { label: 'Store Location', link: '/store-location' },
   { label: 'Order History', link: '/order-history' },
-  { label: 'Wish List', link: '/wish-list' },
+  { label: 'Wish List', link: '/wishlist' },
   { label: 'Newsletter', link: '/newsletter' },
   { label: 'Special Offers', link: '/special-offers' },
-  { label: 'Gift Certificates', link: '/gift-certificates' },
-  { label: 'Affiliate', link: '/affiliate' },
 ];
 
 export const Footer = () => {
