@@ -35,7 +35,7 @@ export const Navigation = () => {
             <Link
               key={nav.label}
               className="py-2 px-3 transition duration-300 hover:bg-gray-100"
-              href={nav.path}
+              href={{ pathname: nav.path }}
             >
               {nav.label}
             </Link>

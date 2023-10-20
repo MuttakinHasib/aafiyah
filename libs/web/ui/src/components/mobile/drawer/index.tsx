@@ -128,7 +128,7 @@ export const Drawer = (props: PropsWithChildren) => {
                         {nav.children.map((child) => (
                           <SheetClose asChild key={child.label}>
                             <Link
-                              href={child.path}
+                              href={{ pathname: child.path }}
                               className="py-[7px] px-3 transition duration-300 hover:bg-gray-100 block"
                             >
                               {child.label}
@@ -143,7 +143,7 @@ export const Drawer = (props: PropsWithChildren) => {
               return (
                 <SheetClose asChild key={nav.label}>
                   <Link
-                    href={nav.path}
+                    href={{ pathname: nav.path }}
                     className="py-[7px] px-2 transition duration-300 hover:bg-gray-100"
                   >
                     {nav.label}

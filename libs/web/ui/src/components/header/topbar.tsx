@@ -30,7 +30,7 @@ export const TopBar = () => {
         {TOPBAR_NAVIGATION.map((navigation) => (
           <Link
             key={navigation.label}
-            href={navigation.path}
+            href={{ pathname: navigation.path }}
             className="hover:text-black transition duration-300"
           >
             {navigation.label}

@@ -82,7 +82,7 @@ export const Slideshow = () => {
                       currentSlide === index &&
                         'animate__fadeIn animate__animated'
                     )}
-                    href={slide.link}
+                    href={{ pathname: slide.link }}
                   >
                     Shop Now
                   </Link>
