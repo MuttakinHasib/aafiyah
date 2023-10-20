@@ -9,7 +9,7 @@
     "cssVariables": true
   },
   "aliases": {
-    "components": "@aafiyah/ui/components",
-    "utils": "@aafiyah/ui/utils"
+    "components": "@aafiyah/ui",
+    "utils": "@aafiyah/ui"
   }
 }
