@@ -16,6 +16,60 @@ import {
   ShoppingBagIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '../../../ui/accordion';
+
+const NAVIGATION = [
+  {
+    label: 'Home',
+    path: '/',
+  },
+  {
+    label: 'Account',
+    children: [
+      {
+        label: 'Dashboard',
+        path: '/dashboard',
+      },
+      {
+        label: 'Edit Profile',
+        path: '/edit-profile',
+      },
+      {
+        label: 'Order History',
+        path: '/order-history',
+      },
+      {
+        label: 'Address Book',
+        path: '/address-book',
+      },
+      {
+        label: 'Edit Address',
+        path: '/edit-address',
+      },
+      {
+        label: 'Change Password',
+        path: '/change-password',
+      },
+    ],
+  },
+  {
+    label: 'Shop',
+    path: '/shop',
+  },
+  {
+    label: 'Blog',
+    path: '/blog',
+  },
+  {
+    label: 'FAQ',
+    path: '/faq',
+  },
+];
 
 export const Drawer = (props: PropsWithChildren) => {
   return (
@@ -60,6 +114,43 @@ export const Drawer = (props: PropsWithChildren) => {
                 </small>
               </Link>
             </SheetClose>
+          </div>
+          <div className="flex flex-col text-[15px] font-medium space-y-[7px]">
+            {NAVIGATION.map((nav, index) => {
+              if (nav.children) {
+                return (
+                  <Accordion type="single" collapsible key={index}>
+                    <AccordionItem className="border-none" value={nav.label}>
+                      <AccordionTrigger className="py-[7px] px-2 transition duration-300 hover:bg-gray-100">
+                        {nav.label}
+                      </AccordionTrigger>
+                      <AccordionContent className="space-y-1">
+                        {nav.children.map((child) => (
+                          <SheetClose asChild key={child.label}>
+                            <Link
+                              href={child.path}
+                              className="py-[7px] px-3 transition duration-300 hover:bg-gray-100 block"
+                            >
+                              {child.label}
+                            </Link>
+                          </SheetClose>
+                        ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                );
+              }
+              return (
+                <SheetClose asChild key={nav.label}>
+                  <Link
+                    href={nav.path}
+                    className="py-[7px] px-2 transition duration-300 hover:bg-gray-100"
+                  >
+                    {nav.label}
+                  </Link>
+                </SheetClose>
+              );
+            })}
           </div>
         </div>
         <SheetFooter className="border-t py-3 text-center">

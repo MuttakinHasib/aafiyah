@@ -2,7 +2,7 @@ import { Bars3Icon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
-const NAVIGATION = [
+export const NAVIGATION = [
   {
     label: 'Home',
     path: '/',

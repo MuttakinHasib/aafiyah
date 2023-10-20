@@ -42,10 +42,10 @@ export const Header = () => {
               className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3"
             >
               <UserIcon className="w-9 h-9" />
-              <div className="-space-y-1">
+              <span className="-space-y-1">
                 <small className="text-gray-500">Hello, Login In</small>
                 <p className="text-lg font-medium">My Account</p>
-              </div>
+              </span>
             </Link>
             <Link
               href="/wishlist"
@@ -55,10 +55,10 @@ export const Header = () => {
                 0
               </small>
               <ShoppingBagIcon className="w-9 h-9" />
-              <div className="-space-y-1">
+              <span className="-space-y-1">
                 <small className="text-gray-500">Shopping Cart</small>
                 <p className="text-lg font-medium">$250</p>
-              </div>
+              </span>
             </Link>
           </div>
         </div>
