@@ -1,21 +1,21 @@
 import Link from 'next/link';
 
 const informationNav = [
-  { label: 'About Us', link: '/about-us' },
-  { label: 'Delivery Information', link: '/delivery-information' },
-  { label: 'Privacy Policy', link: '/privacy-policy' },
-  { label: 'Brands', link: '/brands' },
-  { label: 'Contact Us', link: '/contact-us' },
-  { label: 'Returns', link: '/returns' },
-  { label: 'Site Map', link: '/site-map' },
+  { label: 'About Us', path: '/about-us' },
+  { label: 'Delivery Information', path: '/delivery-information' },
+  { label: 'Privacy Policy', path: '/privacy-policy' },
+  { label: 'Brands', path: '/brands' },
+  { label: 'Contact Us', path: '/contact-us' },
+  { label: 'Returns', path: '/returns' },
+  { label: 'Site Map', path: '/site-map' },
 ];
 
 const accountNav = [
-  { label: 'Store Location', link: '/store-location' },
-  { label: 'Order History', link: '/order-history' },
-  { label: 'Wish List', link: '/wishlist' },
-  { label: 'Newsletter', link: '/newsletter' },
-  { label: 'Special Offers', link: '/special-offers' },
+  { label: 'Store Location', path: '/store-location' },
+  { label: 'Order History', path: '/order-history' },
+  { label: 'Wish List', path: '/wishlist' },
+  { label: 'Newsletter', path: '/newsletter' },
+  { label: 'Special Offers', path: '/special-offers' },
 ];
 
 export const Footer = () => {
@@ -64,7 +64,7 @@ export const Footer = () => {
               {informationNav.map((nav) => (
                 <Link
                   key={nav.label}
-                  href={nav.link}
+                  href={{ pathname: nav.path }}
                   className="text-[15px] text-gray-400 hover:text-white transition-colors duration-200"
                 >
                   {nav.label}
@@ -78,7 +78,7 @@ export const Footer = () => {
               {accountNav.map((nav) => (
                 <Link
                   key={nav.label}
-                  href={nav.link}
+                  href={{ pathname: nav.path }}
                   className="text-[15px] text-gray-400 hover:text-white transition-colors duration-200"
                 >
                   {nav.label}
