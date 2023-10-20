@@ -22,8 +22,8 @@ export const Footer = () => {
   return (
     <footer className="text-white">
       <div className="bg-gray-700">
-        <div className="container pt-14 pb-12 flex flex-wrap justify-between xl:gap-0 gap-10">
-          <div className="space-y-6 xl:w-1/3 w-full text-center xl:text-left">
+        <div className="container pt-14 pb-12 flex flex-wrap gap-5 md:gap-10 justify-center md:justify-start">
+          <div className="space-y-3 md:space-y-6 xl:w-1/3 w-full text-center xl:text-left">
             <h5 className="text-xl font-medium">Contact Us</h5>
             <p className="text-gray-400">
               Hi, we are always open for cooperation and suggestions, contact us
@@ -58,9 +58,9 @@ export const Footer = () => {
               </dl>
             </address>
           </div>
-          <div className="space-y-6 px-5">
+          <div className="space-y-3 md:space-y-6 px-5 text-center md:text-start">
             <h5 className="text-xl font-medium">Information</h5>
-            <div className="space-y-3 flex flex-col">
+            <div className="space-y-3 flex flex-col items-center md:items-start">
               {informationNav.map((nav) => (
                 <Link
                   key={nav.label}
@@ -72,9 +72,9 @@ export const Footer = () => {
               ))}
             </div>
           </div>
-          <div className="space-y-6 px-5">
+          <div className="space-y-3 md:space-y-6 px-5 text-center md:text-start">
             <h5 className="text-xl font-medium">My Account</h5>
-            <div className="space-y-3 flex flex-col">
+            <div className="space-y-3 flex flex-col items-center md:items-start">
               {accountNav.map((nav) => (
                 <Link
                   key={nav.label}
@@ -86,13 +86,13 @@ export const Footer = () => {
               ))}
             </div>
           </div>
-          <div className="space-y-6 w-1/3">
+          <div className="space-y-3 md:space-y-6 md:flex-1 text-center md:text-start">
             <h5 className="text-xl font-medium">Newsletter</h5>
             <p className="text-gray-400">
               Enter your email address below to subscribe to our newsletter and
               keep up to date with discounts and special offers.
             </p>
-            <div className="flex items-center gap-x-3 max-w-lg w-full">
+            <div className="flex items-center justify-center md:justify-start gap-x-3 max-w-lg w-full">
               <input
                 type="email"
                 className="bg-gray-600 border-2 w-full border-gray-600 px-3 py-2 rounded focus:ring-0 focus:border-gray-600 focus:bg-gray-700 focus:outline-none placeholder-gray-400"
