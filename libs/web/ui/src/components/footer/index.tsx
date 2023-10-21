@@ -1,4 +1,11 @@
 import Link from 'next/link';
+import {
+  SiFacebook,
+  SiGithub,
+  SiInstagram,
+  SiLinkedin,
+  SiTwitter,
+} from '@icons-pack/react-simple-icons';
 
 const informationNav = [
   { label: 'About Us', path: '/about-us' },
@@ -16,6 +23,34 @@ const accountNav = [
   { label: 'Wish List', path: '/wishlist' },
   { label: 'Newsletter', path: '/newsletter' },
   { label: 'Special Offers', path: '/special-offers' },
+];
+
+const SOCIAL_NETWORKS = [
+  {
+    label: 'Facebook',
+    url: `https://facebook.com/muttakinhasib`,
+    icon: <SiFacebook title="Facebook" color="#0866FF" size={24} />,
+  },
+  {
+    label: 'Instagram',
+    url: `https://instagram.com/muttakinhasib`,
+    icon: <SiInstagram title="Instagram" color="#E4405F" size={24} />,
+  },
+  {
+    label: 'Twitter',
+    url: `https://twitter.com/muttakinhasib`,
+    icon: <SiTwitter title="Twitter" color="#1D9BF0" size={24} />,
+  },
+  {
+    label: 'GitHub',
+    url: `https://github.com/muttakinhasib`,
+    icon: <SiGithub title="GitHub" color="#181717" size={24} />,
+  },
+  {
+    label: 'LinkedIn',
+    url: `https://linkedin.com/in/muttakinhasib`,
+    icon: <SiLinkedin title="Linkedin" color="#0A66C2" size={24} />,
+  },
 ];
 
 export const Footer = () => {
@@ -88,25 +123,60 @@ export const Footer = () => {
           </div>
           <div className="space-y-3 md:space-y-6 text-center md:text-start col-span-12 md:col-span-6 xl:col-span-4">
             <h5 className="text-xl font-medium">Newsletter</h5>
-            <p className="text-gray-400">
-              Enter your email address below to subscribe to our newsletter and
-              keep up to date with discounts and special offers.
-            </p>
-            <div className="flex items-center justify-center md:justify-start gap-x-3 max-w-lg w-full">
-              <input
-                type="email"
-                className="bg-gray-600 border-2 w-full border-gray-600 px-3 py-2 rounded focus:ring-0 focus:border-gray-600 focus:bg-gray-700 focus:outline-none placeholder-gray-400"
-                placeholder="email@example.com"
-              />
-              <button className="border-none bg-brand text-white py-2 px-5 border-2 border-brand rounded">
-                Subscribe
-              </button>
+            <div className="space-y-3">
+              <p className="text-gray-400">
+                Enter your email address below to subscribe to our newsletter
+                and keep up to date with discounts and special offers.
+              </p>
+              <div className="flex items-center justify-center md:justify-start gap-x-3 max-w-lg w-full">
+                <input
+                  type="email"
+                  className="bg-gray-600 border-2 w-full border-gray-600 px-3 py-2 rounded focus:ring-0 focus:border-gray-600 focus:bg-gray-700 focus:outline-none placeholder-gray-400"
+                  placeholder="email@example.com"
+                />
+                <button className="border-none bg-brand text-white py-2 px-5 border-2 border-brand rounded">
+                  Subscribe
+                </button>
+              </div>
+              <p className="text-gray-400">Follow me on social networks</p>
+              <div className="inline-flex items-center gap-5 bg-white p-3">
+                {SOCIAL_NETWORKS.map((network) => (
+                  <Link
+                    key={network.label}
+                    href={{ pathname: network.url }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:scale-105"
+                  >
+                    {network.icon}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div className="bg-gray-800">
-        <div className="container pt-14 pb-12"></div>
+        <div className="container py-5 flex items-center justify-center md:justify-between flex-wrap gap-5">
+          <p className="text-sm text-gray-400 md:text-start text-center">
+            &copy; {new Date().getFullYear()} All Rights Reserved. Developed by
+            &nbsp;
+            <Link
+              href="https://github.com/muttakinhasib"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline text-brand whitespace-nowrap"
+            >
+              Muttakin Islam Hasib
+            </Link>
+          </p>
+
+          <img
+            className="h-14 bg-white p-2"
+            src="https://www.leafrootfruit.com.au/wp-content/uploads/2018/08/secure-stripe-payment-logo-amex-master-visa.png"
+            alt="Stripe Secure Payment"
+          />
+        </div>
       </div>
     </footer>
   );
