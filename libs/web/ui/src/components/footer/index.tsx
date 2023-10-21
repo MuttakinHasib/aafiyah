@@ -22,14 +22,14 @@ export const Footer = () => {
   return (
     <footer className="text-white">
       <div className="bg-gray-700">
-        <div className="container pt-14 pb-12 flex flex-wrap gap-5 md:gap-10 justify-center md:justify-start">
-          <div className="space-y-3 md:space-y-6 xl:w-1/3 w-full text-center xl:text-left">
+        <div className="container pt-14 pb-12 grid grid-cols-12 gap-5 md:gap-10 justify-between md:justify-start">
+          <div className="space-y-3 md:space-y-6 text-center xl:text-left col-span-12 xl:col-span-4">
             <h5 className="text-xl font-medium">Contact Us</h5>
             <p className="text-gray-400">
               Hi, we are always open for cooperation and suggestions, contact us
               in one of the ways below:
             </p>
-            <address className="flex flex-wrap not-italic gap-y-5 lg:gap-y-0 justify-between">
+            <address className="flex flex-wrap not-italic gap-y-5 justify-between">
               <dl className="space-y-1 bg-gray-600 py-4 px-3 xl:p-0 xl:bg-transparent rounded xl:rounded-none w-full sm:w-[calc(100%/2-10px)] lg:w-[calc(100%/4-12px)] xl:w-[calc(100%/2-30px-1px)]">
                 <dt className="uppercase text-xs text-gray-400">
                   Phone number
@@ -58,35 +58,35 @@ export const Footer = () => {
               </dl>
             </address>
           </div>
-          <div className="space-y-3 md:space-y-6 px-5 text-center md:text-start">
+          <div className="space-y-3 md:space-y-6 text-center md:text-start mx-auto col-span-6 md:col-span-3 xl:col-span-2">
             <h5 className="text-xl font-medium">Information</h5>
-            <div className="space-y-3 flex flex-col items-center md:items-start">
+            <div className="gap-3 flex flex-col">
               {informationNav.map((nav) => (
                 <Link
                   key={nav.label}
                   href={{ pathname: nav.path }}
-                  className="text-[15px] text-gray-400 hover:text-white transition-colors duration-200"
+                  className="text-[15px] text-gray-400 hover:text-white transition-colors duration-200 inline-block"
                 >
                   {nav.label}
                 </Link>
               ))}
             </div>
           </div>
-          <div className="space-y-3 md:space-y-6 px-5 text-center md:text-start">
+          <div className="space-y-3 md:space-y-6 text-center md:text-start mx-auto col-span-6 md:col-span-3 xl:col-span-2">
             <h5 className="text-xl font-medium">My Account</h5>
-            <div className="space-y-3 flex flex-col items-center md:items-start">
+            <div className="gap-3 flex flex-col">
               {accountNav.map((nav) => (
                 <Link
                   key={nav.label}
                   href={{ pathname: nav.path }}
-                  className="text-[15px] text-gray-400 hover:text-white transition-colors duration-200"
+                  className="text-[15px] text-gray-400 hover:text-white transition-colors duration-200 inline-block"
                 >
                   {nav.label}
                 </Link>
               ))}
             </div>
           </div>
-          <div className="space-y-3 md:space-y-6 md:flex-1 text-center md:text-start">
+          <div className="space-y-3 md:space-y-6 text-center md:text-start col-span-12 md:col-span-6 xl:col-span-4">
             <h5 className="text-xl font-medium">Newsletter</h5>
             <p className="text-gray-400">
               Enter your email address below to subscribe to our newsletter and
