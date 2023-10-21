@@ -15,8 +15,9 @@ const slides = [
   },
   {
     offer: '25% off',
-    title: 'When Buying Parts With Installation',
-    description: 'Installation of parts in the services of our service center',
+    title: "Tick & Glow's Timeless Elegance",
+    description:
+      'Elevate your surroundings with the timeless elegance of our wall clocks, each tick matched with the warm glow of our stylish lamps.',
     image: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88',
     link: '/shop',
   },
@@ -29,7 +30,7 @@ export const Slideshow = () => {
     dots: true,
     infinite: true,
     autoplay: true,
-    speed: 1000,
+    speed: 1500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
@@ -45,7 +46,7 @@ export const Slideshow = () => {
                 className={`bg-no-repeat bg-cover bg-center w-full cursor-pointer`}
                 style={{ backgroundImage: `url(${slide.image})` }}
               >
-                <div className="h-96 md:h-[460px] xxl:h-[500] pt-9 px-10 pb-10 lg:p-14 xl:py-16 xl:px-20 xxl:px-24 xxl:py-20 space-y-10 w-full text-center md:text-start">
+                <div className="h-96 md:h-[500px] xxl:h-[600px] pt-9 px-10 pb-10 lg:p-14 xl:py-16 xl:px-20 xxl:px-24 xxl:py-20 space-y-10 w-full text-center md:text-start">
                   <div className="space-y-5">
                     {slide.offer && (
                       <span
