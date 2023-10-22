@@ -22,15 +22,24 @@ const LoginPage = () => {
             <Label>Password</Label>
             <Input type="password" placeholder="********" />
           </div>
+          <div className='flex items-center justify-between gap-10 flex-wrap'>
           <Link
             target="_blank"
             href="/forget-password"
-            className="mt-1 block text-blue-600 text-[13px] hover:underline"
+            className="text-blue-600 text-[13px] hover:underline"
           >
             Forget password?
           </Link>
+          <Link
+            href="/register"
+            className="text-gray-600 text-[13px] hover:underline"
+          >
+            Don't have an account? Register here
+          </Link>
+          </div>
         </div>
         <Button>Login</Button>
+        
       </div>
     </div>
   );
