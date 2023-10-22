@@ -46,7 +46,7 @@ export const Slideshow = () => {
                 className={`bg-no-repeat bg-cover bg-center w-full cursor-pointer`}
                 style={{ backgroundImage: `url(${slide.image})` }}
               >
-                <div className="h-96 md:h-[500px] xxl:h-[600px] pt-9 px-10 pb-10 lg:p-14 xl:py-16 xl:px-20 xxl:px-24 xxl:py-20 space-y-10 w-full text-center md:text-start">
+                <div className="h-96 md:h-[500px] pt-9 px-10 pb-10 lg:p-14 xl:py-16 xl:px-20 xxl:px-24 xxl:py-20 space-y-10 w-full text-center md:text-start">
                   <div className="space-y-5">
                     {slide.offer && (
                       <span
