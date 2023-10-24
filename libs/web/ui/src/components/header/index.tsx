@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { TopBar } from './topbar';
 import Image from 'next/image';
@@ -8,6 +10,7 @@ import {
   UserIcon,
 } from '@heroicons/react/24/outline';
 import { Navigation } from './navigation';
+import { UserMenu } from '../menu';
 
 export const Header = () => {
   return (
@@ -37,16 +40,15 @@ export const Header = () => {
             >
               <HeartIcon className="w-9 h-9" />
             </Link>
-            <Link
-              href="/wishlist"
-              className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3"
-            >
-              <UserIcon className="w-9 h-9" />
-              <span className="-space-y-1">
-                <small className="text-gray-500">Hello, Login In</small>
-                <p className="text-lg font-medium">My Account</p>
-              </span>
-            </Link>
+            <UserMenu>
+              <button title='Profile Menu' className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3">
+                <UserIcon className="w-9 h-9" />
+                <span className="-space-y-1">
+                  <small className="text-gray-500">Hello, Login In</small>
+                  <p className="text-lg font-medium">My Account</p>
+                </span>
+              </button>
+            </UserMenu>
             <Link
               href="/wishlist"
               className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3 relative"

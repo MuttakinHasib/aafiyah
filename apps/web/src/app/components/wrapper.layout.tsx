@@ -4,7 +4,7 @@ import { Footer, Header, MobileHeader } from '@aafiyah/ui';
 import React, { PropsWithChildren } from 'react';
 import { useMedia } from 'react-use';
 
-const PublicLayout = (props: PropsWithChildren) => {
+const RootLayoutWrapper = (props: PropsWithChildren) => {
   const isDesktop = useMedia('(min-width: 1200px)');
   return (
     <React.Fragment>
@@ -15,4 +15,4 @@ const PublicLayout = (props: PropsWithChildren) => {
   );
 };
 
-export default PublicLayout;
+export default RootLayoutWrapper;

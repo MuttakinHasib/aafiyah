@@ -34,7 +34,7 @@ const LoginPage = () => {
             href="/register"
             className="text-gray-600 text-[13px] hover:underline"
           >
-            Don't have an account? Register here
+            Don&apos;t have an account? Register here
           </Link>
           </div>
         </div>
