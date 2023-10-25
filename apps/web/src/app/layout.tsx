@@ -13,6 +13,7 @@ const roboto = Roboto({
   weight: ['100', '300', '400', '500', '700', '900'],
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-roboto',
 });
 
 export const metadata = defaultMetadata
@@ -23,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={roboto.className}>
+    <html lang="en" className={roboto.variable} suppressHydrationWarning>
+      <body>
         <StyledComponentsRegistry>
           <RootLayoutWrapper>{children}</RootLayoutWrapper>
         </StyledComponentsRegistry>

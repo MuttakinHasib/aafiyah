@@ -24,8 +24,12 @@ module.exports = {
         center: true,
         padding: '1rem',
       },
+      fontFamily: {
+        roboto: ['var(--font-roboto)'],
+      },
       boxShadow: {
         header: '0 1px 3px rgba(0, 0, 0, .09)',
+        box: '0 1px 3px rgba(0, 0, 0, .09)',
       },
       colors: {
         brand: '#F58E2B',

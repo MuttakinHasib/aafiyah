@@ -55,7 +55,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-roboto;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -78,4 +78,8 @@
 }
 .slick-dots li button::before {
   @apply hidden
+}
+
+.radix-themes {
+  --default-font-family: var(--font-roboto);
 }

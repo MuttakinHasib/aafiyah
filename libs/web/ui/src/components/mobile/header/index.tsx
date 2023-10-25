@@ -22,7 +22,7 @@ export const MobileHeader = () => {
       <div className="container flex items-center justify-between md:py-1 gap-10">
         <div className="flex items-center gap-x-1">
           <Drawer>
-            <button className="py-2 px-3 transition duration-300 hover:bg-gray-100">
+            <button title='menu' type='button' className="py-2 px-3 transition duration-300 hover:bg-gray-100">
               <Bars3Icon className="w-7 h-7" />
             </button>
           </Drawer>
@@ -56,6 +56,7 @@ export const MobileHeader = () => {
           <button
             onClick={() => setOpenSearchBar(true)}
             type="button"
+            title='search'
             className="py-2 px-3 transition duration-300 hover:bg-gray-100 md:hidden"
           >
             <MagnifyingGlassIcon className="w-6 h-6" />
