@@ -23,7 +23,7 @@ import {
   AccordionTrigger,
 } from '../../../ui/accordion';
 
-const NAVIGATION = [
+export const NAVIGATION = [
   {
     label: 'Home',
     path: '/',
