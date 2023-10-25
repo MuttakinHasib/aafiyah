@@ -57,7 +57,7 @@ export function UserMenu(props: PropsWithChildren) {
           <DropdownMenuItem>
             <Link
               className="px-6 py-2 text-[15px] font-medium transition-colors w-full"
-              href="/dashboard/addresses"
+              href="/dashboard/address-book"
             >
               Addresses
             </Link>
