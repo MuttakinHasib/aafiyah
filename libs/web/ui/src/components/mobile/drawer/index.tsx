@@ -48,10 +48,6 @@ export const NAVIGATION = [
         path: '/dashboard/address-book',
       },
       {
-        label: 'Edit Address',
-        path: '/dashboard/edit-address',
-      },
-      {
         label: 'Change Password',
         path: '/dashboard/change-password',
       },

@@ -51,10 +51,10 @@ const DashboardPage = () => {
               </div>
             </div>
             <Link
-              href="/dashboard/edit-address"
+              href="/dashboard/address-book/1"
               className="hover:underline text-blue-500 inline-block text-[15px]"
             >
-              Edit Profile
+              Edit Address
             </Link>
           </div>
         </div>
