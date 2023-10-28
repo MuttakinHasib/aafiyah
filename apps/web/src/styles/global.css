@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -26,7 +25,7 @@
     --ring: 24.6 95% 53.1%;
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 20 14.3% 4.1%;
     --foreground: 60 9.1% 97.8%;
@@ -56,34 +55,33 @@
   }
   html {
     scroll-behavior: smooth;
-    @apply font-roboto
+    @apply font-roboto;
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 }
 
 @layer components {
-
 }
 
 .slick-dots {
-  @apply !bottom-7
+  @apply !bottom-7;
 }
-.slick-dots li  {
-  @apply !w-3 !h-3
+.slick-dots li {
+  @apply !w-3 !h-3;
 }
-.slick-dots .slick-active button  {
-  @apply !bg-brand
+.slick-dots .slick-active button {
+  @apply !bg-brand;
 }
 .slick-dots li button {
-  @apply !w-full !h-full !bg-gray-400 rounded-full
+  @apply !w-full !h-full !bg-gray-400 rounded-full;
 }
 .slick-dots li button::before {
-  @apply hidden
+  @apply hidden;
 }
 
 .radix-themes {
-  --default-font-family: var(--font-roboto);
+  --default-font-family: var(--font-roboto) !important;
 }

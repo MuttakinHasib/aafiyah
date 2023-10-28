@@ -13,7 +13,7 @@ export const metadata = {
 const EditProfilePage = () => {
   return (
     <Theme>
-      <div className="shadow-box bg-white">
+      <div className="shadow-box bg-white font-roboto">
         <h4 className="border-b py-5 px-8 font-medium text-xl">Edit Profile</h4>
         <div className="p-8 max-w-md w-full">
           <label
