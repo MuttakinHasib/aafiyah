@@ -16,8 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@aafiyah/common": ["libs/api/common/src/index.ts"],
-      "@aafiyah/ui": ["libs/web/ui/src/index.ts"],
+      "@aafiyah/ui": ["libs/web/ui/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "tmp"],
+  "exclude": ["node_modules", "tmp"]
 }

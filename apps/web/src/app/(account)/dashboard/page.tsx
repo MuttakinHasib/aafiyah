@@ -4,11 +4,12 @@ import React from 'react';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 import { Button } from '@aafiyah/ui';
+
 export const metadata = {
   title: 'Dashboard',
 };
 
-const page = () => {
+const DashboardPage = () => {
   return (
     <Theme>
       <div className="space-y-8 font-roboto">
@@ -59,21 +60,37 @@ const page = () => {
         </div>
         <div className="shadow-box bg-white">
           <h4 className="py-5 px-8 font-medium text-xl">Recent Orders</h4>
-          <table className='table-auto text-left w-full'>
+          <table className="table-auto text-left w-full">
             <thead>
-              <tr className='border-t'>
-                <th className='uppercase whitespace-nowrap font-bold py-3 text-[13px] pl-8 pr-3'>Number</th>
-                <th className='uppercase whitespace-nowrap font-bold py-3 text-[13px] px-3'>Date</th>
-                <th className='uppercase whitespace-nowrap font-bold py-3 text-[13px] px-3'>Status</th>
-                <th className='uppercase whitespace-nowrap font-bold py-3 text-[13px] pl-3 pr-8'>Total</th>
+              <tr className="border-t">
+                <th className="uppercase whitespace-nowrap font-bold py-3 text-[13px] pl-8 pr-3">
+                  Number
+                </th>
+                <th className="uppercase whitespace-nowrap font-bold py-3 text-[13px] px-3">
+                  Date
+                </th>
+                <th className="uppercase whitespace-nowrap font-bold py-3 text-[13px] px-3">
+                  Status
+                </th>
+                <th className="uppercase whitespace-nowrap font-bold py-3 text-[13px] pl-3 pr-8">
+                  Total
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr className='border-t'>
-                <td className='whitespace-nowrap py-3 text-[15px] pl-8 pr-3'>Number</td>
-                <td className='whitespace-nowrap py-3 text-[15px] px-3'>Date</td>
-                <td className='whitespace-nowrap py-3 text-[15px] px-3'>Status</td>
-                <td className='whitespace-nowrap py-3 text-[15px] pl-3 pr-8'>Total</td>
+              <tr className="border-t">
+                <td className="whitespace-nowrap py-3 text-[15px] pl-8 pr-3">
+                  Number
+                </td>
+                <td className="whitespace-nowrap py-3 text-[15px] px-3">
+                  Date
+                </td>
+                <td className="whitespace-nowrap py-3 text-[15px] px-3">
+                  Status
+                </td>
+                <td className="whitespace-nowrap py-3 text-[15px] pl-3 pr-8">
+                  Total
+                </td>
               </tr>
             </tbody>
           </table>
@@ -83,4 +100,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default DashboardPage;
