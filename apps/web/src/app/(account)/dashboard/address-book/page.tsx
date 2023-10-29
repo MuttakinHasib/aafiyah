@@ -12,7 +12,7 @@ const AddressBookPage = () => {
       <div className="p-8 shadow-box bg-white w-[calc((100%_-_0px_-_1px)_/_1)] md:w-[calc((100%_-_16px_-_1px)_/_2)] lg:w-[calc((100%_-_32px_-_1px)_/_3)] grid place-content-center justify-items-center text-center gap-y-5">
         <PlusIcon className="w-16 h-16 text-gray-400 p-1 rounded-full border-2" />
         <Button variant="secondary" asChild>
-          <Link href="/dashboard/address-book/new">Add New</Link>
+          <Link href={`/dashboard/address-book/new`}>Add New</Link>
         </Button>
       </div>
       <div className="p-8 shadow-box bg-white w-[calc((100%_-_0px_-_1px)_/_1)] md:w-[calc((100%_-_16px_-_1px)_/_2)] lg:w-[calc((100%_-_32px_-_1px)_/_3)] space-y-5">
