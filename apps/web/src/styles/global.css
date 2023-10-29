@@ -58,7 +58,7 @@
     @apply font-roboto;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gray-100 text-foreground;
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 }

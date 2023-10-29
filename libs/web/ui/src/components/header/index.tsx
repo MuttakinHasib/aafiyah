@@ -14,7 +14,7 @@ import { UserMenu } from '../menu';
 
 export const Header = () => {
   return (
-    <header className="shadow-header">
+    <header className="shadow-header bg-white">
       <TopBar />
       <div className="border-y border">
         <div className="container flex items-center justify-between gap-10">
@@ -50,7 +50,7 @@ export const Header = () => {
               </button>
             </UserMenu>
             <Link
-              href="/wishlist"
+              href="/cart"
               className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3 relative"
             >
               <small className="absolute top-1 left-9 text-white min-w-[20px] flex items-center justify-center bg-red-500 rounded-full">
