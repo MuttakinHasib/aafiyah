@@ -15,8 +15,6 @@ export const defaultMetadata = {
   creator: 'Muttakin Islam Hasib',
   publisher: 'Muttakin Islam Hasib',
   applicationName: 'Aafiyah',
-  viewport: 'width=device-width, initial-scale=1.0',
-  colorScheme: 'light',
   category: 'Islamic E-commerce',
   robots: {
     index: false,
@@ -37,7 +35,6 @@ export const defaultMetadata = {
       url: 'https://muttakinhasib.com',
     },
   ],
-  themeColor: '#ffffff',
   appLinks: {
     web: {
       url: baseURL,

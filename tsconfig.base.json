@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@aafiyah/common": ["libs/api/common/src/index.ts"],
-      "@aafiyah/ui": ["libs/web/ui/src/index.ts"]
+      "@aafiyah/common": ["libs/common/src/index.ts"],
+      "@aafiyah/ui": ["libs/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@aafiyah/ui": ["libs/web/ui/src/*"],
+      "@aafiyah/ui": ["libs/ui/src/*"],
     }
   },
 }
