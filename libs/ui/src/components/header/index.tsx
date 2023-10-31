@@ -41,7 +41,10 @@ export const Header = () => {
               <HeartIcon className="w-9 h-9" />
             </Link>
             <UserMenu>
-              <button title='Profile Menu' className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3">
+              <button
+                title="Profile Menu"
+                className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3"
+              >
                 <UserIcon className="w-9 h-9" />
                 <span className="-space-y-1">
                   <small className="text-gray-500">Hello, Login In</small>
