@@ -10,7 +10,7 @@ import {
   IsUrl,
   MinLength,
 } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 
 @Entity()
 export class User extends CoreEntity {
@@ -61,3 +61,5 @@ export class User extends CoreEntity {
     return await bcrypt.compare(password, this.password);
   }
 }
+
+export class UserWithoutPassword extends OmitType(User, ['password']) {}

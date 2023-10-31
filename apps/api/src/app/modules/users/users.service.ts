@@ -4,9 +4,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { FindOneOptions, Repository } from 'typeorm';
+import { createHash } from '../../utils/hash';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>
   ) {}
@@ -17,8 +18,14 @@ export class UserService {
     });
     if (existingUser) throw new ConflictException('User already exists');
 
-    const user = this.userRepository.create(createUserDto);
-    return await this.userRepository.save(user);
+    createUserDto.password = await createHash(createUserDto.password);
+
+    const user = await this.userRepository.save(
+      this.userRepository.create(createUserDto)
+    );
+
+    delete user.password;
+    return user;
   }
 
   async findOne(options: FindOneOptions<User>) {
