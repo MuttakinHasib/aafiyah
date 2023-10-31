@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { CoreEntity } from '@aafiyah/common';
-import { Column } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import {
   IsEmail,
   IsNotEmpty,
@@ -12,9 +12,10 @@ import {
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
+@Entity()
 export class User extends CoreEntity {
   @ApiPropertyOptional()
-  @Column()
+  @Column({ nullable: true })
   @IsUrl()
   @IsOptional()
   avatar?: string;
@@ -24,6 +25,12 @@ export class User extends CoreEntity {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @ApiPropertyOptional({ example: 'MuttakinHasib' })
+  @Column({ unique: true, nullable: true })
+  @IsString()
+  @IsOptional()
+  username: string;
 
   @ApiProperty({ example: 'muttakinislamhasib@gmail.com' })
   @Column({ unique: true })
