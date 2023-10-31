@@ -1,7 +1,8 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConfigurationService } from '../configuration/configuration.service';
 
+@Global()
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({

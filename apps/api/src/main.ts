@@ -1,12 +1,14 @@
 import 'colors';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { ConfigurationService } from '@aafiyah/common';
 import { NestFactory } from '@nestjs/core';
 import passport from 'passport';
 import session from 'express-session';
 import PostgresStore from 'connect-pg-simple';
+import helmet from 'helmet';
 
 import { AppModule } from './app/app.module';
-import { ConfigurationService } from '@aafiyah/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 const pgSession = PostgresStore(session);
 
@@ -21,6 +23,21 @@ async function bootstrap() {
     credentials: true,
     origin: [configurationService.WEB_URL],
   });
+
+  app.use(helmet());
+
+  // Swagger Setup
+  const config = new DocumentBuilder()
+    .setTitle(
+      `${configurationService.APP_NAME} - An Islamic E-Commerce Web Application`
+    )
+    .setDescription(`${configurationService.APP_NAME} API description`)
+    .setVersion('1.0')
+    .addServer(configurationService.API_URL)
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
 
   app.use(
     session({
