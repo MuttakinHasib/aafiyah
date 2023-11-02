@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
     "outDir": "../../dist/out-tsc",
     "types": [
       "node",
@@ -26,7 +27,7 @@
     "src/**/*.jsx",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "../../apps/web/.next/types/**/*.ts",
-    "../../dist/apps/web/.next/types/**/*.ts"
+    "../../apps/web/.next/types/**/*.ts", // for next.js typed route
+    "../../dist/apps/web/.next/types/**/*.ts" // for next.js typed route
   ]
 }
