@@ -1,19 +1,39 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import {
+  DetailedHTMLProps,
+  ForwardedRef,
+  forwardRef,
+  InputHTMLAttributes,
+} from 'react';
 import { cn } from '../../utils';
 
 type InputProps = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
->;
-
-export const Input = ({ className, ...rest }: InputProps) => {
-  return (
-    <input
-    {...rest}
-      className={cn(
-        'bg-gray-100 w-full border-gray-100 px-3 py-2 rounded focus:ring-0 focus:border-gray-300 focus:bg-white focus:outline-none',
-        className
-      )}
-    />
-  );
+> & {
+  error?: string;
 };
+
+export const Input = forwardRef(
+  (props: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
+    const { className, error, ...rest } = props;
+    return (
+      <div className="space-y-2">
+        <input
+          {...rest}
+          ref={ref}
+          className={cn(
+            'bg-gray-100 w-full border-gray-100 px-3 py-2 rounded focus:ring-0 focus:border-gray-300 focus:bg-white focus:outline-none',
+            className
+          )}
+        />
+        <small
+          className={cn('text-red-500 inline-block animate__animated', {
+            animate__headShake: error,
+          })}
+        >
+          {error}
+        </small>
+      </div>
+    );
+  }
+);

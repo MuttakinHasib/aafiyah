@@ -1,9 +1,10 @@
 import { capitalize, isArray } from 'lodash';
 import axios, { AxiosResponse } from 'axios';
-// import toast from 'react-hot-toast';
+import toast from 'react-hot-toast';
+export const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL,
   withCredentials: true,
 });
 
@@ -14,15 +15,14 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response: AxiosResponse) => {
-    // if (response.data.message) toast.success(response.data.message)
+    if (response.data.message) toast.success(response.data.message);
     return response.data;
   },
   async (error) => {
     if (error.response.data.message) {
       if (isArray(error.response.data.message)) {
-        error.response.data.message.forEach(
-          (message: string) => console.error(message)
-          // toast.error(capitalize(message))
+        error.response.data.message.forEach((message: string) =>
+          toast.error(capitalize(message))
         );
       }
     }
@@ -30,7 +30,7 @@ api.interceptors.response.use(
       // window.location.reload()
     }
 
-    return Promise.reject(error);
+    return Promise.reject(error.response.data);
   }
 );
 

@@ -10,7 +10,7 @@ export class ConfigurationService {
   }
 
   get API_URL() {
-    return this.configService.get<string>('API_URL');
+    return this.configService.get<string>('NEXT_PUBLIC_API_URL');
   }
 
   get WEB_URL() {
