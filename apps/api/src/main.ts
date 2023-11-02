@@ -1,6 +1,6 @@
 import 'colors';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { ConfigurationService } from '@aafiyah/common';
+import { ConfigurationService, NestHttpExceptionFilter } from '@aafiyah/common';
 import { NestFactory } from '@nestjs/core';
 import passport from 'passport';
 import session from 'express-session';
@@ -18,7 +18,7 @@ async function bootstrap() {
     app.get<ConfigurationService>(ConfigurationService);
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
-
+  app.useGlobalFilters(new NestHttpExceptionFilter());
   app.enableCors({
     credentials: true,
     origin: [configurationService.WEB_URL],

@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start:api" : "node dist/apps/api/main.js",
-    "start:web" : "cd dist/apps/web && yarn install && yarn start",
+    "start:api": "node dist/apps/api/main.js",
+    "start:web": "cd dist/apps/web && yarn install && yarn start",
     "dev": "nx run-many --target=serve --all=true",
     "build:api": "nx run api:build",
     "build:web": "nx run web:serve --configuration=production"
@@ -49,6 +49,7 @@
     "helmet": "^7.0.0",
     "joi": "^17.11.0",
     "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "next": "^14.0.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
