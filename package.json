@@ -6,7 +6,8 @@
     "start:api" : "node dist/apps/api/main.js",
     "start:web" : "cd dist/apps/web && yarn install && yarn start",
     "dev": "nx run-many --target=serve --all=true",
-    "build": "nx run-many --target=build --all=true"
+    "build:api": "nx run build:api",
+    "build:web": "nx run build:web"
   },
   "private": true,
   "dependencies": {
