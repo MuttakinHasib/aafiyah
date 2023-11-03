@@ -11,8 +11,12 @@ import {
 } from '@heroicons/react/24/outline';
 import { Navigation } from './navigation';
 import { UserMenu } from '../menu';
+import { useReadLocalStorage } from 'usehooks-ts';
+import { LOGGED_IN } from '@aafiyah/client';
 
 export const Header = () => {
+  const loggedIn = useReadLocalStorage<boolean>(LOGGED_IN);
+
   return (
     <header className="shadow-header bg-white">
       <TopBar />
@@ -40,8 +44,22 @@ export const Header = () => {
             >
               <HeartIcon className="w-9 h-9" />
             </Link>
-            <UserMenu>
-              <button
+            {loggedIn ? (
+              <UserMenu>
+                <button
+                  title="Profile Menu"
+                  className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3"
+                >
+                  <UserIcon className="w-9 h-9" />
+                  <span className="-space-y-1">
+                    <small className="text-gray-500">Hello, Login In</small>
+                    <p className="text-lg font-medium">My Account</p>
+                  </span>
+                </button>
+              </UserMenu>
+            ) : (
+              <Link
+                href="/login"
                 title="Profile Menu"
                 className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3"
               >
@@ -50,8 +68,9 @@ export const Header = () => {
                   <small className="text-gray-500">Hello, Login In</small>
                   <p className="text-lg font-medium">My Account</p>
                 </span>
-              </button>
-            </UserMenu>
+              </Link>
+            )}
+
             <Link
               href="/cart"
               className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3 relative"

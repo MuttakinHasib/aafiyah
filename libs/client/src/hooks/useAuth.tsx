@@ -4,8 +4,14 @@ import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { AUTH_API } from '../services';
 import { ILogin, IRegister } from '@aafiyah/types';
+import { useLocalStorage } from 'usehooks-ts';
+import { LOGGED_IN } from '../constant';
+import { useRouter } from 'next/navigation';
 
 export const useAuth = () => {
+  const { push } = useRouter();
+  const [, setLoggedIn] = useLocalStorage(LOGGED_IN, false);
+
   const { handleSubmit, ...form } = useForm<ILogin & IRegister>({
     mode: 'all',
   });
@@ -31,6 +37,8 @@ export const useAuth = () => {
       toast.promise(AUTH_API.register(data), {
         loading: 'Registering...',
         success: (data) => {
+          setLoggedIn(true);
+          push('/dashboard');
           return 'Registered!';
         },
         error: (err) => {

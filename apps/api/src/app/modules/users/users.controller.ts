@@ -6,16 +6,34 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
+import { User } from '@aafiyah/common';
 
 @ApiTags('User')
-@Controller('user')
+@Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
+
+  @ApiOperation({ summary: 'Get logged in user' })
+  @ApiOkResponse({ description: 'User retrieved successfully' })
+  @UseGuards(AuthenticatedGuard)
+  @Get('me')
+  async me(@User() user: User) {
+    const me = await this.userService.findOne({ where: { email: user.email } });
+    delete me.password;
+    return me;
+  }
 
   @ApiOperation({ summary: 'Create user' })
   @ApiCreatedResponse({ description: 'User created successfully' })
