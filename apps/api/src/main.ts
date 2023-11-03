@@ -6,6 +6,8 @@ import passport from 'passport';
 import session from 'express-session';
 import PostgresStore from 'connect-pg-simple';
 import helmet from 'helmet';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { shouldSendSameSiteNone } from 'should-send-same-site-none';
 
 import { AppModule } from './app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -13,7 +15,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 const pgSession = PostgresStore(session);
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configurationService =
     app.get<ConfigurationService>(ConfigurationService);
 
@@ -39,6 +41,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
+  app.use(shouldSendSameSiteNone);
+
   app.use(
     session({
       secret: configurationService.SESSION_SECRET_KEY,
@@ -47,8 +51,8 @@ async function bootstrap() {
       cookie: {
         maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
         httpOnly: true,
-        sameSite: 'lax',
-        secure: false,
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production',
       },
       store: new pgSession({
         conString: process.env.POSTGRES_DB_URL,
@@ -56,6 +60,8 @@ async function bootstrap() {
       }),
     })
   );
+
+  app.set('trust proxy', 1);
 
   app.use(passport.initialize());
   app.use(passport.session());
