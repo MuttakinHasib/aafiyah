@@ -10,13 +10,15 @@ import {
 } from '../../ui';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
-import { fallbackName, useProfile } from '@aafiyah/client';
+import { fallbackName, useAuth } from '@aafiyah/client';
 import { IUser } from '@aafiyah/types';
 
 export function UserMenu({
   children,
   user,
 }: PropsWithChildren & { user?: IUser }) {
+  const { logout } = useAuth();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
@@ -67,8 +69,11 @@ export function UserMenu({
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="px-6 py-2 text-[15px] font-medium transition-colors w-full">
-          <span>Log out</span>
+        <DropdownMenuItem
+          className="px-6 py-2 text-[15px] font-medium transition-colors w-full cursor-pointer"
+          onClick={logout}
+        >
+          Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

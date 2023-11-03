@@ -7,10 +7,12 @@ import { ILogin, IRegister } from '@aafiyah/types';
 import { useLocalStorage } from 'usehooks-ts';
 import { LOGGED_IN } from '../constant';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const useAuth = () => {
   const { push } = useRouter();
   const [, setLoggedIn] = useLocalStorage(LOGGED_IN, false);
+  const queryClient = useQueryClient();
 
   const { handleSubmit, ...form } = useForm<ILogin & IRegister>({
     mode: 'all',
@@ -53,5 +55,25 @@ export const useAuth = () => {
     }
   });
 
-  return { login, signUp, ...form };
+  const logout = async () => {
+    try {
+      toast.promise(AUTH_API.logout(), {
+        loading: 'Logging out...',
+        success: () => {
+          setLoggedIn(false);
+          push('/');
+          queryClient.removeQueries({ queryKey: ['me'], exact: true });
+          return 'Logged out!';
+        },
+        error: (err) => {
+          console.log(err);
+          return err.message;
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return { login, signUp, logout, ...form };
 };
