@@ -1,5 +1,3 @@
-'use client';
-
 import { PropsWithChildren } from 'react';
 import {
   DropdownMenu,
@@ -12,20 +10,25 @@ import {
 } from '../../ui';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
+import { fallbackName, useProfile } from '@aafiyah/client';
+import { IUser } from '@aafiyah/types';
 
-export function UserMenu(props: PropsWithChildren) {
+export function UserMenu({
+  children,
+  user,
+}: PropsWithChildren & { user?: IUser }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>{props.children}</DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="w-72 rounded">
         <DropdownMenuLabel className="flex gap-2 items-center px-6 py-2 text-[15px] font-medium transition-colors w-full">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src={user?.avatar} alt={user?.name} />
+            <AvatarFallback>{fallbackName(user?.name)}</AvatarFallback>
           </Avatar>
           <div className="font-normal">
-            <h4 className='text-[15px]'>Muttakin Hasib</h4>
-            <p className='text-sm'>hasib@beweddy.com</p>
+            <h4 className="text-[15px]">{user?.name}</h4>
+            <p className="text-sm">{user?.email}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

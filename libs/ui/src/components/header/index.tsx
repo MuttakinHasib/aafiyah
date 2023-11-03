@@ -12,10 +12,11 @@ import {
 import { Navigation } from './navigation';
 import { UserMenu } from '../menu';
 import { useReadLocalStorage } from 'usehooks-ts';
-import { LOGGED_IN } from '@aafiyah/client';
+import { LOGGED_IN, useProfile } from '@aafiyah/client';
 
 export const Header = () => {
   const loggedIn = useReadLocalStorage<boolean>(LOGGED_IN);
+  const { data } = useProfile();
 
   return (
     <header className="shadow-header bg-white">
@@ -45,14 +46,16 @@ export const Header = () => {
               <HeartIcon className="w-9 h-9" />
             </Link>
             {loggedIn ? (
-              <UserMenu>
+              <UserMenu user={data}>
                 <button
                   title="Profile Menu"
                   className="px-3 py-2 transition duration-300 hover:bg-gray-100 rounded flex items-center gap-3"
                 >
                   <UserIcon className="w-9 h-9" />
                   <span className="-space-y-1">
-                    <small className="text-gray-500">Hello, Login In</small>
+                    <small className="text-gray-500">
+                      Hi, {data?.name?.split(' ')[0]}
+                    </small>
                     <p className="text-lg font-medium">My Account</p>
                   </span>
                 </button>

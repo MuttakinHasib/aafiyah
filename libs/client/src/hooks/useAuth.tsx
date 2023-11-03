@@ -21,6 +21,8 @@ export const useAuth = () => {
       toast.promise(AUTH_API.login(data), {
         loading: 'Logging in...',
         success: (data) => {
+          setLoggedIn(true);
+          push('/dashboard');
           return 'Logged in!';
         },
         error: (err) => {

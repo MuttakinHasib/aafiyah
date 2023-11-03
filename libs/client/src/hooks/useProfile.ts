@@ -1,19 +1,15 @@
 import { useReadLocalStorage } from 'usehooks-ts';
 import { useQuery } from '@tanstack/react-query';
-import { baseURL } from '../api';
-import { IUser } from '@aafiyah/types';
+
+import { LOGGED_IN } from '../constant';
+import { USERS_API } from '../services';
 
 export const useProfile = () => {
-  const loggedIn = useReadLocalStorage<boolean>('loggedIn');
+  const loggedIn = useReadLocalStorage<boolean>(LOGGED_IN);
 
-  const { data } = useQuery({
-    queryKey: ['profile'],
-    queryFn: (): Promise<IUser> =>
-      fetch(`${baseURL}/users/me`).then((res) => res.json()),
+  return useQuery({
+    queryKey: ['me'],
+    queryFn: USERS_API.getMe,
     enabled: !!loggedIn,
   });
-
-  return {
-    data,
-  };
 };

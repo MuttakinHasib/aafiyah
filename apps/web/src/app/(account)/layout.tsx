@@ -1,14 +1,19 @@
-import { baseURL } from '@aafiyah/client';
+import { baseURL, getCookieString } from '@aafiyah/client';
 import { AccountNavigation } from '@aafiyah/ui';
 import { QueryClient } from '@tanstack/react-query';
 import React, { PropsWithChildren } from 'react';
 
 const AccountLayout = async (props: PropsWithChildren) => {
+  const cookie = getCookieString('connect.sid');
   const queryClient = new QueryClient();
+
   await queryClient.prefetchQuery({
     queryKey: ['me'],
     queryFn: async () =>
-      await fetch(`${baseURL}/users/me`).then((res) => res.json()),
+      await fetch(`${baseURL}/users/me`, {
+        credentials: 'include',
+        headers: { cookie },
+      }),
   });
 
   return (
