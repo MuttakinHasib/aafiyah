@@ -1,5 +1,12 @@
 import { pick } from 'lodash';
-import { Body, Controller, Post, Session, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Post,
+  Session,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
   ApiCreatedResponse,
@@ -12,6 +19,7 @@ import { LoginDto } from './dto/login.dto';
 import { User } from '@aafiyah/common';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
+import { Logout } from './guards/logout.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -45,5 +53,14 @@ export class AuthController {
     ]);
 
     session.passport = { user };
+    return `Welcome ${user.name}! 🎉`;
+  }
+
+  @ApiOperation({ summary: 'Logout' })
+  @ApiOkResponse({ description: 'User logged out successfully' })
+  @UseGuards(Logout)
+  @Delete('logout')
+  async logout() {
+    return 'Logged out successfully';
   }
 }
