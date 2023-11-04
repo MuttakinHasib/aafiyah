@@ -52,9 +52,12 @@ export class UsersController {
     return this.userService.findOne({});
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(id, updateUserDto);
+  @ApiOperation({ summary: 'Update user' })
+  @ApiCreatedResponse({ description: 'User updated successfully' })
+  @UseGuards(AuthenticatedGuard)
+  @Patch()
+  update(@User() user: User, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(user.id, updateUserDto);
   }
 
   @Delete(':id')
