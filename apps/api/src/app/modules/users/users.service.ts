@@ -29,7 +29,7 @@ export class UsersService {
   }
 
   async findOne(options: FindOneOptions<User>) {
-    return await this.userRepository.findOneOrFail(options);
+    return await this.userRepository.findOne(options);
   }
 
   async findAll() {

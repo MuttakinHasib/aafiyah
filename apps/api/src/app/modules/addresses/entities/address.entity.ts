@@ -4,9 +4,10 @@ import {
   IsBoolean,
   IsEmail,
   IsNotEmpty,
+  IsNumberString,
   IsOptional,
   IsPhoneNumber,
-  IsPostalCode,
+  IsPositive,
   IsString,
 } from 'class-validator';
 import { Column, Entity, JoinTable, ManyToOne } from 'typeorm';
@@ -70,11 +71,11 @@ export class Address extends CoreEntity {
 
   @ApiProperty({ example: 1234 })
   @Column()
-  @IsPostalCode()
+  @IsNumberString()
   @IsNotEmpty()
   postcode: string;
 
-  @ApiProperty({ example: true })
+  @ApiProperty({ example: false })
   @Column({ type: 'boolean', default: false })
   @IsBoolean()
   @IsOptional()
