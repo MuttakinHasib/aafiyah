@@ -10,6 +10,6 @@
   },
   "aliases": {
     "components": "@aafiyah/ui",
-    "utils": "../utils"
+    "utils": "@aafiyah/ui"
   }
 }

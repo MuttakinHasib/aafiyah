@@ -22,7 +22,7 @@ export const Input = forwardRef(
           {...rest}
           ref={ref}
           className={cn(
-            'bg-gray-100 w-full border-gray-100 px-3 py-2 rounded focus:ring-0 focus:border-gray-300 focus:bg-white focus:outline-none',
+            'bg-gray-100 w-full border-gray-100 px-3 py-[6px] focus:ring-0 focus:border-gray-300 focus:bg-white focus:outline-none',
             className
           )}
         />

@@ -1,7 +1,6 @@
 import React from 'react';
+import EditAddressScreen from '../../screens/edit-address.screen';
 
-const EditAddress = () => {
-  return <div>EditAddress</div>;
-};
+const EditAddress = () => <EditAddressScreen />;
 
 export default EditAddress;
