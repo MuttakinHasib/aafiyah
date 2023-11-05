@@ -5,9 +5,16 @@ import { AppService } from './app.service';
 import { ConfigurationModule, DatabaseModule } from '@aafiyah/common';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { AddressesModule } from './modules/addresses/addresses.module';
 
 @Module({
-  imports: [ConfigurationModule, DatabaseModule, UsersModule, AuthModule],
+  imports: [
+    ConfigurationModule,
+    DatabaseModule,
+    UsersModule,
+    AuthModule,
+    AddressesModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { CoreEntity } from '@aafiyah/common';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import {
   IsEmail,
   IsNotEmpty,
@@ -11,6 +11,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
+import { Address } from '../../addresses/entities/address.entity';
 
 @Entity()
 export class User extends CoreEntity {
@@ -56,6 +57,9 @@ export class User extends CoreEntity {
   @IsString()
   @IsOptional()
   role?: string;
+
+  @OneToMany(() => Address, (address) => address.user, { cascade: true })
+  addresses: Address[];
 
   async comparePassword(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.password);
