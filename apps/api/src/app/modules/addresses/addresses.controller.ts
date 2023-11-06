@@ -48,7 +48,7 @@ export class AddressesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.addressesService.findOne(+id);
+    return this.addressesService.findOne({ id });
   }
 
   @Patch(':id')

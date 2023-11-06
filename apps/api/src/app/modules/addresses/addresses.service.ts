@@ -3,7 +3,7 @@ import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Address } from './entities/address.entity';
-import { Repository } from 'typeorm';
+import { FindOneOptions, FindOptionsWhere, Repository } from 'typeorm';
 
 @Injectable()
 export class AddressesService {
@@ -12,7 +12,14 @@ export class AddressesService {
     private readonly addressRepository: Repository<Address>
   ) {}
 
-  async create(createAddressDto: CreateAddressDto) {
+  async create(createAddressDto: CreateAddressDto): Promise<string> {
+    const existingDefaultAddress = await this.findOne({ default: true });
+
+    if (existingDefaultAddress) {
+      existingDefaultAddress.default = false;
+      await this.addressRepository.save(existingDefaultAddress);
+    }
+
     await this.addressRepository.save(createAddressDto);
     return 'Address has been successfully created.';
   }
@@ -21,8 +28,8 @@ export class AddressesService {
     return `This action returns all addresses`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} address`;
+  async findOne(where: FindOptionsWhere<Address>) {
+    return await this.addressRepository.findOne({ where });
   }
 
   update(id: number, updateAddressDto: UpdateAddressDto) {
