@@ -1,7 +1,7 @@
 'use client';
 
 import { useReadLocalStorage } from 'usehooks-ts';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { LOGGED_IN } from '../constant';
 import { useForm } from 'react-hook-form';
@@ -12,7 +12,13 @@ import { ADDRESSES_API } from '../services/addresses';
 import { useProfile } from './useProfile';
 import { useEffect } from 'react';
 
-export const useAddress = () => {
+type AddressHookOptions = {
+  fetch: boolean;
+};
+
+export const useAddress = (options?: AddressHookOptions) => {
+  const { fetch = false } = options || {};
+
   const queryClient = useQueryClient();
   const { push } = useRouter();
   const loggedIn = useReadLocalStorage<boolean>(LOGGED_IN);
@@ -28,6 +34,12 @@ export const useAddress = () => {
   const { mutateAsync } = useMutation({
     mutationKey: [isNew ? 'addAddress' : 'editAddress'],
     mutationFn: ADDRESSES_API['create'],
+  });
+
+  const { data: addresses = [] } = useQuery({
+    queryKey: ['addresses'],
+    queryFn: ADDRESSES_API.getAll,
+    enabled: fetch && !!loggedIn,
   });
 
   useEffect(() => {
@@ -63,6 +75,7 @@ export const useAddress = () => {
 
   return {
     ...form,
+    addresses,
     addOrEditAddress,
   };
 };

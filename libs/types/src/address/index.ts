@@ -1,6 +1,9 @@
+import { IBase } from '../base';
 import { IUser } from '../user';
 
-export interface IAddress extends Pick<IUser, 'name' | 'email' | 'phone'> {
+export interface IAddress
+  extends Pick<IUser, 'name' | 'email' | 'phone'>,
+    IBase {
   company?: string;
   country: string;
   street: string;
