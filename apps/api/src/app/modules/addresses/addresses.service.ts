@@ -24,8 +24,8 @@ export class AddressesService {
     return 'Address has been successfully created.';
   }
 
-  findAll() {
-    return `This action returns all addresses`;
+  async findAll(id: string): Promise<Address[]> {
+    return await this.addressRepository.find({ where: { user: { id } } });
   }
 
   async findOne(where: FindOptionsWhere<Address>) {

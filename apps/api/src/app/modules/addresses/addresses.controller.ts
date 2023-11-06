@@ -12,7 +12,12 @@ import {
 import { AddressesService } from './addresses.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { User } from '@aafiyah/common';
 import { UsersService } from '../users/users.service';
@@ -41,9 +46,12 @@ export class AddressesController {
     return await this.addressesService.create(createAddressDto);
   }
 
+  @ApiOperation({ summary: 'Get all addresses' })
+  @ApiOkResponse({ description: 'This action returns all addresses' })
+  @UseGuards(AuthenticatedGuard)
   @Get()
-  findAll() {
-    return this.addressesService.findAll();
+  async findAll(@User() { id }: User) {
+    return await this.addressesService.findAll(id);
   }
 
   @Get(':id')
