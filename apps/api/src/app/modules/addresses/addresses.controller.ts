@@ -54,9 +54,12 @@ export class AddressesController {
     return await this.addressesService.findAll(id);
   }
 
+  @ApiOperation({ summary: 'Get address by id' })
+  @ApiOkResponse({ description: 'This action returns address by id' })
+  @UseGuards(AuthenticatedGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.addressesService.findOne({ id });
+  async findOne(@Param('id') id: string, @User() { id: userId }: User) {
+    return await this.addressesService.findOne({ id, user: { id: userId } });
   }
 
   @Patch(':id')
