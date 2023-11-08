@@ -10,7 +10,8 @@ import { IAddress } from '@aafiyah/types';
 import { useParams, useRouter } from 'next/navigation';
 import { ADDRESSES_API } from '../services/addresses';
 import { useProfile } from './useProfile';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { isEmpty } from 'lodash';
 
 type AddressHookOptions = {
   fetch: boolean;
@@ -25,6 +26,8 @@ export const useAddress = (options?: AddressHookOptions) => {
   const { data: user } = useProfile();
   const { id } = useParams<{ id: string }>();
 
+  const [defaultValues, setDefaultValues] = useState({});
+
   const isNew = id === 'new';
 
   const { handleSubmit, ...form } = useForm<IAddress>({
@@ -33,7 +36,7 @@ export const useAddress = (options?: AddressHookOptions) => {
 
   const { mutateAsync } = useMutation({
     mutationKey: [isNew ? 'addAddress' : 'editAddress'],
-    mutationFn: ADDRESSES_API['create'],
+    mutationFn: ADDRESSES_API[isNew ? 'create' : 'update'],
   });
 
   const { data: addresses = [] } = useQuery({
@@ -42,16 +45,34 @@ export const useAddress = (options?: AddressHookOptions) => {
     enabled: fetch && !!loggedIn,
   });
 
+  const { data: address } = useQuery({
+    queryKey: ['addresses', id],
+    queryFn: async () => await ADDRESSES_API.getById(id),
+    enabled: !!loggedIn && !isNew && !isEmpty(id),
+  });
+
   useEffect(() => {
     if (user) {
-      form.reset({
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-      });
+      setDefaultValues((prev) => ({
+        ...prev,
+        ...user,
+      }));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+
+    if (address) {
+      setDefaultValues((prev) => ({
+        ...prev,
+        ...address,
+      }));
+    }
+  }, [user, address]);
+
+  useEffect(() => {
+    if (!isEmpty(defaultValues)) {
+      form.reset(defaultValues);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValues]);
 
   const addOrEditAddress = handleSubmit(async (data) => {
     try {
