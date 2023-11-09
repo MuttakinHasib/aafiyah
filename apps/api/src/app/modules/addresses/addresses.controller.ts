@@ -62,13 +62,19 @@ export class AddressesController {
     return await this.addressesService.findOne({ id, user: { id: userId } });
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAddressDto: UpdateAddressDto) {
-    return this.addressesService.update(+id, updateAddressDto);
+  @ApiOperation({ summary: 'Update address' })
+  @ApiCreatedResponse({ description: 'Address has been successfully updated.' })
+  @UseGuards(AuthenticatedGuard)
+  @Patch()
+  async update(@Body() updateAddressDto: UpdateAddressDto) {
+    return await this.addressesService.update(updateAddressDto);
   }
 
+  @ApiOperation({ summary: 'Delete address' })
+  @ApiOkResponse({ description: 'Address has been successfully deleted.' })
+  @UseGuards(AuthenticatedGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.addressesService.remove(+id);
+    return this.addressesService.remove(id);
   }
 }

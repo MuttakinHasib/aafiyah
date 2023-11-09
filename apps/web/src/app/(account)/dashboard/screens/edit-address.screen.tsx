@@ -212,7 +212,7 @@ const EditAddressScreen = () => {
               className="border-gray-300"
               id="default"
               type="checkbox"
-              {...register('default')}
+              {...register('isDefault')}
             />
             <Label htmlFor="default">Set as my default address</Label>
           </div>

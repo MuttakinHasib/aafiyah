@@ -79,7 +79,7 @@ export class Address extends CoreEntity {
   @Column({ type: 'boolean', default: false })
   @IsBoolean()
   @IsOptional()
-  default?: boolean;
+  isDefault: boolean;
 
   @ManyToOne(() => User, (user) => user.addresses, { nullable: false })
   @JoinTable({ name: 'userId' })

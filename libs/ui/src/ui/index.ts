@@ -4,3 +4,4 @@ export * from './dropdown-menu';
 export * from './avatar';
 export * from './popover';
 export * from './command';
+export * from './skeleton';

@@ -21,7 +21,7 @@ const AddressBookScreen = () => {
           key={address.id}
           className="relative p-8 shadow-box bg-white w-[calc((100%_-_0px_-_1px)_/_1)] md:w-[calc((100%_-_16px_-_1px)_/_2)] lg:w-[calc((100%_-_32px_-_1px)_/_3)] space-y-3"
         >
-          {address.default && (
+          {address.isDefault && (
             <div className="absolute top-0 right-0 bg-red-400 text-white text-xs py-1 px-2 font-bold">
               Default
             </div>

@@ -64,6 +64,21 @@
 }
 
 @layer components {
+  .loader{
+    font-size: 32px;
+    color: transparent;
+    overflow:hidden;
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow:0 0 #000, 5em 0 #000;
+    animation:marquee 2s infinite ease;
+  }
+  .loader:before {
+    content:"Loading...";
+  }
+
+  @keyframes marquee {to{text-shadow:-5em 0 #000, 0 0 #000}}
+
 }
 
 .slick-dots {

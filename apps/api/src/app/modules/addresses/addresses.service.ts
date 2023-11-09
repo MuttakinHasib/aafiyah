@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Address } from './entities/address.entity';
-import { FindOneOptions, FindOptionsWhere, Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 
 @Injectable()
 export class AddressesService {
@@ -13,11 +13,8 @@ export class AddressesService {
   ) {}
 
   async create(createAddressDto: CreateAddressDto): Promise<string> {
-    const existingDefaultAddress = await this.findOne({ default: true });
-
-    if (existingDefaultAddress) {
-      existingDefaultAddress.default = false;
-      await this.addressRepository.save(existingDefaultAddress);
+    if (createAddressDto.isDefault) {
+      await this.updateExistingDefaultAddress();
     }
 
     await this.addressRepository.save(createAddressDto);
@@ -32,11 +29,44 @@ export class AddressesService {
     return await this.addressRepository.findOne({ where });
   }
 
-  update(id: number, updateAddressDto: UpdateAddressDto) {
-    return `This action updates a #${id} address`;
+  async update(updateAddressDto: UpdateAddressDto) {
+    if (updateAddressDto.isDefault) {
+      const existingDefaultAddress = await this.findOne({ isDefault: true });
+
+      if (existingDefaultAddress) {
+        existingDefaultAddress.isDefault = false;
+        await this.addressRepository.save(existingDefaultAddress);
+      }
+    }
+
+    const address = await this.addressRepository.findOne({
+      where: { id: updateAddressDto.id },
+      relations: ['user'],
+    });
+
+    if (!address) throw new NotFoundException('Address not found');
+
+    Object.assign(address, {
+      ...updateAddressDto,
+    });
+
+    console.log(address);
+    await this.addressRepository.save(address);
+
+    return 'Address has been successfully updated.';
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} address`;
+  async remove(id: string) {
+    await this.addressRepository.delete(id);
+    return 'Address has been successfully deleted.';
+  }
+
+  async updateExistingDefaultAddress() {
+    const existingDefaultAddress = await this.findOne({ isDefault: true });
+
+    if (existingDefaultAddress) {
+      existingDefaultAddress.isDefault = false;
+      await this.addressRepository.save(existingDefaultAddress);
+    }
   }
 }
