@@ -16,7 +16,6 @@ export class AddressesService {
     if (createAddressDto.isDefault) {
       await this.updateExistingDefaultAddress();
     }
-
     await this.addressRepository.save(createAddressDto);
     return 'Address has been successfully created.';
   }
@@ -49,8 +48,6 @@ export class AddressesService {
     Object.assign(address, {
       ...updateAddressDto,
     });
-
-    console.log(address);
     await this.addressRepository.save(address);
 
     return 'Address has been successfully updated.';
