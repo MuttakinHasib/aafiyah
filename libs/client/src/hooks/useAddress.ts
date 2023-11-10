@@ -7,7 +7,7 @@ import { LOGGED_IN } from '../constant';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { IAddress } from '@aafiyah/types';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { ADDRESSES_API } from '../services/addresses';
 import { useProfile } from './useProfile';
 import { useEffect, useState } from 'react';
@@ -25,6 +25,7 @@ export const useAddress = (options?: AddressHookOptions) => {
   const loggedIn = useReadLocalStorage<boolean>(LOGGED_IN);
   const { data: user } = useProfile();
   const { id } = useParams<{ id: string }>();
+  const pathname = usePathname();
 
   const [defaultValues, setDefaultValues] = useState({});
 
@@ -100,6 +101,11 @@ export const useAddress = (options?: AddressHookOptions) => {
         loading: 'Loading...',
         success: (message) => {
           queryClient.invalidateQueries({ queryKey: ['addresses'] });
+
+          if (pathname === '/dashboard') {
+            queryClient.invalidateQueries({ queryKey: ['me'] });
+          }
+
           return message;
         },
         error: ({ message }) => message || 'Something went wrong',

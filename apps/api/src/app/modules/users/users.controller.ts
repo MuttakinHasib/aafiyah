@@ -19,18 +19,36 @@ import {
 } from '@nestjs/swagger';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 import { User } from '@aafiyah/common';
+import { AddressesService } from '../addresses/addresses.service';
 
 @ApiTags('User')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(
+    private readonly userService: UsersService,
+    private readonly addressesService: AddressesService
+  ) {}
 
   @ApiOperation({ summary: 'Get logged in user' })
   @ApiOkResponse({ description: 'User retrieved successfully' })
   @UseGuards(AuthenticatedGuard)
   @Get('me')
   async me(@User() user: User) {
-    const me = await this.userService.findOne({ where: { email: user.email } });
+    const me = await this.userService.findOne({
+      where: { email: user.email },
+    });
+
+    const defaultAddress = await this.addressesService.findOne({
+      user: { id: me.id },
+      isDefault: true,
+    });
+
+    if (defaultAddress) {
+      Object.assign(me, {
+        addresses: [defaultAddress],
+      });
+    }
+
     delete me.password;
     return me;
   }

@@ -43,7 +43,7 @@ const AddressBookScreen = () => {
               <p className="text-[15px]">{address.email}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Link
               href={{
                 pathname: `/dashboard/address-book/${address.id}`,

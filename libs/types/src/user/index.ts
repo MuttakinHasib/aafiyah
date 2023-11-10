@@ -1,3 +1,4 @@
+import { IAddress } from '../address';
 import { IBase } from '../base';
 
 export interface IUser extends IBase {
@@ -7,4 +8,5 @@ export interface IUser extends IBase {
   phone: string;
   avatar: string;
   role: string;
+  addresses: IAddress[];
 }
