@@ -1,7 +1,8 @@
 import { CoreEntity } from '@aafiyah/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Product } from '../../products/entities/product.entity';
 
 @Entity()
 export class Category extends CoreEntity {
@@ -31,4 +32,7 @@ export class Category extends CoreEntity {
   @JoinColumn({ name: 'parent_id' })
   @IsOptional()
   parent?: Category;
+
+  @OneToMany(() => Product, (product) => product.categories)
+  products: Product[];
 }
