@@ -9,22 +9,32 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { Column, Entity } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+} from 'typeorm';
+import { Category } from '../../categories/entities/category.entity';
+import { Dimension } from './dimension.entity';
+import { Brand } from '../../brands/entities/brand.entity';
 
 class VariationOption {
-  @ApiProperty({ example: 'Color' })
+  @ApiProperty({ example: 'Red' })
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty({ example: 'Red' })
+  @ApiProperty({ example: '#f36' })
   @IsString()
   @IsNotEmpty()
   value: string;
 }
 
 class Variation {
-  @ApiProperty({ example: 'Size' })
+  @ApiProperty({ example: 'Color' })
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -54,27 +64,25 @@ export class Product extends CoreEntity {
   @IsNotEmpty()
   description: string;
 
-  @ApiPropertyOptional({ example: 'dfgdfgwerw23' })
   @Column()
-  @IsString()
-  @IsOptional()
   slug: string;
 
-  // @ApiProperty({ example: 'physical' })
-  // @Column()
-  // @IsString()
-  // @IsNotEmpty()
-  // type: string;
+  @ApiProperty({
+    type: () => [Category],
+    example: [
+      { id: 1, name: 'Tech' },
+      { id: 2, name: 'Smartphone' },
+    ],
+  })
+  @ManyToMany(() => Category, { eager: true })
+  @JoinTable()
+  categories: Category[];
 
-  // @ApiProperty({ type: [String], example: ['Electronics', 'Gadgets'] })
-  // @Column('simple-array')
-  // @IsArray()
-  // categories: string[];
-
-  // @ApiProperty({ type: [String], example: ['Tech', 'Smartphone'] })
-  // @Column('simple-array')
-  // @IsArray()
-  // tags: string[];
+  @ApiPropertyOptional({ type: [String], example: ['Tech', 'Smartphone'] })
+  @Column('simple-array')
+  @IsArray()
+  @IsOptional()
+  tags?: string[];
 
   @ApiProperty({
     type: [Variation],
@@ -84,21 +92,6 @@ export class Product extends CoreEntity {
   @IsArray()
   @ValidateNested({ each: true })
   variations: Variation[];
-
-  @ApiProperty({
-    type: [VariationOption],
-    example: [{ name: 'Color', value: 'Red' }],
-  })
-  @Column('jsonb')
-  @IsArray()
-  @ValidateNested({ each: true })
-  variation_options: VariationOption[];
-
-  @ApiProperty({ example: 'Online Shop' })
-  @Column()
-  @IsString()
-  @IsNotEmpty()
-  shop: string;
 
   @ApiProperty({ example: 'ABC123' })
   @Column()
@@ -124,23 +117,31 @@ export class Product extends CoreEntity {
   @IsNumber()
   sale_price?: number;
 
-  @ApiProperty({ type: [Number], example: [10, 20, 30], required: false })
-  @Column({ type: 'simple-array', nullable: true })
+  @ApiPropertyOptional({
+    type: Dimension,
+    example: { height: 1, width: 2, length: 1 },
+  })
+  @Column({ type: 'json', nullable: true })
+  @ValidateNested({ each: true })
   @IsOptional()
-  @IsArray()
-  dimensions?: number[];
+  dimensions?: Dimension;
 
-  @ApiProperty({ example: 'Nike' })
-  @Column({ nullable: true })
-  @IsOptional()
-  @IsString()
-  brand?: string;
+  @ApiProperty({ type: Brand, example: { id: 1, name: 'Brand 1' } })
+  @ManyToOne(() => Brand, { eager: true, nullable: true })
+  @JoinColumn({ name: 'brand_id' })
+  brand: Brand;
 
   @ApiProperty({ example: 'product.jpg' })
   @Column({ nullable: true })
   @IsOptional()
   @IsString()
   image?: string;
+
+  @ApiProperty({ type: [String], example: ['image1.jpg', 'image2.jpg'] })
+  @Column('simple-array', { nullable: true })
+  @IsOptional()
+  @IsArray()
+  gallery?: string[];
 
   @ApiProperty({
     type: [String],
@@ -150,12 +151,6 @@ export class Product extends CoreEntity {
   @IsOptional()
   @IsArray()
   reviews?: string[];
-
-  @ApiProperty({ type: [String], example: ['image1.jpg', 'image2.jpg'] })
-  @Column('simple-array', { nullable: true })
-  @IsOptional()
-  @IsArray()
-  gallery?: string[];
 
   @ApiProperty({ example: ProductStatus.DRAFT })
   @Column({ enum: ProductStatus, default: ProductStatus.DRAFT })
