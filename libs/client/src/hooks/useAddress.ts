@@ -71,7 +71,7 @@ export const useAddress = (options?: AddressHookOptions) => {
     if (!isEmpty(defaultValues)) {
       form.reset(defaultValues);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultValues]);
 
   const addOrEditAddress = handleSubmit(async (data) => {
@@ -94,9 +94,25 @@ export const useAddress = (options?: AddressHookOptions) => {
     }
   });
 
+  const removeAddress = async (id: string) => {
+    try {
+      toast.promise(ADDRESSES_API.remove(id), {
+        loading: 'Loading...',
+        success: (message) => {
+          queryClient.invalidateQueries({ queryKey: ['addresses'] });
+          return message;
+        },
+        error: ({ message }) => message || 'Something went wrong',
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return {
     ...form,
     addresses,
+    removeAddress,
     addOrEditAddress,
   };
 };

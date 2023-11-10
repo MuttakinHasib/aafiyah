@@ -6,7 +6,7 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import { useAddress } from '@aafiyah/client';
 
 const AddressBookScreen = () => {
-  const { addresses } = useAddress({ fetch: true });
+  const { addresses, removeAddress } = useAddress({ fetch: true });
 
   return (
     <div className={cn('flex gap-[16px] flex-wrap break-words')}>
@@ -43,14 +43,22 @@ const AddressBookScreen = () => {
               <p className="text-[15px]">{address.email}</p>
             </div>
           </div>
-          <Link
-            href={{
-              pathname: `/dashboard/address-book/${address.id}`,
-            }}
-            className="hover:underline text-blue-500 inline-block text-[15px]"
-          >
-            Edit Address
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href={{
+                pathname: `/dashboard/address-book/${address.id}`,
+              }}
+              className="hover:underline text-blue-500 inline-block text-[15px]"
+            >
+              Edit Address
+            </Link>
+            <button
+              onClick={async () => await removeAddress(address.id)}
+              className="hover:underline text-blue-500 inline-block text-[15px]"
+            >
+              Remove Address
+            </button>
+          </div>
         </div>
       ))}
     </div>

@@ -65,7 +65,7 @@
 
 @layer components {
   .loader{
-    font-size: 32px;
+    font-size: 25px;
     color: transparent;
     overflow:hidden;
     display: inline-block;

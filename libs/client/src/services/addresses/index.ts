@@ -13,4 +13,7 @@ export const ADDRESSES_API = {
 
   getById: async (id: string): Promise<IAddress> =>
     await api.get(ADDRESSES_ROUTE + '/' + id),
+
+  remove: async (id: string): Promise<string> =>
+    await api.delete(ADDRESSES_ROUTE + '/' + id),
 };
