@@ -4,7 +4,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { FindOneOptions, Repository } from 'typeorm';
-import { createHash } from '../../utils/hash';
 
 @Injectable()
 export class UsersService {
@@ -16,9 +15,11 @@ export class UsersService {
     const existingUser = await this.userRepository.findOne({
       where: { email: createUserDto.email },
     });
-    if (existingUser) throw new ConflictException('User already exists');
 
-    createUserDto.password = await createHash(createUserDto.password);
+    if (existingUser)
+      throw new ConflictException(
+        'Looks like you have an account already! Please log in.'
+      );
 
     const user = await this.userRepository.save(
       this.userRepository.create(createUserDto)

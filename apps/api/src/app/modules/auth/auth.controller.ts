@@ -8,7 +8,6 @@ import {
   Session,
   UseGuards,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import {
   ApiCreatedResponse,
   ApiOkResponse,
@@ -24,6 +23,7 @@ import { Logout } from './guards/logout.guard';
 import { JwtService } from '@nestjs/jwt';
 import { createHash } from '../../utils/hash';
 import { AccountService } from '@aafiyah/mail';
+import { AccountActivateDto } from './dto/activate.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -66,6 +66,24 @@ export class AuthController {
     await this.accountService.sendConfirmationEmail({ ...payload, token });
 
     return `Account activation link sent to your email address: ${payload.email}`;
+  }
+
+  @ApiOperation({ summary: 'Activate account' })
+  @ApiCreatedResponse({ description: 'Account activated successfully' })
+  @Post('activate')
+  async activate(
+    @Body() { token }: AccountActivateDto,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    @Session() session: any
+  ) {
+    const payload: CreateUserDto = await this.jwtService.verifyAsync(token);
+
+    const user = await this.usersService.create(payload);
+
+    // Create session
+    session.passport = { user };
+
+    return `Welcome ${user.name}! Your account has been activated successfully`;
   }
 
   @ApiOperation({ summary: 'Logout' })
