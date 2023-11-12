@@ -1,6 +1,7 @@
 import { pick } from 'lodash';
 import {
   Body,
+  ConflictException,
   Controller,
   Delete,
   Post,
@@ -20,12 +21,16 @@ import { User } from '@aafiyah/common';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
 import { Logout } from './guards/logout.guard';
+import { JwtService } from '@nestjs/jwt';
+import { createHash } from '../../utils/hash';
+import { AccountService } from '@aafiyah/mail';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly authService: AuthService,
+    private readonly jwtService: JwtService,
+    private readonly accountService: AccountService,
     private readonly usersService: UsersService
   ) {}
 
@@ -40,20 +45,27 @@ export class AuthController {
   @ApiOperation({ summary: 'Register user' })
   @ApiCreatedResponse({ description: 'User registered successfully' })
   @Post('register')
-  async register(@Body() createUserDto: CreateUserDto, @Session() session) {
-    const data = await this.usersService.create(createUserDto);
-    const user = pick(data, [
-      'id',
-      'avatar',
-      'username',
-      'name',
-      'email',
-      'phone',
-      'role',
-    ]);
+  async register(@Body() createUserDto: CreateUserDto) {
+    const user = await this.usersService.findOne({
+      where: { email: createUserDto.email },
+    });
 
-    session.passport = { user };
-    return `Welcome ${user.name}! 🎉`;
+    if (user)
+      throw new ConflictException(
+        'Looks like you have an account already! Please log in.'
+      );
+
+    Object.assign(createUserDto, {
+      password: await createHash(createUserDto.password),
+    });
+
+    const token = await this.jwtService.signAsync({ ...createUserDto });
+
+    const payload = pick(createUserDto, ['name', 'email']);
+
+    await this.accountService.sendConfirmationEmail({ ...payload, token });
+
+    return `Account activation link sent to your email address: ${payload.email}`;
   }
 
   @ApiOperation({ summary: 'Logout' })

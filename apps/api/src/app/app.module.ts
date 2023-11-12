@@ -1,14 +1,20 @@
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigurationModule, DatabaseModule } from '@aafiyah/common';
+import {
+  ConfigurationModule,
+  ConfigurationService,
+  DatabaseModule,
+} from '@aafiyah/common';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AddressesModule } from './modules/addresses/addresses.module';
 import { ProductsModule } from './modules/products/products.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { BrandsModule } from './modules/brands/brands.module';
+import { MailModule } from '@aafiyah/mail';
 
 @Module({
   imports: [
@@ -20,8 +26,18 @@ import { BrandsModule } from './modules/brands/brands.module';
     ProductsModule,
     CategoriesModule,
     BrandsModule,
+    MailModule,
+    JwtModule.registerAsync({
+      global: true,
+      useFactory: async (configurationService: ConfigurationService) => ({
+        secret: configurationService.JWT_SECRET_KEY,
+        signOptions: { expiresIn: '180s' },
+      }),
+      inject: [ConfigurationService],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
+  exports: [JwtModule],
 })
 export class AppModule {}

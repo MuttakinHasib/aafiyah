@@ -40,14 +40,14 @@ export const useAuth = () => {
     try {
       toast.promise(AUTH_API.register(data), {
         loading: 'Registering...',
-        success: (data) => {
-          setLoggedIn(true);
-          push('/dashboard');
-          return 'Registered!';
+        success: (message) => {
+          push('/login');
+
+          return message;
         },
-        error: (err) => {
-          console.log(err);
-          return err.message;
+        error: (message) => {
+          console.log(message);
+          return message || 'Something went wrong';
         },
       });
     } catch (error) {

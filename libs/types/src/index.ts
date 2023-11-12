@@ -3,3 +3,4 @@ export * from './auth';
 export * from './user';
 export * from './base';
 export * from './response';
+export * from './mail';

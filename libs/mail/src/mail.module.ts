@@ -3,6 +3,7 @@ import { Global, Module } from '@nestjs/common';
 import { MailerModule, MailerOptions } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
+import { AccountService } from './services/account.service';
 
 @Global()
 @Module({
@@ -21,6 +22,7 @@ import { join } from 'path';
           },
           defaults: {
             from: `"${configurationService.APP_NAME}" <${configurationService.EMAIL_USER}>`,
+            replyTo: configurationService.ADMIN_EMAIL_USER,
           },
           template: {
             dir: join(__dirname, 'assets', 'templates'),
@@ -36,7 +38,7 @@ import { join } from 'path';
     }),
   ],
   controllers: [],
-  providers: [],
-  exports: [],
+  providers: [AccountService],
+  exports: [AccountService],
 })
 export class MailModule {}
