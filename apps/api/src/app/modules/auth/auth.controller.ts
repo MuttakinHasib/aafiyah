@@ -59,7 +59,10 @@ export class AuthController {
       password: await createHash(createUserDto.password),
     });
 
-    const token = await this.jwtService.signAsync({ ...createUserDto });
+    const token = await this.jwtService.signAsync(
+      { ...createUserDto },
+      { expiresIn: '5m' }
+    );
 
     const payload = pick(createUserDto, ['name', 'email']);
 
