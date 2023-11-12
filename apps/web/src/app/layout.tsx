@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import { StyledComponentsRegistry } from './registry';
 import '../styles/global.css';
 import 'animate.css';
@@ -31,6 +32,7 @@ export default function RootLayout({
           <StyledComponentsRegistry>
             <RootLayoutWrapper>
               {children}
+              <Analytics />
               <Toaster position="top-right" />
             </RootLayoutWrapper>
           </StyledComponentsRegistry>
