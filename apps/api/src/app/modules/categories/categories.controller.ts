@@ -6,23 +6,40 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Category } from './entities/category.entity';
+import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
+import { Role, Permission } from '@aafiyah/common';
 
+@ApiTags(Category.name)
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
+  @ApiOperation({ summary: 'Create category' })
+  @ApiCreatedResponse({ description: 'Category created successfully' })
+  @UseGuards(AuthenticatedGuard)
+  @Permission(Role.CUSTOMER)
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoriesService.create(createCategoryDto);
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
+    return await this.categoriesService.create(createCategoryDto);
   }
 
+  @ApiOperation({ summary: 'Get all categories' })
+  @ApiOkResponse({ description: 'Categories retrieved successfully' })
   @Get()
-  findAll() {
-    return this.categoriesService.findAll();
+  async findAll() {
+    return await this.categoriesService.findAll();
   }
 
   @Get(':id')

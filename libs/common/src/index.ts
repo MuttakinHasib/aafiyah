@@ -5,3 +5,4 @@ export * from './entities';
 export * from './decorators';
 export * from './api-response';
 export * from './filters';
+export * from './roles';

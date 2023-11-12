@@ -7,6 +7,7 @@ import {
   ConfigurationModule,
   ConfigurationService,
   DatabaseModule,
+  RolesGuard,
 } from '@aafiyah/common';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -15,6 +16,7 @@ import { ProductsModule } from './modules/products/products.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { BrandsModule } from './modules/brands/brands.module';
 import { MailModule } from '@aafiyah/mail';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -37,7 +39,13 @@ import { MailModule } from '@aafiyah/mail';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
   exports: [JwtModule],
 })
 export class AppModule {}
