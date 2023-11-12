@@ -17,6 +17,7 @@
     "paths": {
       "@aafiyah/client": ["libs/client/src/index.ts"],
       "@aafiyah/common": ["libs/common/src/index.ts"],
+      "@aafiyah/mail": ["libs/mail/src/index.ts"],
       "@aafiyah/types": ["libs/types/src/index.ts"],
       "@aafiyah/ui": ["libs/ui/src/index.ts"]
     }

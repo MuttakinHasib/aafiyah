@@ -1,0 +1,16 @@
+{
+  "name": "mail",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mail/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/mail/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
