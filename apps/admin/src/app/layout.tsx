@@ -1,5 +1,13 @@
+import RootLayoutWrapper from '../layouts';
 import '../styles/global.css';
 import { StyledComponentsRegistry } from './registry';
+import { Poppins } from 'next/font/google';
+
+const poppins = Poppins({
+  weight: ['100', '300', '400', '500', '700', '900'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 export const metadata = {
   title: 'Welcome to demo2',
@@ -13,8 +21,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+      <body className={poppins.className}>
+        <StyledComponentsRegistry>
+          <RootLayoutWrapper>{children}</RootLayoutWrapper>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
