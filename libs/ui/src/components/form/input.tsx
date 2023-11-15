@@ -17,7 +17,7 @@ export const Input = forwardRef(
   (props: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
     const { className, error, ...rest } = props;
     return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-full">
         <input
           {...rest}
           ref={ref}

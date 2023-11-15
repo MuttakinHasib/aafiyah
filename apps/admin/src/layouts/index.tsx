@@ -4,11 +4,11 @@ import { Header } from '../components/header';
 
 const RootLayoutWrapper = (props: PropsWithChildren) => {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-gray-50">
       <Sidebar />
       <div className="ml-72">
         <Header />
-        {props.children}
+        <div className="px-16 py-10">{props.children}</div>
       </div>
     </main>
   );
