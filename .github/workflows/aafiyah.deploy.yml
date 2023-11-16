@@ -31,6 +31,7 @@ jobs:
           echo "${{ secrets.ENV_FILE }}" > .env
 
       - run: npm -g install yarn@1.22.19
+      - run: npm -g install pm2
       - run: yarn install --frozen-lockfile
       - run: yarn build:api
 
