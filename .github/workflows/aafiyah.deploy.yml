@@ -32,31 +32,30 @@ jobs:
 
       - run: npm -g install yarn@1.22.19
       - run: yarn install --frozen-lockfile
-      - run: yarn build
+      - run: yarn build:api
 
       - name: 'Restart The Server'
         run: pm2 restart server.aafiyah.com
 
-      # - name: Send deployment success notification
-      #   uses: dawidd6/action-send-mail@v3
-      #   with:
-      #     server_address: smtp.gmail.com
-      #     # Server port, default 25:
-      #     server_port: 465
-      #     # Optional whether this connection use TLS (default is true if server_port is 465)
-      #     secure: true
-      #     # Optional (recommended) mail server username:
-      #     username: ${{secrets.MAIL_USERNAME}}
-      #     # Optional (recommended) mail server password:
-      #     password: ${{secrets.MAIL_PASSWORD}}
-      #     # Required mail subject:
-      #     subject: Deployment Success
-      #     # Required recipients' addresses:
-      #     to: nate@beweddy.com, muttakinislamhasib@gmail.com
-      #     # Required sender full name (address can be skipped):
-      #     from: Hasib <${{secrets.MAIL_USERNAME}}> # <user@example.com>
-      #     # Optional plain body:
-      #     body: Hey Team, The latest code deployed. The server is up and running.
-      #     # Optional priority: 'high', 'normal' (default) or 'low'
-      #     priority: high
-
+      - name: Send deployment success notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          # Server port, default 25:
+          server_port: 465
+          # Optional whether this connection use TLS (default is true if server_port is 465)
+          secure: true
+          # Optional (recommended) mail server username:
+          username: ${{secrets.EMAIL_USER}}
+          # Optional (recommended) mail server password:
+          password: ${{secrets.EMAIL_APP_PASSWORD}}
+          # Required mail subject:
+          subject: Aafiyah | Deployment Success
+          # Required recipients' addresses:
+          to: muttakinislamhasib@gmail.com
+          # Required sender full name (address can be skipped):
+          from: Hasib <${{secrets.EMAIL_USER}}> # <user@example.com>
+          # Optional plain body:
+          body: Hey Team, The latest code deployed. The server is up and running.
+          # Optional priority: 'high', 'normal' (default) or 'low'
+          priority: high
