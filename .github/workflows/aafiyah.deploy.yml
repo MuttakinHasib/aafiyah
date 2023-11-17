@@ -47,15 +47,15 @@ jobs:
           # Optional whether this connection use TLS (default is true if server_port is 465)
           secure: true
           # Optional (recommended) mail server username:
-          username: ${{secrets.EMAIL_USER}}
+          username: ${{secrets.MAIL_USERNAME}}
           # Optional (recommended) mail server password:
-          password: ${{secrets.EMAIL_APP_PASSWORD}}
+          password: ${{secrets.MAIL_PASSWORD}}
           # Required mail subject:
           subject: Aafiyah | Deployment Success
           # Required recipients' addresses:
           to: muttakinislamhasib@gmail.com
           # Required sender full name (address can be skipped):
-          from: Hasib <${{secrets.EMAIL_USER}}> # <user@example.com>
+          from: Hasib <${{secrets.MAIL_USERNAME}}> # <user@example.com>
           # Optional plain body:
           body: Hey Team, The latest code deployed. The server is up and running.
           # Optional priority: 'high', 'normal' (default) or 'low'
