@@ -24,6 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from '@aafiyah/ui';
+import { DataTablePagination } from './table-pagination';
 
 interface ProductTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -117,6 +118,7 @@ export const ProductTable = <TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      <DataTablePagination {...{ table }} />
     </div>
   );
 };

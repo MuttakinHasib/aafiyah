@@ -9,3 +9,4 @@ export * from './table';
 export * from './separator';
 export * from './badge';
 export * from './checkbox';
+export * from './select';

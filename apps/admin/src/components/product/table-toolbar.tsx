@@ -12,6 +12,7 @@ import {
   StopwatchIcon,
 } from '@radix-ui/react-icons';
 import ProductTableFilter from './table-faceted-filter';
+import Link from 'next/link';
 
 export const statuses = [
   {
@@ -73,7 +74,9 @@ const ProductTableToolbar = <TData,>({
         <Button variant="secondary" className="bg-white">
           Export
         </Button>
-        <Button>Add Product</Button>
+        <Link href={{ pathname: '/products/new-product' }} passHref>
+          <Button>Add Product</Button>
+        </Link>
       </div>
       {/* <DataTableViewOptions table={table} /> */}
     </div>

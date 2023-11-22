@@ -17,6 +17,9 @@ const nextConfig = {
     // For other options, see https://styled-components.com/docs/tooling#babel-plugin
     styledComponents: true,
   },
+  experimental: {
+    typedRoutes: true,
+  },
 };
 
 const plugins = [
