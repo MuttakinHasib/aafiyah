@@ -5,3 +5,7 @@ export * from './avatar';
 export * from './popover';
 export * from './command';
 export * from './skeleton';
+export * from './table';
+export * from './separator';
+export * from './badge';
+export * from './checkbox';

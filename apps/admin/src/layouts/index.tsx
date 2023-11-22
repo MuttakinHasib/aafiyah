@@ -20,7 +20,7 @@ const RootLayoutWrapper = (props: PropsWithChildren) => {
       <Sidebar />
       <div className="ml-72">
         <Header />
-        <div className="px-16 py-10">
+        <div className="px-16 py-8">
           <div className="mb-6 flex flex-col justify-between gap-y-1 sm:flex-row sm:gap-y-0">
             <h3 className="text-xl font-medium">
               {breadcrumbs[0] === ''
