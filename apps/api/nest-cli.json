@@ -24,7 +24,9 @@
       "entryFile": "index",
       "sourceRoot": "libs/mail/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/mail/tsconfig.lib.json"
+        "assets": ["libs/mail/src/templates/**/*"],
+        "tsConfigPath": "libs/mail/tsconfig.lib.json",
+        "watchAssets": true
       }
     },
     "types": {

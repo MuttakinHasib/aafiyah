@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "An Islamic E-Commerce Web Application using REST API, Nest.js, typeORM and PostgreSQL",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "api:dev": "npm run dev --prefix apps/api",
+    "web:dev": "npm run dev --prefix apps/web",
+    "install": "yarn --cwd apps/api && yarn --cwd apps/web",
+    "dev": "concurrently \"yarn api:dev\" \"yarn web:dev\""
   },
   "repository": {
     "type": "git",
@@ -23,5 +26,12 @@
   "bugs": {
     "url": "https://github.com/MuttakinHasib/aafiyah/issues"
   },
-  "homepage": "https://github.com/MuttakinHasib/aafiyah#readme"
+  "homepage": "https://github.com/MuttakinHasib/aafiyah#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "volta": {
+    "node": "20.10.0",
+    "yarn": "1.22.19"
+  }
 }
