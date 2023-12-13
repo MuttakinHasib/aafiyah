@@ -31,8 +31,8 @@ export default function RootLayout({
         <ReactQueryProviders>
           <StyledComponentsRegistry>
             <RootLayoutWrapper>
-              {children}
               <Analytics />
+              {children}
               <Toaster position="top-right" />
             </RootLayoutWrapper>
           </StyledComponentsRegistry>
