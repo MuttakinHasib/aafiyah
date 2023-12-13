@@ -1,11 +1,11 @@
-import { Button, Input } from '@aafiyah/ui';
-import { MinusIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import { Button, Input } from "@/components";
+import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
 export const metadata = {
-  title: 'Cart',
+  title: "Cart",
 };
 
 const CartPage = () => {

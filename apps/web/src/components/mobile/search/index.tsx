@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { cn } from '../../../utils';
-import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import React, { Dispatch, SetStateAction } from "react";
+import { cn } from "@/utils";
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 interface Props {
   openSearchBar: boolean;
@@ -11,8 +11,8 @@ export const MobileSearchBar = ({ openSearchBar, setOpenSearchBar }: Props) => {
   return (
     <div
       className={cn(
-        'absolute left-0 right-0 shadow-header z-50 bg-white animate__animated animate__faster',
-        openSearchBar ? 'animate__slideInDown' : 'animate__slideOutUp'
+        "absolute left-0 right-0 shadow-header z-50 bg-white animate__animated animate__faster",
+        openSearchBar ? "animate__slideInDown" : "animate__slideOutUp"
       )}
     >
       <div className="container py-2">

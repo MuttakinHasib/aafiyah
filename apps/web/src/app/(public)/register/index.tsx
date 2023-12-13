@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import React from 'react';
-import { Label, Input, Button } from '@aafiyah/ui';
-import { useAuth } from '@aafiyah/client';
+import Link from "next/link";
+import React from "react";
+import { Label, Input, Button } from "@/components";
+import { useAuth } from "@/hooks";
 
 const RegisterScreen = () => {
   const {
@@ -27,8 +27,8 @@ const RegisterScreen = () => {
               type="text"
               placeholder="Abdullah Ibn Adam"
               error={errors?.name?.message}
-              {...register('name', {
-                required: 'Name is required',
+              {...register("name", {
+                required: "Name is required",
               })}
             />
           </div>
@@ -39,11 +39,11 @@ const RegisterScreen = () => {
               type="email"
               placeholder="customer@example.com"
               error={errors?.email?.message}
-              {...register('email', {
-                required: 'Email is required',
+              {...register("email", {
+                required: "Email is required",
                 pattern: {
                   value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  message: 'Invalid email address',
+                  message: "Invalid email address",
                 },
               })}
             />
@@ -55,11 +55,11 @@ const RegisterScreen = () => {
               type="tel"
               placeholder="0131 123 4567"
               error={errors?.phone?.message}
-              {...register('phone', {
-                required: 'Phone number is required',
+              {...register("phone", {
+                required: "Phone number is required",
                 pattern: {
                   value: /^0[0-9]{10}$/,
-                  message: 'Invalid phone number',
+                  message: "Invalid phone number",
                 },
               })}
             />
@@ -71,11 +71,11 @@ const RegisterScreen = () => {
               type="password"
               placeholder="********"
               error={errors?.password?.message}
-              {...register('password', {
-                required: 'Password is required',
+              {...register("password", {
+                required: "Password is required",
                 minLength: {
                   value: 6,
-                  message: 'Password must be at least 6 characters',
+                  message: "Password must be at least 6 characters",
                 },
               })}
             />

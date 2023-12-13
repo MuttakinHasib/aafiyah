@@ -1,18 +1,19 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { TopBar } from './topbar';
-import Image from 'next/image';
+import Link from "next/link";
+import { TopBar } from "./topbar";
+import Image from "next/image";
 import {
   HeartIcon,
   MagnifyingGlassIcon,
   ShoppingBagIcon,
   UserIcon,
-} from '@heroicons/react/24/outline';
-import { Navigation } from './navigation';
-import { UserMenu } from '../menu';
-import { useReadLocalStorage } from 'usehooks-ts';
-import { LOGGED_IN, useProfile } from '@aafiyah/client';
+} from "@heroicons/react/24/outline";
+import { Navigation } from "./navigation";
+import { UserMenu } from "../menu";
+import { useReadLocalStorage } from "usehooks-ts";
+import { LOGGED_IN } from "@/constant";
+import { useProfile } from "@/hooks";
 
 export const Header = () => {
   const loggedIn = useReadLocalStorage<boolean>(LOGGED_IN);
@@ -54,7 +55,7 @@ export const Header = () => {
                   <UserIcon className="w-9 h-9" />
                   <span className="-space-y-1">
                     <small className="text-gray-500">
-                      Hi, {data?.name?.split(' ')[0]}
+                      Hi, {data?.name?.split(" ")[0]}
                     </small>
                     <p className="text-lg font-medium">My Account</p>
                   </span>

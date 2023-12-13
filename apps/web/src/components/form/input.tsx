@@ -4,7 +4,7 @@ import {
   forwardRef,
   InputHTMLAttributes,
 } from "react";
-import { cn } from "../../utils";
+import { cn } from "@/utils";
 
 type InputProps = DetailedHTMLProps<
   InputHTMLAttributes<HTMLTextAreaElement & HTMLInputElement>,
