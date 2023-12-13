@@ -1,6 +1,5 @@
-import { Skeleton } from '@aafiyah/ui';
-
-import React from 'react';
+import { Skeleton } from "@/components/ui";
+import React from "react";
 
 const Loading = () => {
   return (

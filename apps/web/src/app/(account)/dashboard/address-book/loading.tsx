@@ -1,5 +1,5 @@
-import { Skeleton } from '@aafiyah/ui';
-import React from 'react';
+import { Skeleton } from "@/components/ui";
+import React from "react";
 
 const Loading = () => {
   return (
@@ -11,7 +11,7 @@ const Loading = () => {
       <div className="space-y-3">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Skeleton className="h-5 w-14" />{' '}
+            <Skeleton className="h-5 w-14" />{" "}
             <Skeleton className="h-5 w-full" />
           </div>
           <Skeleton className="h-5 w-20" />

@@ -1,57 +1,58 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
-import { Label, Input, Button } from '@aafiyah/ui';
-import { useAddress } from '@aafiyah/client';
-import { useParams } from 'next/navigation';
+import { useParams } from "next/navigation";
+import { useAddress } from "@/hooks";
+import { Button, Label } from "@/components/ui";
+import { Input } from "@/components";
 
 const muslimCountries = [
-  'Afghanistan',
-  'Albania',
-  'Algeria',
-  'Azerbaijan',
-  'Bahrain',
-  'Bangladesh',
-  'Brunei',
-  'Burkina Faso',
-  'Chad',
-  'Comoros',
-  'Djibouti',
-  'Egypt',
-  'Gambia',
-  'Indonesia',
-  'Iran',
-  'Iraq',
-  'Jordan',
-  'Kazakhstan',
-  'Kuwait',
-  'Kyrgyzstan',
-  'Lebanon',
-  'Libya',
-  'Malaysia',
-  'Mali',
-  'Mauritania',
-  'Morocco',
-  'Niger',
-  'Nigeria',
-  'Oman',
-  'Pakistan',
-  'Palestine',
-  'Qatar',
-  'Saudi Arabia',
-  'Senegal',
-  'Sierra Leone',
-  'Somalia',
-  'Sudan',
-  'Syria',
-  'Tajikistan',
-  'Tunisia',
-  'Turkey',
-  'Turkmenistan',
-  'United Arab Emirates',
-  'Uzbekistan',
-  'Yemen',
+  "Afghanistan",
+  "Albania",
+  "Algeria",
+  "Azerbaijan",
+  "Bahrain",
+  "Bangladesh",
+  "Brunei",
+  "Burkina Faso",
+  "Chad",
+  "Comoros",
+  "Djibouti",
+  "Egypt",
+  "Gambia",
+  "Indonesia",
+  "Iran",
+  "Iraq",
+  "Jordan",
+  "Kazakhstan",
+  "Kuwait",
+  "Kyrgyzstan",
+  "Lebanon",
+  "Libya",
+  "Malaysia",
+  "Mali",
+  "Mauritania",
+  "Morocco",
+  "Niger",
+  "Nigeria",
+  "Oman",
+  "Pakistan",
+  "Palestine",
+  "Qatar",
+  "Saudi Arabia",
+  "Senegal",
+  "Sierra Leone",
+  "Somalia",
+  "Sudan",
+  "Syria",
+  "Tajikistan",
+  "Tunisia",
+  "Turkey",
+  "Turkmenistan",
+  "United Arab Emirates",
+  "Uzbekistan",
+  "Yemen",
 ];
 
 const EditAddressScreen = () => {
@@ -66,7 +67,7 @@ const EditAddressScreen = () => {
   return (
     <div className="shadow-box bg-white font-roboto">
       <h4 className="border-b py-5 px-8 font-medium text-xl">
-        {id === 'new' ? 'New' : 'Edit'} Address
+        {id === "new" ? "New" : "Edit"} Address
       </h4>
       <form onSubmit={addOrEditAddress} className="p-8 max-w-lg w-full">
         <div className="space-y-4 pb-8">
@@ -77,8 +78,8 @@ const EditAddressScreen = () => {
               type="text"
               placeholder="Enter your name"
               error={errors.name?.message}
-              {...register('name', {
-                required: 'Name is required',
+              {...register("name", {
+                required: "Name is required",
                 maxLength: 20,
                 minLength: 3,
               })}
@@ -93,7 +94,7 @@ const EditAddressScreen = () => {
               type="text"
               placeholder="Enter your name"
               error={errors?.company?.message}
-              {...register('company', {
+              {...register("company", {
                 minLength: 3,
               })}
             />
@@ -105,8 +106,8 @@ const EditAddressScreen = () => {
             <select
               id="country"
               className="bg-gray-100 w-full border-gray-100 px-3 py-[6px] focus:ring-0 focus:border-gray-300 focus:bg-white focus:outline-none"
-              {...register('country', {
-                required: 'Country is required',
+              {...register("country", {
+                required: "Country is required",
               })}
             >
               {muslimCountries.map((country) => (
@@ -123,8 +124,8 @@ const EditAddressScreen = () => {
               type="text"
               placeholder="House number and street name"
               error={errors?.street?.message}
-              {...register('street', {
-                required: 'Street address is required',
+              {...register("street", {
+                required: "Street address is required",
                 minLength: 3,
               })}
             />
@@ -133,7 +134,7 @@ const EditAddressScreen = () => {
               type="text"
               placeholder="Apartment, suite, unit etc. (optional)"
               error={errors?.apartment?.message}
-              {...register('apartment')}
+              {...register("apartment")}
             />
           </div>
           <div className="space-y-2">
@@ -143,8 +144,8 @@ const EditAddressScreen = () => {
               type="text"
               placeholder="Enter your city"
               error={errors.city?.message}
-              {...register('city', {
-                required: 'City is required',
+              {...register("city", {
+                required: "City is required",
               })}
             />
           </div>
@@ -155,8 +156,8 @@ const EditAddressScreen = () => {
               type="text"
               placeholder="Enter your state"
               error={errors.state?.message}
-              {...register('state', {
-                required: 'State is required',
+              {...register("state", {
+                required: "State is required",
               })}
             />
           </div>
@@ -168,8 +169,8 @@ const EditAddressScreen = () => {
               min={0}
               placeholder="1234"
               error={errors.postcode?.message}
-              {...register('postcode', {
-                required: 'Postcode is required',
+              {...register("postcode", {
+                required: "Postcode is required",
               })}
             />
           </div>
@@ -181,11 +182,11 @@ const EditAddressScreen = () => {
                 type="email"
                 placeholder="customer@example.com"
                 error={errors.email?.message}
-                {...register('email', {
-                  required: 'Email is required',
+                {...register("email", {
+                  required: "Email is required",
                   pattern: {
                     value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                    message: 'Invalid email address',
+                    message: "Invalid email address",
                   },
                 })}
               />
@@ -197,11 +198,11 @@ const EditAddressScreen = () => {
                 type="tel"
                 placeholder="+880 1315873250"
                 error={errors?.phone?.message}
-                {...register('phone', {
-                  required: 'Phone number is required',
+                {...register("phone", {
+                  required: "Phone number is required",
                   pattern: {
                     value: /^[0-9]{11}$/,
-                    message: 'Invalid phone number',
+                    message: "Invalid phone number",
                   },
                 })}
               />
@@ -212,7 +213,7 @@ const EditAddressScreen = () => {
               className="border-gray-300"
               id="default"
               type="checkbox"
-              {...register('isDefault')}
+              {...register("isDefault")}
             />
             <Label htmlFor="default">Set as my default address</Label>
           </div>

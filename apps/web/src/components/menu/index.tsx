@@ -13,8 +13,9 @@ import {
 } from "@/components/ui";
 import Link from "next/link";
 
-import { fallbackName, useAuth } from "@aafiyah/client";
 import { IUser } from "@/types";
+import { useAuth } from "@/hooks";
+import { fallbackName } from "@/utils";
 
 export function UserMenu({
   children,

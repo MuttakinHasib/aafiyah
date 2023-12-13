@@ -1,5 +1,5 @@
-import { Loader } from '@aafiyah/ui';
-import React from 'react';
+import { Loader } from "@/components";
+import React from "react";
 
 const Loading = () => <Loader />;
 
