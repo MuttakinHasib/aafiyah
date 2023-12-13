@@ -4,17 +4,17 @@ import { QueryClient } from '@tanstack/react-query';
 import React, { PropsWithChildren } from 'react';
 
 const AccountLayout = async (props: PropsWithChildren) => {
-  const cookie = getCookieString('connect.sid');
-  const queryClient = new QueryClient();
+  // const cookie = getCookieString('connect.sid');
+  // const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ['me'],
-    queryFn: async () =>
-      await fetch(`${baseURL}/users/me`, {
-        credentials: 'include',
-        headers: { cookie },
-      }),
-  });
+  // await queryClient.prefetchQuery({
+  //   queryKey: ['me'],
+  //   queryFn: async () =>
+  //     await fetch(`${baseURL}/users/me`, {
+  //       credentials: 'include',
+  //       headers: { cookie },
+  //     }),
+  // });
 
   return (
     <div className="bg-gray-100">

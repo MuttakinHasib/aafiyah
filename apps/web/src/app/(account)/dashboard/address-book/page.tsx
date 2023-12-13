@@ -7,17 +7,17 @@ export const metadata = {
 };
 
 const AddressBookPage = async () => {
-  const cookie = getCookieString('connect.sid');
-  const queryClient = new QueryClient();
+  // const cookie = getCookieString('connect.sid');
+  // const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ['addresses'],
-    queryFn: async () =>
-      await fetch(`${baseURL}${ADDRESSES_ROUTE}`, {
-        credentials: 'include',
-        headers: { cookie },
-      }),
-  });
+  // await queryClient.prefetchQuery({
+  //   queryKey: ['addresses'],
+  //   queryFn: async () =>
+  //     await fetch(`${baseURL}${ADDRESSES_ROUTE}`, {
+  //       credentials: 'include',
+  //       headers: { cookie },
+  //     }),
+  // });
 
   return <AddressBookScreen />;
 };
