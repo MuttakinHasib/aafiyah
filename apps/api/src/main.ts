@@ -2,9 +2,9 @@ import '@colors/colors';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigurationService, NestHttpExceptionFilter } from '@app/common';
 import { NestFactory } from '@nestjs/core';
-import * as passport from 'passport';
-import * as session from 'express-session';
-// import PostgresStore from 'connect-pg-simple';
+import passport from 'passport';
+import session from 'express-session';
+import PostgresStore from 'connect-pg-simple';
 import helmet from 'helmet';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { shouldSendSameSiteNone } from 'should-send-same-site-none';
@@ -12,7 +12,7 @@ import { shouldSendSameSiteNone } from 'should-send-same-site-none';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-// const pgSession = PostgresStore(session);
+const pgSession = PostgresStore(session);
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -54,10 +54,10 @@ async function bootstrap() {
         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         secure: process.env.NODE_ENV === 'production',
       },
-      // store: new pgSession({
-      //   conString: process.env.POSTGRES_DB_URL,
-      //   createTableIfMissing: true,
-      // }),
+      store: new pgSession({
+        conString: process.env.POSTGRES_DB_URL,
+        createTableIfMissing: true,
+      }),
     }),
   );
 
