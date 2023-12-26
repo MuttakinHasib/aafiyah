@@ -25,7 +25,7 @@ import { ConfigurationService } from '@app/common';
             replyTo: configurationService.ADMIN_EMAIL_USER,
           },
           template: {
-            dir: join(__dirname, 'assets', 'templates'),
+            dir: join(__dirname, 'templates'),
             adapter: new HandlebarsAdapter(),
 
             options: {

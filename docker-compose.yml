@@ -8,9 +8,9 @@ services:
     command: yarn dev
     env_file: apps/web/.env.local
     image: web
-    # volumes:
-    #   - .:/app
-    #   - /app/node_modules
+    volumes:
+      - ./apps/web:/app
+
     ports:
       - "3000:3000"
     depends_on:
@@ -23,8 +23,8 @@ services:
     command: yarn dev
     env_file: apps/api/.env
     image: api
-    # volumes:
-    #   - .:/app
+    volumes:
+      - ./apps/api:/app
     #   - /app/node_modules
     ports:
       - "3333:3333"

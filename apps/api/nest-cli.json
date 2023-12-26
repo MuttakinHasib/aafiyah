@@ -3,9 +3,9 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true,
-    "assets": ["libs/mail/src/templates/**/*"],
+    "assets": ["templates/**/*"],
     "watchAssets": true,
+    "deleteOutDir": true,
     "webpack": true
   },
   "projects": {
@@ -24,9 +24,7 @@
       "entryFile": "index",
       "sourceRoot": "libs/mail/src",
       "compilerOptions": {
-        "assets": ["libs/mail/src/templates/**/*"],
-        "tsConfigPath": "libs/mail/tsconfig.lib.json",
-        "watchAssets": true
+        "tsConfigPath": "libs/mail/tsconfig.lib.json"
       }
     },
     "types": {

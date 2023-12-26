@@ -20,7 +20,7 @@ export const Header = () => {
   const { data } = useProfile();
 
   return (
-    <header className="shadow-header bg-white">
+    <header className="shadow-header bg-white hidden xl:block">
       <TopBar />
       <div className="border-y border">
         <div className="container flex items-center justify-between gap-10">

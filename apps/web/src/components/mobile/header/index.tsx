@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Bars3Icon,
@@ -6,23 +6,27 @@ import {
   MagnifyingGlassIcon,
   ShoppingBagIcon,
   UserIcon,
-} from '@heroicons/react/24/outline';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState } from 'react';
-import { Drawer } from '../drawer';
-import { MobileSearchBar } from '../search';
+} from "@heroicons/react/24/outline";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { Drawer } from "../drawer";
+import { MobileSearchBar } from "../search";
 
 export const MobileHeader = () => {
   const [openSearchBar, setOpenSearchBar] = useState(false);
 
   return (
-    <header className="shadow-header">
+    <header className="shadow-header block xl:hidden">
       <MobileSearchBar {...{ openSearchBar, setOpenSearchBar }} />
       <div className="container flex items-center justify-between md:py-1 gap-10">
         <div className="flex items-center gap-x-1">
           <Drawer>
-            <button title='menu' type='button' className="py-2 px-3 transition duration-300 hover:bg-gray-100">
+            <button
+              title="menu"
+              type="button"
+              className="py-2 px-3 transition duration-300 hover:bg-gray-100"
+            >
               <Bars3Icon className="w-7 h-7" />
             </button>
           </Drawer>
@@ -56,7 +60,7 @@ export const MobileHeader = () => {
           <button
             onClick={() => setOpenSearchBar(true)}
             type="button"
-            title='search'
+            title="search"
             className="py-2 px-3 transition duration-300 hover:bg-gray-100 md:hidden"
           >
             <MagnifyingGlassIcon className="w-6 h-6" />
