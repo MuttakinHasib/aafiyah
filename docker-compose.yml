@@ -15,6 +15,23 @@ services:
       - "3000:3000"
     depends_on:
       - api
+
+  admin:
+    build:
+      context: apps/admin
+      dockerfile: Dockerfile
+      target: builder
+    command: yarn dev
+    env_file: apps/admin/.env.local
+    image: admin
+    volumes:
+      - ./apps/admin:/app
+
+    ports:
+      - 4000:4000
+    depends_on:
+      - api
+
   api:
     build:
       context: apps/api
