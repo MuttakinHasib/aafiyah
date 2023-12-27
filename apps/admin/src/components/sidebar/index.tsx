@@ -8,6 +8,7 @@ import {
   ShoppingBagIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline";
+import { LayoutList } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -16,6 +17,11 @@ import React from "react";
 export const navigation = [
   { name: "Dashboard", href: "/", icon: <HomeIcon className="w-5 h-5" /> },
   { name: "Users", href: "/users", icon: <UsersIcon className="w-5 h-5" /> },
+  {
+    name: "Categories",
+    href: "/categories",
+    icon: <LayoutList className="w-5 h-5" />,
+  },
   {
     name: "Products",
     href: "/products",

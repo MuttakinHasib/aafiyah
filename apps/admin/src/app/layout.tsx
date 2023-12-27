@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 import { Poppins } from "next/font/google";
 import RootLayoutWrapper from "@/layouts";

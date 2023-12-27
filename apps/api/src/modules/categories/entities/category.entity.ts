@@ -25,6 +25,12 @@ export class Category extends CoreEntity {
   @Column({ nullable: true })
   @IsUrl()
   @IsOptional()
+  icon?: string;
+
+  @ApiPropertyOptional({ example: 'https://example.com/icon.png' })
+  @Column({ nullable: true })
+  @IsUrl()
+  @IsOptional()
   image?: string;
 
   @ApiPropertyOptional()
