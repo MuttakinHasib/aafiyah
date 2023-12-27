@@ -4,10 +4,8 @@ import { Table } from "@tanstack/react-table";
 import React from "react";
 import {
   CheckCircledIcon,
-  CircleIcon,
   Cross2Icon,
   CrossCircledIcon,
-  QuestionMarkCircledIcon,
   StopwatchIcon,
 } from "@radix-ui/react-icons";
 import Link from "next/link";

@@ -16,9 +16,9 @@ interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
 }
 
-export function ProductTableRowActions<TData>({
-  row,
-}: DataTableRowActionsProps<TData>) {
+export function ProductTableRowActions<
+  TData
+>({}: DataTableRowActionsProps<TData>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
