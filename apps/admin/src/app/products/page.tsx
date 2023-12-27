@@ -1,5 +1,5 @@
-import React from 'react';
-import { ProductsScreen } from './screens/products.screen';
+import React from "react";
+import { ProductsScreen } from "./screens/products.screen";
 
 const ProductsPage = () => <ProductsScreen />;
 

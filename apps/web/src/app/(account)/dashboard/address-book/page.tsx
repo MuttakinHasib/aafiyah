@@ -1,9 +1,8 @@
-import { ADDRESSES_ROUTE, baseURL, getCookieString } from '@aafiyah/client';
-import { QueryClient } from '@tanstack/react-query';
-import AddressBookScreen from '../screens/address-book.screen';
+import { QueryClient } from "@tanstack/react-query";
+import AddressBookScreen from "../screens/address-book.screen";
 
 export const metadata = {
-  title: 'Address Book',
+  title: "Address Book",
 };
 
 const AddressBookPage = async () => {

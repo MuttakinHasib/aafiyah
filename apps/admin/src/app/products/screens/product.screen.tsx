@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Input, Label } from '@aafiyah/ui';
-import React from 'react';
+import { Input, Label } from "@/components";
+import React from "react";
 
 export const ProductScreen = () => {
   return (

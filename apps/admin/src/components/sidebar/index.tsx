@@ -1,34 +1,34 @@
-'use client';
+"use client";
 
-import { cn } from '@aafiyah/ui';
+import { cn } from "@/utils";
 import {
   Cog6ToothIcon,
   CubeIcon,
   HomeIcon,
   ShoppingBagIcon,
   UsersIcon,
-} from '@heroicons/react/24/outline';
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React from 'react';
+} from "@heroicons/react/24/outline";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React from "react";
 
 export const navigation = [
-  { name: 'Dashboard', href: '/', icon: <HomeIcon className="w-5 h-5" /> },
-  { name: 'Users', href: '/users', icon: <UsersIcon className="w-5 h-5" /> },
+  { name: "Dashboard", href: "/", icon: <HomeIcon className="w-5 h-5" /> },
+  { name: "Users", href: "/users", icon: <UsersIcon className="w-5 h-5" /> },
   {
-    name: 'Products',
-    href: '/products',
+    name: "Products",
+    href: "/products",
     icon: <CubeIcon className="w-5 h-5" />,
   },
   {
-    name: 'Orders',
-    href: '/orders',
+    name: "Orders",
+    href: "/orders",
     icon: <ShoppingBagIcon className="w-5 h-5" />,
   },
   {
-    name: 'Settings',
-    href: '/settings',
+    name: "Settings",
+    href: "/settings",
     icon: <Cog6ToothIcon className="w-5 h-5" />,
   },
 ];
@@ -47,8 +47,8 @@ export const Sidebar = () => {
           href={{ pathname: item.href }}
           key={item.name}
           className={cn(
-            'flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100',
-            { 'bg-gray-100': pathname === item.href }
+            "flex items-center gap-x-2 px-4 py-3 hover:bg-gray-100",
+            { "bg-gray-100": pathname === item.href }
           )}
         >
           {item.icon}

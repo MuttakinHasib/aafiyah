@@ -1,5 +1,5 @@
-import { Slideshow } from '@aafiyah/ui';
-import React from 'react';
+import { Slideshow } from "@/components";
+import React from "react";
 
 const HomePage = () => {
   return (

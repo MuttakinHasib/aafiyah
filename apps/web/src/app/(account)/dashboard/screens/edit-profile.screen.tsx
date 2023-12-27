@@ -1,13 +1,15 @@
-'use client';
+"use client";
 
-import { Avatar } from '@radix-ui/themes';
+import { Avatar } from "@radix-ui/themes";
 
-import React from 'react';
-import '@radix-ui/themes/styles.css';
-import { Theme } from '@radix-ui/themes';
-import { CameraIcon } from '@heroicons/react/24/outline';
-import { Label, Input, Button } from '@aafiyah/ui';
-import { fallbackName, useProfile } from '@aafiyah/client';
+import React from "react";
+import "@radix-ui/themes/styles.css";
+import { Theme } from "@radix-ui/themes";
+import { CameraIcon } from "@heroicons/react/24/outline";
+import { useProfile } from "@/hooks";
+import { fallbackName } from "@/utils";
+import { Button, Label } from "@/components/ui";
+import { Input } from "@/components";
 
 const EditProfileScreen = () => {
   const {
@@ -29,8 +31,8 @@ const EditProfileScreen = () => {
             <Avatar
               radius="full"
               size="7"
-              src={getValues('avatar')}
-              fallback={fallbackName(getValues('name'))}
+              src={getValues("avatar")}
+              fallback={fallbackName(getValues("name"))}
             />
             <input id="avatar" type="file" className="hidden" />
             <div className="absolute inset-0 bg-black/70 z-50 grid place-content-center group-hover:opacity-100 opacity-0 transition duration-300">
@@ -45,8 +47,8 @@ const EditProfileScreen = () => {
                 type="text"
                 placeholder="Enter your name"
                 error={errors.name?.message}
-                {...register('name', {
-                  required: 'Name is required',
+                {...register("name", {
+                  required: "Name is required",
                   maxLength: 20,
                   minLength: 3,
                 })}
@@ -61,11 +63,11 @@ const EditProfileScreen = () => {
                 disabled
                 readOnly
                 error={errors.email?.message}
-                {...register('email', {
-                  required: 'Email is required',
+                {...register("email", {
+                  required: "Email is required",
                   pattern: {
                     value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                    message: 'Invalid email address',
+                    message: "Invalid email address",
                   },
                 })}
               />
@@ -77,11 +79,11 @@ const EditProfileScreen = () => {
                 type="tel"
                 placeholder="+880 1315873250"
                 error={errors?.phone?.message}
-                {...register('phone', {
-                  required: 'Phone number is required',
+                {...register("phone", {
+                  required: "Phone number is required",
                   pattern: {
                     value: /^[0-9]{11}$/,
-                    message: 'Invalid phone number',
+                    message: "Invalid phone number",
                   },
                 })}
               />

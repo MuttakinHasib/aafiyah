@@ -1,3 +1,11 @@
+import { cn } from "@/utils";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CaretSortIcon,
+  EyeNoneIcon,
+} from "@radix-ui/react-icons";
+import { Column } from "@tanstack/react-table";
 import {
   Button,
   DropdownMenu,
@@ -5,15 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  cn,
-} from '@aafiyah/ui';
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  CaretSortIcon,
-  EyeNoneIcon,
-} from '@radix-ui/react-icons';
-import { Column } from '@tanstack/react-table';
+} from "..";
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -30,7 +30,7 @@ export const ProductColumnHeader = <TData, TValue>({
     return (
       <div
         className={cn(
-          'px-3 py-3.5 text-left text-sm font-semibold text-gray-900',
+          "px-3 py-3.5 text-left text-sm font-semibold text-gray-900",
           className
         )}
       >
@@ -40,7 +40,7 @@ export const ProductColumnHeader = <TData, TValue>({
   }
 
   return (
-    <div className={cn('flex items-center space-x-2', className)}>
+    <div className={cn("flex items-center space-x-2", className)}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -49,9 +49,9 @@ export const ProductColumnHeader = <TData, TValue>({
             className="data-[state=open]:bg-accent px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
           >
             <span>{title}</span>
-            {column.getIsSorted() === 'desc' ? (
+            {column.getIsSorted() === "desc" ? (
               <ArrowDownIcon className="ml-2 h-4 w-4" />
-            ) : column.getIsSorted() === 'asc' ? (
+            ) : column.getIsSorted() === "asc" ? (
               <ArrowUpIcon className="ml-2 h-4 w-4" />
             ) : (
               <CaretSortIcon className="ml-2 h-4 w-4" />

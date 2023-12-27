@@ -1,7 +1,6 @@
-import { baseURL, getCookieString } from '@aafiyah/client';
-import { AccountNavigation } from '@aafiyah/ui';
-import { QueryClient } from '@tanstack/react-query';
-import React, { PropsWithChildren } from 'react';
+import { AccountNavigation } from "@/components";
+import { QueryClient } from "@tanstack/react-query";
+import React, { PropsWithChildren } from "react";
 
 const AccountLayout = async (props: PropsWithChildren) => {
   // const cookie = getCookieString('connect.sid');

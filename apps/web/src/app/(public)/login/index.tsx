@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import React from 'react';
-import { Label, Input, Button } from '@aafiyah/ui';
-import { useAuth } from '@aafiyah/client';
+import { Input, Button, Label } from "@/components";
+
+import { useAuth } from "@/hooks";
+import Link from "next/link";
+import React from "react";
 
 const LoginScreen = () => {
   const {
@@ -27,11 +28,11 @@ const LoginScreen = () => {
               type="email"
               placeholder="customer@example.com"
               error={errors?.email?.message}
-              {...register('email', {
-                required: 'Email is required',
+              {...register("email", {
+                required: "Email is required",
                 pattern: {
                   value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  message: 'Invalid email address',
+                  message: "Invalid email address",
                 },
               })}
             />
@@ -43,11 +44,11 @@ const LoginScreen = () => {
               type="password"
               placeholder="********"
               error={errors?.password?.message}
-              {...register('password', {
-                required: 'Password is required',
+              {...register("password", {
+                required: "Password is required",
                 minLength: {
                   value: 6,
-                  message: 'Password must be at least 6 characters',
+                  message: "Password must be at least 6 characters",
                 },
               })}
             />

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { IProduct } from '@aafiyah/types';
-import { ProductTable, productColumns } from '../../../components/product';
+import { ProductTable, productColumns } from "@/components";
+import { IProduct } from "@/types";
 
-import React from 'react';
+import React from "react";
 
 const data: IProduct[] = [];
 

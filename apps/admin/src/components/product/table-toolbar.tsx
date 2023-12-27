@@ -1,33 +1,31 @@
-'use client';
+"use client";
 
-import { Table } from '@tanstack/react-table';
-import { Button, Input } from '@aafiyah/ui';
-import React from 'react';
+import { Table } from "@tanstack/react-table";
+import React from "react";
 import {
   CheckCircledIcon,
-  CircleIcon,
   Cross2Icon,
   CrossCircledIcon,
-  QuestionMarkCircledIcon,
   StopwatchIcon,
-} from '@radix-ui/react-icons';
-import ProductTableFilter from './table-faceted-filter';
-import Link from 'next/link';
+} from "@radix-ui/react-icons";
+import Link from "next/link";
+import { Button, Input } from "..";
+import ProductTableFilter from "./table-faceted-filter";
 
 export const statuses = [
   {
-    value: 'in progress',
-    label: 'In Progress',
+    value: "in progress",
+    label: "In Progress",
     icon: StopwatchIcon,
   },
   {
-    value: 'done',
-    label: 'Done',
+    value: "done",
+    label: "Done",
     icon: CheckCircledIcon,
   },
   {
-    value: 'canceled',
-    label: 'Canceled',
+    value: "canceled",
+    label: "Canceled",
     icon: CrossCircledIcon,
   },
 ];
@@ -46,15 +44,15 @@ const ProductTableToolbar = <TData,>({
       <div className="flex items-center space-x-2">
         <Input
           placeholder="Filter tasks..."
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn('name')?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-xs bg-white"
         />
-        {table.getColumn('status') && (
+        {table.getColumn("status") && (
           <ProductTableFilter
-            column={table.getColumn('status')}
+            column={table.getColumn("status")}
             title="Status"
             options={statuses}
           />
@@ -74,7 +72,7 @@ const ProductTableToolbar = <TData,>({
         <Button variant="secondary" className="bg-white">
           Export
         </Button>
-        <Link href={{ pathname: '/products/new-product' }} passHref>
+        <Link href={{ pathname: "/products/new-product" }} passHref>
           <Button>Add Product</Button>
         </Link>
       </div>

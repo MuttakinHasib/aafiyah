@@ -1,21 +1,22 @@
-import { Analytics } from '@vercel/analytics/react';
-import { StyledComponentsRegistry } from './registry';
-import '../styles/global.css';
-import 'animate.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { Analytics } from "@vercel/analytics/react";
+import { StyledComponentsRegistry } from "./registry";
+import "../styles/global.css";
+import "animate.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-import { Roboto } from 'next/font/google';
-import RootLayoutWrapper from './components/wrapper.layout';
-import { defaultMetadata } from '@aafiyah/ui';
-import { ReactQueryProviders } from '@aafiyah/client';
-import { Toaster } from 'react-hot-toast';
+import { Roboto } from "next/font/google";
+import RootLayoutWrapper from "./components/wrapper.layout";
+
+import { Toaster } from "react-hot-toast";
+import { defaultMetadata } from "@/seo";
+import { ReactQueryProviders } from "@/providers";
 
 const roboto = Roboto({
-  weight: ['100', '300', '400', '500', '700', '900'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-roboto',
+  weight: ["100", "300", "400", "500", "700", "900"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto",
 });
 
 export const metadata = defaultMetadata;

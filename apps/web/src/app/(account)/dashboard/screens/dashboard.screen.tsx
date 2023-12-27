@@ -1,14 +1,15 @@
-'use client';
+"use client";
 
-import { Avatar } from '@radix-ui/themes';
-import Link from 'next/link';
-import React from 'react';
-import '@radix-ui/themes/styles.css';
-import { Theme } from '@radix-ui/themes';
-import { Button } from '@aafiyah/ui';
-import { fallbackName, useAddress, useProfile } from '@aafiyah/client';
-import { isEmpty } from 'lodash';
-import { PlusIcon } from '@heroicons/react/24/outline';
+import { Avatar, Theme } from "@radix-ui/themes";
+import Link from "next/link";
+import React from "react";
+import "@radix-ui/themes/styles.css";
+
+import { isEmpty } from "lodash";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { useAddress, useProfile } from "@/hooks";
+import { fallbackName } from "@/utils";
+import { Button } from "@/components/ui";
 
 const DashboardScreen = () => {
   const { data } = useProfile();
@@ -57,7 +58,7 @@ const DashboardScreen = () => {
                     `${data?.addresses[0].apartment}, `}
                   {data?.addresses[0].street}
                   <br />
-                  {data?.addresses[0].city}, {data?.addresses[0].state} -{' '}
+                  {data?.addresses[0].city}, {data?.addresses[0].state} -{" "}
                   {data?.addresses[0].postcode}
                 </p>
                 <div>

@@ -1,8 +1,9 @@
-import React from 'react';
-import { Label, Input, Button } from '@aafiyah/ui';
+import React from "react";
+import { Label, Button } from "@/components/ui";
+import { Input } from "@/components";
 
 export const metadata = {
-  title: 'Change Password',
+  title: "Change Password",
 };
 
 const ChangePasswordPage = () => {

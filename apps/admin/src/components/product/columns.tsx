@@ -1,21 +1,21 @@
-import { Checkbox } from '@aafiyah/ui';
-import { ColumnDef } from '@tanstack/react-table';
-import React from 'react';
-import { ProductColumnHeader } from './column-header';
-import { statuses } from './table-toolbar';
-import { ProductTableRowActions } from './table-row-actions';
-import { IProduct } from '@aafiyah/types';
-import Image from 'next/image';
+import { ColumnDef } from "@tanstack/react-table";
+import React from "react";
+import { statuses } from "./table-toolbar";
+import { ProductTableRowActions } from "./table-row-actions";
+import { IProduct } from "@/types";
+import Image from "next/image";
+import { ProductColumnHeader } from "./column-header";
+import { Checkbox } from "..";
 
 export const productColumns: ColumnDef<IProduct>[] = [
   {
-    id: 'select',
+    id: "select",
     header: ({ table }) => (
       <div className="grid align-middle py-5 pl-4 pr-3 text-sm">
         <Checkbox
           checked={
             table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && 'indeterminate')
+            (table.getIsSomePageRowsSelected() && "indeterminate")
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
@@ -35,7 +35,7 @@ export const productColumns: ColumnDef<IProduct>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
+    accessorKey: "name",
     header: ({ column }) => (
       <ProductColumnHeader column={column} title="Product" />
     ),
@@ -47,13 +47,13 @@ export const productColumns: ColumnDef<IProduct>[] = [
               className="rounded-full"
               width={44}
               height={44}
-              src={row.getValue('image')}
-              alt={row.getValue('name')}
+              src={row.getValue("image")}
+              alt={row.getValue("name")}
             />
           </div>
           <div className="ml-4">
             <div className="font-medium text-gray-900">
-              {row.getValue('name')}
+              {row.getValue("name")}
             </div>
             <div className="mt-1 text-gray-500">Category</div>
           </div>
@@ -62,12 +62,12 @@ export const productColumns: ColumnDef<IProduct>[] = [
     },
   },
   {
-    accessorKey: 'sku',
+    accessorKey: "sku",
     header: ({ column }) => <ProductColumnHeader column={column} title="SKU" />,
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="truncate font-medium">{row.getValue('sku')}</span>
+          <span className="truncate font-medium">{row.getValue("sku")}</span>
         </div>
       );
     },
@@ -75,20 +75,20 @@ export const productColumns: ColumnDef<IProduct>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: 'price',
+    accessorKey: "price",
     header: ({ column }) => (
       <ProductColumnHeader column={column} title="Price" />
     ),
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="truncate font-medium">{row.getValue('price')}</span>
+          <span className="truncate font-medium">{row.getValue("price")}</span>
         </div>
       );
     },
   },
   {
-    accessorKey: 'countInStock',
+    accessorKey: "countInStock",
     header: ({ column }) => (
       <ProductColumnHeader column={column} title="Quantity" />
     ),
@@ -96,7 +96,7 @@ export const productColumns: ColumnDef<IProduct>[] = [
       return (
         <div className="flex space-x-2">
           <span className="truncate font-medium">
-            {row.getValue('countInStock')}
+            {row.getValue("countInStock")}
           </span>
         </div>
       );
@@ -105,13 +105,13 @@ export const productColumns: ColumnDef<IProduct>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: 'status',
+    accessorKey: "status",
     header: ({ column }) => (
       <ProductColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => {
       const status = statuses.find(
-        (status) => status.value === row.getValue('status')
+        (status) => status.value === row.getValue("status")
       );
 
       if (!status) {
@@ -132,7 +132,7 @@ export const productColumns: ColumnDef<IProduct>[] = [
     },
   },
   {
-    id: 'actions',
+    id: "actions",
     cell: ({ row }) => <ProductTableRowActions row={row} />,
   },
 ];
