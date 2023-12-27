@@ -26,9 +26,8 @@ services:
     image: admin
     volumes:
       - ./apps/admin:/app
-
     ports:
-      - 4000:4000
+      - 4000:3000
     depends_on:
       - api
 

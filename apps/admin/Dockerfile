@@ -1,5 +1,6 @@
 FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat
+
 WORKDIR /app
 
 COPY package.json ./
@@ -32,8 +33,8 @@ COPY --from=builder /app/.next/package.json ./package.json
 
 USER nextjs
 
-EXPOSE 4000
+EXPOSE 3000
 
-ENV PORT 4000
+ENV PORT 3000
 
 CMD ["yarn", "start"]
