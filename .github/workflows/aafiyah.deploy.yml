@@ -25,6 +25,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+
+      - run: npm -g install yarn@1.22.19
+      - run: npm -g install pm2
+
       - name: "Go to the api directory"
         run: cd apps/api
 
@@ -32,10 +36,10 @@ jobs:
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
 
-      - run: npm -g install yarn@1.22.19
-      - run: npm -g install pm2
-      - run: yarn install --frozen-lockfile
-      - run: yarn build
+      - name: "Install dependencies and build"
+        run: |
+          yarn install
+          yarn build
 
       - name: "Restart The Server"
         run: pm2 restart server.aafiyah.com
