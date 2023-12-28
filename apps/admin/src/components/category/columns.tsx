@@ -49,7 +49,7 @@ export const categoryColumns: ColumnDef<ICategory>[] = [
               width={44}
               height={44}
               src={row.getValue("icon")}
-              alt={row.getValue("name")}
+              alt={""}
             />
           </div>
           <div className="ml-4">
@@ -77,7 +77,7 @@ export const categoryColumns: ColumnDef<ICategory>[] = [
             width={44}
             height={44}
             src={row.getValue("image")}
-            alt={row.getValue("name")}
+            alt={""}
           />
         </div>
       );

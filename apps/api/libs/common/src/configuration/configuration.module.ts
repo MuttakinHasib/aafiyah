@@ -15,6 +15,7 @@ import * as Joi from 'joi';
         SESSION_SECRET_KEY: Joi.string().required(),
         JWT_SECRET_KEY: Joi.string().required(),
         WEB_URL: Joi.string().required(),
+        ADMIN_URL: Joi.string().required(),
         NEXT_PUBLIC_API_URL: Joi.string().required(),
         EMAIL_USER: Joi.string().required(),
         ADMIN_EMAIL_USER: Joi.string().required(),

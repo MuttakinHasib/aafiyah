@@ -23,7 +23,7 @@ async function bootstrap() {
   app.useGlobalFilters(new NestHttpExceptionFilter());
   app.enableCors({
     credentials: true,
-    origin: [configurationService.WEB_URL],
+    origin: [configurationService.WEB_URL, configurationService.ADMIN_URL],
   });
 
   app.use(helmet());

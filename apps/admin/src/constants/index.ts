@@ -1,1 +1,1 @@
-export const CATEGORY_ROUTE = "/categories";
+export const CATEGORIES = "categories";

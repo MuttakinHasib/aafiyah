@@ -1,6 +1,7 @@
 import { api } from "@/api";
-import { CATEGORY_ROUTE } from "@/constants";
+import { CATEGORIES } from "@/constants";
+import { ICategory } from "@/types";
 
 export const CATEGORY_API = {
-  getCategories: async () => await api.get(CATEGORY_ROUTE),
+  getCategories: async (): Promise<ICategory[]> => await api.get(CATEGORIES),
 };

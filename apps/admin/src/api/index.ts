@@ -2,8 +2,8 @@ import { capitalize, isArray } from "lodash";
 import axios, { AxiosResponse } from "axios";
 import { toast } from "@/libs";
 
-export const baseURL = process.env.NEXT_PUBLIC_API_URL;
-
+export const baseURL = process.env.NEXT_PUBLIC_API_URL + "/";
+console.log(baseURL);
 const api = axios.create({
   baseURL,
   withCredentials: true,

@@ -17,6 +17,10 @@ export class ConfigurationService {
     return this.configService.get<string>('WEB_URL');
   }
 
+  get ADMIN_URL() {
+    return this.configService.get<string>('ADMIN_URL');
+  }
+
   get POSTGRES_DB_URL() {
     return this.configService.get<string>('POSTGRES_DB_URL');
   }
