@@ -29,17 +29,16 @@ jobs:
       - run: npm -g install yarn@1.22.19
       - run: npm -g install pm2
 
-      - name: "Go to the api directory"
-        run: cd apps/api
-
       - name: "Create env file"
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
+        working-directory: apps/api
 
       - name: "Install dependencies and build"
         run: |
           yarn install
           yarn build
+        working-directory: apps/api
 
       - name: "Restart The Server"
         run: pm2 restart server.aafiyah.com
