@@ -4,12 +4,12 @@ services:
     build:
       context: apps/web
       dockerfile: Dockerfile
-      target: builder
-    command: yarn dev
+      target: runner
+    # command: yarn dev
     env_file: apps/web/.env.local
     image: web
-    volumes:
-      - ./apps/web:/app
+    # volumes:
+    #   - ./apps/web:/app
 
     ports:
       - "3000:3000"
@@ -20,12 +20,12 @@ services:
     build:
       context: apps/admin
       dockerfile: Dockerfile
-      target: builder
-    command: yarn dev
+      target: runner
+    # command: yarn dev
     env_file: apps/admin/.env.local
     image: admin
-    volumes:
-      - ./apps/admin:/app
+    # volumes:
+    #   - ./apps/admin:/app
     ports:
       - 4000:3000
     depends_on:
@@ -35,12 +35,12 @@ services:
     build:
       context: apps/api
       dockerfile: Dockerfile
-      target: builder
-    command: yarn dev
+      target: runner
+    # command: yarn dev
     env_file: apps/api/.env
     image: api
-    volumes:
-      - ./apps/api:/app
+    # volumes:
+    #   - ./apps/api:/app
     #   - /app/node_modules
     ports:
       - "3333:3333"

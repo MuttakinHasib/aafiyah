@@ -1,4 +1,4 @@
-import '@colors/colors';
+import 'colors';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigurationService, NestHttpExceptionFilter } from '@app/common';
 import { NestFactory } from '@nestjs/core';
