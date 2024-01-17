@@ -1,3 +1,4 @@
 [submodule "apps/api"]
 	path = apps/api
 	url = https://github.com/MuttakinHasib/api.aafiyah.com.git
+	branch = main
