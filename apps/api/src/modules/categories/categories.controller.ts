@@ -26,7 +26,7 @@ import { Role, Permission } from '@app/common';
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
-  @ApiOperation({ summary: 'Create category' })
+  @ApiOperation({ summary: 'Create category', operationId: 'Create' })
   @ApiCreatedResponse({ description: 'Category created successfully' })
   @UseGuards(AuthenticatedGuard)
   @Permission(Role.CUSTOMER)
@@ -35,7 +35,7 @@ export class CategoriesController {
     return await this.categoriesService.create(createCategoryDto);
   }
 
-  @ApiOperation({ summary: 'Get all categories' })
+  @ApiOperation({ summary: 'Get all categories', operationId: 'Get All' })
   @ApiOkResponse({ description: 'Categories retrieved successfully' })
   @Get()
   async findAll() {
