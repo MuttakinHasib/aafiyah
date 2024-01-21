@@ -15,6 +15,7 @@ const nextConfig = {
   },
   experimental: {
     typedRoutes: true,
+    optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
   },
 };
 

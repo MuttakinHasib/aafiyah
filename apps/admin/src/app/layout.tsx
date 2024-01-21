@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import "sweetalert2/dist/sweetalert2.min.css";
+import "@mantine/core/styles.css";
 
 import { Poppins } from "next/font/google";
 import RootLayoutWrapper from "@/layouts";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
 const poppins = Poppins({
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -22,8 +24,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body className={poppins.className}>
-        <RootLayoutWrapper>{children}</RootLayoutWrapper>
+        <MantineProvider>
+          <RootLayoutWrapper>{children}</RootLayoutWrapper>
+        </MantineProvider>
       </body>
     </html>
   );

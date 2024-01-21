@@ -23,7 +23,7 @@
     --border: 20 5.9% 90%;
     --input: 20 5.9% 90%;
     --ring: 24.6 95% 53.1%;
-    --radius: 0.5rem;
+    --radius: 0.0rem;
   }
 
   .dark {
@@ -61,4 +61,11 @@
   body {
     @apply bg-background bg-foreground
   }
+}
+
+.mantine-MultiSelect-inputField {
+  @apply focus:ring-0 text-sm bg-slate-50 focus:outline-none focus:bg-white
+}
+.mantine-Input-input {
+  @apply rounded-none bg-slate-50 border-gray-100 border focus:ring-0 focus-within:border-gray-300 focus:bg-white focus-within:bg-white focus:outline-none
 }
