@@ -2,12 +2,14 @@
 import "@mantine/tiptap/styles.css";
 
 import {
+  DropZone,
   Input,
   Label,
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components";
@@ -37,15 +39,28 @@ export const ProductScreen = () => {
                 type="text"
                 placeholder="Enter product name"
                 className="text-sm bg-slate-50"
-                // error={errors?.email?.message}
-                // {...register('email', {
-                //   required: 'Email is required',
-                //   pattern: {
-                //     value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                //     message: 'Invalid email address',
-                //   },
-                // })}
               />
+            </div>
+            <div className="flex gap-5">
+              <div className="space-y-2 w-full">
+                <Label htmlFor="sku">SKU</Label>
+                <Input
+                  id="sku"
+                  type="text"
+                  placeholder="Enter product SKU"
+                  className="text-sm bg-slate-50"
+                />
+              </div>
+              <div className="space-y-2 w-full">
+                <Label htmlFor="quantity">Quantity</Label>
+                <Input
+                  id="quantity"
+                  type="number"
+                  min={0}
+                  placeholder="Enter product quantity"
+                  className="text-sm bg-slate-50"
+                />
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="description">Description</Label>
@@ -68,14 +83,6 @@ export const ProductScreen = () => {
                   min={10}
                   placeholder="Set the product regular price"
                   className="text-sm bg-slate-50"
-                  // error={errors?.email?.message}
-                  // {...register('email', {
-                  //   required: 'Email is required',
-                  //   pattern: {
-                  //     value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  //     message: 'Invalid email address',
-                  //   },
-                  // })}
                 />
               </div>
               <div className="space-y-2 w-full">
@@ -86,14 +93,6 @@ export const ProductScreen = () => {
                   min={0}
                   placeholder="Set the product offer price"
                   className="text-sm bg-slate-50"
-                  // error={errors?.email?.message}
-                  // {...register('email', {
-                  //   required: 'Email is required',
-                  //   pattern: {
-                  //     value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  //     message: 'Invalid email address',
-                  //   },
-                  // })}
                 />
               </div>
             </div>
@@ -106,14 +105,6 @@ export const ProductScreen = () => {
                   min={10}
                   placeholder="Set the cost price of the product"
                   className="text-sm bg-slate-50"
-                  // error={errors?.email?.message}
-                  // {...register('email', {
-                  //   required: 'Email is required',
-                  //   pattern: {
-                  //     value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  //     message: 'Invalid email address',
-                  //   },
-                  // })}
                 />
               </div>
               <div className="space-y-2 w-full">
@@ -124,18 +115,101 @@ export const ProductScreen = () => {
                   min={0}
                   placeholder="Set the product tax amount in percentage (%)"
                   className="text-sm bg-slate-50"
-                  // error={errors?.email?.message}
-                  // {...register('email', {
-                  //   required: 'Email is required',
-                  //   pattern: {
-                  //     value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-                  //     message: 'Invalid email address',
-                  //   },
-                  // })}
                 />
               </div>
             </div>
           </div>
+        </div>
+        {/* ************** MEDIA SECTION ************** */}
+
+        <div className="bg-white rounded p-6 shadow-box">
+          <h3 className="text-xl font-medium">Media</h3>
+          <p className="text-sm mt-1 text-gray-500 pb-5">
+            Showcase your product with high-quality images
+          </p>
+          <div className="max-w-[250px] w-full">
+            <DropZone />
+          </div>
+        </div>
+        {/* ************** DIMENSIONS SECTION ************** */}
+        <div className="bg-white rounded p-6 shadow-box">
+          <div className="flex justify-between gap-5 flex-wrap pb-5">
+            <div className="space-y-1">
+              <h3 className="text-xl font-medium">Dimensions</h3>
+              <p className="text-sm text-gray-500">
+                Details regarding size are provided below:
+              </p>
+            </div>
+            <Select defaultValue="MKS">
+              <SelectTrigger
+                id="status"
+                className="bg-slate-50 border-gray-100 max-w-xs w-full"
+              >
+                <SelectValue placeholder="Select Unit" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Unit Type</SelectLabel>
+                  <SelectItem value="MKS">MKS (Meter KG Second)</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-5">
+            <div className="flex gap-5">
+              <div className="space-y-2 w-full">
+                <Label htmlFor="height">Height</Label>
+                <Input
+                  id="height"
+                  type="number"
+                  min={10}
+                  placeholder="Set the product height"
+                  className="text-sm bg-slate-50"
+                />
+              </div>
+              <div className="space-y-2 w-full">
+                <Label htmlFor="width">Width</Label>
+                <Input
+                  id="width"
+                  type="number"
+                  min={0}
+                  placeholder="Set the product width"
+                  className="text-sm bg-slate-50"
+                />
+              </div>
+            </div>
+            <div className="flex gap-5">
+              <div className="space-y-2 w-full">
+                <Label htmlFor="weight">Weight</Label>
+                <Input
+                  id="weight"
+                  type="number"
+                  min={10}
+                  placeholder="Set the weight of the product"
+                  className="text-sm bg-slate-50"
+                />
+              </div>
+              <div className="space-y-2 w-full">
+                <Label htmlFor="length">Length</Label>
+                <Input
+                  id="length"
+                  type="number"
+                  min={0}
+                  placeholder="Set the length of the product"
+                  className="text-sm bg-slate-50"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* ************** VARIATIONS SECTION ************** */}
+
+        <div className="bg-white rounded p-6 shadow-box">
+          <h3 className="text-xl font-medium">Variations</h3>
+          <p className="text-sm mt-1 text-gray-500 pb-5">
+            Customize products with versatile options like colors, sizes, and
+            unique features
+          </p>
         </div>
       </div>
       <div className="col-span-1">

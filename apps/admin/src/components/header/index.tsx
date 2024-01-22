@@ -6,7 +6,7 @@ import { PanelRightOpen } from "lucide-react";
 
 export const Header = () => {
   return (
-    <header className="px-6 py-3 shadow-md flex items-center justify-between gap-10 bg-white">
+    <header className="px-6 py-3 shadow-md flex items-center justify-between gap-10 bg-white sticky top-0 z-50">
       <div className="flex flex-1 items-center space-x-5">
         <button>
           <PanelRightOpen className="w-6 h-6" />
