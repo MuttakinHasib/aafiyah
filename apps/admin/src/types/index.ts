@@ -7,3 +7,4 @@ export * from "./mail";
 export * from "./product";
 export * from "./category";
 export * from "./toast";
+export * from "./attribute";
