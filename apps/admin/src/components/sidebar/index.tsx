@@ -6,6 +6,8 @@ import {
   CubeIcon,
   HomeIcon,
   ShoppingBagIcon,
+  SparklesIcon,
+  TagIcon,
   UsersIcon,
 } from "@heroicons/react/24/outline";
 import { LayoutList } from "lucide-react";
@@ -18,14 +20,24 @@ export const navigation = [
   { name: "Dashboard", href: "/", icon: <HomeIcon className="w-5 h-5" /> },
   { name: "Users", href: "/users", icon: <UsersIcon className="w-5 h-5" /> },
   {
+    name: "Products",
+    href: "/products",
+    icon: <CubeIcon className="w-5 h-5" />,
+  },
+  {
     name: "Categories",
     href: "/categories",
     icon: <LayoutList className="w-5 h-5" />,
   },
   {
-    name: "Products",
-    href: "/products",
-    icon: <CubeIcon className="w-5 h-5" />,
+    name: "Tags",
+    href: "/tags",
+    icon: <TagIcon className="w-5 h-5" />,
+  },
+  {
+    name: "Attributes",
+    href: "/attributes",
+    icon: <SparklesIcon className="w-5 h-5" />,
   },
   {
     name: "Orders",
