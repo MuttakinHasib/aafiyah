@@ -7,5 +7,5 @@ export const ATTRIBUTES_API = {
 
   createAttribute: async (
     attribute: Omit<IAttribute, "id" | "createdAt" | "updatedAt">
-  ): Promise<IAttribute> => await api.post(ATTRIBUTES, attribute),
+  ): Promise<string> => await api.post(ATTRIBUTES, attribute),
 };
