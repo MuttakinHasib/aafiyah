@@ -41,14 +41,14 @@ export const useAttribute = (options?: UseAttributeOptions) => {
     mutationKey: ["CREATE_ATTRIBUTE"],
   });
 
-  const { handleSubmit, ...formOptions } = useForm<FormFields>({
+  const form = useForm<FormFields>({
     mode: "all",
     reValidateMode: "onChange",
     resolver: zodResolver(schema),
   });
 
   const values = useFieldArray({
-    control: formOptions.control,
+    control: form.control,
     name: "values",
   });
 
@@ -58,14 +58,14 @@ export const useAttribute = (options?: UseAttributeOptions) => {
     enabled: fetch,
   });
 
-  const createAttribute = handleSubmit(
+  const createAttribute = form.handleSubmit(
     async (data) =>
       await mutateAsync(data, {
         onSuccess: (message) => {
           toast({
             title: message,
           });
-          formOptions.reset({ name: "", values: [] });
+          form.reset({ name: "", values: [] });
         },
         onError: (error) => {
           toast({
@@ -79,9 +79,13 @@ export const useAttribute = (options?: UseAttributeOptions) => {
   return {
     createAttribute,
     isCreatingAttribute,
-    attributes: query.data || [],
-    ...omit(query, ["data"]),
-    ...formOptions,
-    ...values,
+    data: {
+      attributes: query.data || [],
+      ...omit(query, ["data"]),
+    },
+    form: {
+      ...form,
+      ...values,
+    },
   };
 };

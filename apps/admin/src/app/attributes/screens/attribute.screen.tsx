@@ -11,13 +11,14 @@ import { nanoid } from "nanoid";
 export const AttributeScreen = () => {
   const {
     createAttribute,
-    register,
-    fields: values,
-    append,
-    remove,
-    formState: { errors },
+    form: {
+      register,
+      fields: values,
+      append,
+      remove,
+      formState: { errors },
+    },
   } = useAttribute();
-  console.log("🚀 ~ AttributeScreen ~ values:", values);
 
   return (
     <form className="grid grid-cols-3 gap-5" onSubmit={createAttribute}>
