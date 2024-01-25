@@ -5,7 +5,7 @@ import { useCategory } from "@/hooks";
 import React from "react";
 
 const CategoriesScreen = () => {
-  const { data } = useCategory();
+  const { data } = useCategory({ fetch: true });
   return (
     <React.Fragment>
       <div className="flex items-center justify-between mb-5"></div>

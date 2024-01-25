@@ -1,5 +1,5 @@
 import { ATTRIBUTES } from "@/constants";
-import { ATTRIBUTES_API } from "@/services";
+import { ATTRIBUTE_API } from "@/services";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -37,7 +37,7 @@ export const useAttribute = (options?: UseAttributeOptions) => {
   const { fetch = false } = options || {};
 
   const { mutateAsync, isPending: isCreatingAttribute } = useMutation({
-    mutationFn: ATTRIBUTES_API.createAttribute,
+    mutationFn: ATTRIBUTE_API.createAttribute,
     mutationKey: ["CREATE_ATTRIBUTE"],
   });
 
@@ -54,7 +54,7 @@ export const useAttribute = (options?: UseAttributeOptions) => {
 
   const query = useQuery({
     queryKey: [ATTRIBUTES],
-    queryFn: ATTRIBUTES_API.getAttributes,
+    queryFn: ATTRIBUTE_API.getAttributes,
     enabled: fetch,
   });
 
