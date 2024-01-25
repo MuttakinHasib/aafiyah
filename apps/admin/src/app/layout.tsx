@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
+import "animate.css";
 import "sweetalert2/dist/sweetalert2.min.css";
 import "@mantine/core/styles.css";
 import "@mantine/dropzone/styles.css";

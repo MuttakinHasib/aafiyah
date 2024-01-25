@@ -1,6 +1,6 @@
-import React from 'react';
-import { ProductScreen } from '../screens/attribute.screen';
+import React from "react";
+import { AttributeScreen } from "../screens/attribute.screen";
 
-const ProductPage = () => <ProductScreen />;
+const ProductPage = () => <AttributeScreen />;
 
 export default ProductPage;
