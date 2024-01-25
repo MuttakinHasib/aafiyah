@@ -30,7 +30,7 @@ export const ProductColumnHeader = <TData, TValue>({
     return (
       <div
         className={cn(
-          "px-3 py-3.5 text-left text-sm font-semibold text-gray-900",
+          "py-3.5 text-left text-sm font-semibold text-gray-900",
           className
         )}
       >
@@ -73,14 +73,18 @@ export const ProductColumnHeader = <TData, TValue>({
             <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Desc
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            className="px-2 py-1 text-sm"
-            onClick={() => column.toggleVisibility(false)}
-          >
-            <EyeNoneIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Hide
-          </DropdownMenuItem>
+          {column.getCanHide() && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="px-2 py-1 text-sm"
+                onClick={() => column.toggleVisibility(false)}
+              >
+                <EyeNoneIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+                Hide
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

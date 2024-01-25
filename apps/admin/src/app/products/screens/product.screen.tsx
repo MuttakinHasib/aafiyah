@@ -1,6 +1,6 @@
 "use client";
-import "@mantine/tiptap/styles.css";
 
+import "@mantine/tiptap/styles.css";
 import {
   DropZone,
   Input,
@@ -21,8 +21,10 @@ import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import React from "react";
 import { MultiSelect, Select as MantineSelect } from "@mantine/core";
+import { useCategory } from "@/hooks";
 
 export const ProductScreen = () => {
+  const { data } = useCategory({ fetch: true });
   return (
     <div className="grid grid-cols-3 gap-5">
       <div className="col-span-2 space-y-8">
@@ -242,7 +244,10 @@ export const ProductScreen = () => {
                 id="category"
                 searchable
                 placeholder="Pick product categories"
-                data={["React", "Angular", "Vue", "Svelte"]}
+                data={data.categories.map((category) => ({
+                  label: category.name,
+                  value: category.id,
+                }))}
                 comboboxProps={{
                   transitionProps: { transition: "pop", duration: 200 },
                 }}
