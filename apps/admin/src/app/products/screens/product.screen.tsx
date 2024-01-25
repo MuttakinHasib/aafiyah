@@ -20,8 +20,31 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import React from "react";
-import { MultiSelect, Select as MantineSelect } from "@mantine/core";
+import { MultiSelect, Select as MantineSelect, TagsInput } from "@mantine/core";
 import { useCategory } from "@/hooks";
+
+const defaultTags = [
+  "Clothing",
+  "Footwear",
+  "Accessories",
+  "Electronics",
+  "HomeDecor",
+  "BeautyProducts",
+  "FitnessGear",
+  "TechGadgets",
+  "OutdoorGear",
+  "KitchenAppliances",
+  "BooksAndStationery",
+  "ToysAndGames",
+  "Jewelry",
+  "HandmadeCrafts",
+  "PetSupplies",
+  "HealthAndWellness",
+  "SportsEquipment",
+  "OfficeFurniture",
+  "TravelEssentials",
+  "GiftIdeas",
+];
 
 export const ProductScreen = () => {
   const { data } = useCategory({ fetch: true });
@@ -255,11 +278,10 @@ export const ProductScreen = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="tags">Tags</Label>
-              <MultiSelect
+              <TagsInput
                 id="tags"
-                searchable
                 placeholder="Pick product tags"
-                data={["React", "Angular", "Vue", "Svelte"]}
+                data={defaultTags}
                 comboboxProps={{
                   transitionProps: { transition: "pop", duration: 200 },
                 }}

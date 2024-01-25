@@ -63,7 +63,7 @@
   }
 }
 
-.mantine-MultiSelect-inputField {
+.mantine-MultiSelect-inputField, .mantine-TagsInput-inputField {
   @apply focus:ring-0 text-sm bg-slate-50 focus:outline-none focus:bg-white
 }
 .mantine-Input-input {
