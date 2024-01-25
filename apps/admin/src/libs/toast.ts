@@ -9,6 +9,6 @@ export const toast = (options: IToastOptions) => {
     toast: true,
     title,
     showConfirmButton: false,
-    timer: 1500,
+    timer: 3000,
   });
 };
