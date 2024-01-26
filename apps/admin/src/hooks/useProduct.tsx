@@ -1,5 +1,5 @@
-import { BRANDS, PRODUCTS } from "@/constants";
-import { BRAND_API, PRODUCT_API } from "@/services";
+import { PRODUCTS } from "@/constants";
+import { PRODUCT_API } from "@/services";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

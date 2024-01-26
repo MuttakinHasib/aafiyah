@@ -21,7 +21,7 @@ import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import React from "react";
 import { MultiSelect, Select as MantineSelect, TagsInput } from "@mantine/core";
-import { useBrand, useCategory } from "@/hooks";
+import { useBrand, useCategory, useProduct } from "@/hooks";
 
 const defaultTags = [
   "Clothing",
@@ -48,6 +48,14 @@ const defaultTags = [
 
 export const ProductScreen = () => {
   const {
+    createProduct,
+    form: {
+      register,
+      formState: { errors },
+      setValue,
+    },
+  } = useProduct();
+  const {
     data: { categories },
   } = useCategory({ fetch: true });
   const {
@@ -55,7 +63,7 @@ export const ProductScreen = () => {
   } = useBrand({ fetch: true });
 
   return (
-    <div className="grid grid-cols-3 gap-5">
+    <form className="grid grid-cols-3 gap-5" onSubmit={createProduct}>
       <div className="col-span-2 space-y-8">
         <div className="bg-white rounded p-6 shadow-box">
           <h3 className="text-xl font-medium">General</h3>
@@ -70,6 +78,8 @@ export const ProductScreen = () => {
                 type="text"
                 placeholder="Enter product name"
                 className="text-sm bg-slate-50"
+                error={errors?.name?.message}
+                {...register("name")}
               />
             </div>
             <div className="flex gap-5">
@@ -80,6 +90,8 @@ export const ProductScreen = () => {
                   type="text"
                   placeholder="Enter product SKU"
                   className="text-sm bg-slate-50"
+                  error={errors?.sku?.message}
+                  {...register("sku")}
                 />
               </div>
               <div className="space-y-2 w-full">
@@ -90,6 +102,8 @@ export const ProductScreen = () => {
                   min={0}
                   placeholder="Enter product quantity"
                   className="text-sm bg-slate-50"
+                  error={errors?.quantity?.message}
+                  {...register("quantity")}
                 />
               </div>
             </div>
@@ -111,9 +125,11 @@ export const ProductScreen = () => {
                 <Input
                   id="price"
                   type="number"
-                  min={10}
+                  min={0}
                   placeholder="Set the product regular price"
                   className="text-sm bg-slate-50"
+                  error={errors?.price?.message}
+                  {...register("price")}
                 />
               </div>
               <div className="space-y-2 w-full">
@@ -124,6 +140,8 @@ export const ProductScreen = () => {
                   min={0}
                   placeholder="Set the product offer price"
                   className="text-sm bg-slate-50"
+                  error={errors?.salePrice?.message}
+                  {...register("salePrice")}
                 />
               </div>
             </div>
@@ -136,6 +154,8 @@ export const ProductScreen = () => {
                   min={10}
                   placeholder="Set the cost price of the product"
                   className="text-sm bg-slate-50"
+                  error={errors?.costPrice?.message}
+                  {...register("costPrice")}
                 />
               </div>
               <div className="space-y-2 w-full">
@@ -146,6 +166,8 @@ export const ProductScreen = () => {
                   min={0}
                   placeholder="Set the product tax amount in percentage (%)"
                   className="text-sm bg-slate-50"
+                  error={errors?.taxPrice?.message}
+                  {...register("taxPrice")}
                 />
               </div>
             </div>
@@ -173,8 +195,9 @@ export const ProductScreen = () => {
             </div>
             <Select defaultValue="MKS">
               <SelectTrigger
-                id="status"
+                id="unit"
                 className="bg-slate-50 border-gray-100 max-w-xs w-full"
+                onChange={(value) => console.log("UNIT:", value)}
               >
                 <SelectValue placeholder="Select Unit" />
               </SelectTrigger>
@@ -196,6 +219,8 @@ export const ProductScreen = () => {
                   min={10}
                   placeholder="Set the product height"
                   className="text-sm bg-slate-50"
+                  error={errors?.dimensions?.height?.message}
+                  {...register("dimensions.height")}
                 />
               </div>
               <div className="space-y-2 w-full">
@@ -206,6 +231,8 @@ export const ProductScreen = () => {
                   min={0}
                   placeholder="Set the product width"
                   className="text-sm bg-slate-50"
+                  error={errors?.dimensions?.width?.message}
+                  {...register("dimensions.width")}
                 />
               </div>
             </div>
@@ -218,6 +245,8 @@ export const ProductScreen = () => {
                   min={10}
                   placeholder="Set the weight of the product"
                   className="text-sm bg-slate-50"
+                  error={errors?.dimensions?.weight?.message}
+                  {...register("dimensions.weight")}
                 />
               </div>
               <div className="space-y-2 w-full">
@@ -228,6 +257,8 @@ export const ProductScreen = () => {
                   min={0}
                   placeholder="Set the length of the product"
                   className="text-sm bg-slate-50"
+                  error={errors?.dimensions?.length?.message}
+                  {...register("dimensions.length")}
                 />
               </div>
             </div>
@@ -252,7 +283,7 @@ export const ProductScreen = () => {
           <div className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="status">Status</Label>
-              <Select>
+              <Select onValueChange={(value) => console.log("STATUS:", value)}>
                 <SelectTrigger
                   id="status"
                   className="w-full bg-slate-50 border-gray-100"
@@ -263,7 +294,7 @@ export const ProductScreen = () => {
                   <SelectGroup>
                     <SelectItem value="archived">Archived</SelectItem>
                     <SelectItem value="draft">Draft</SelectItem>
-                    <SelectItem value="publish">Publish</SelectItem>
+                    <SelectItem value="published">Published</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -274,6 +305,7 @@ export const ProductScreen = () => {
                 id="category"
                 searchable
                 placeholder="Pick product categories"
+                onChange={(value) => console.log("CATEGORY:", value)}
                 data={categories?.map((category) => ({
                   label: category.name,
                   value: category.id,
@@ -292,6 +324,7 @@ export const ProductScreen = () => {
                 comboboxProps={{
                   transitionProps: { transition: "pop", duration: 200 },
                 }}
+                onChange={(value) => console.log("TAGS:", value)}
               />
             </div>
             <div className="space-y-2">
@@ -304,12 +337,13 @@ export const ProductScreen = () => {
                   value: brand.id,
                 }))}
                 searchable
+                onChange={(value) => console.log("BRAND:", value)}
               />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
