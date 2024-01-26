@@ -1,35 +1,27 @@
-import { IBase } from '../base';
+import { z } from "zod";
+import { IBrand, ICategory } from "..";
+import { IBase } from "../base";
+import { productSchema } from "@/validations";
 
 interface VariationOption {
   name: string;
   value: string;
 }
 
-interface Variation {
+type Variation = {
   name: string;
   options: VariationOption[];
-}
+};
 
-export enum ProductStatus {
-  PUBLISH = 'publish',
-  DRAFT = 'draft',
-}
+type BrandType<T> = T extends "create" ? string : IBrand;
+type CategoriesType<T> = T extends "create" ? string[] : ICategory[];
 
-export interface IProduct extends IBase {
-  name: string;
-  description: string;
+export interface IProduct<T extends "create" | undefined = undefined>
+  extends IBase,
+    Omit<z.infer<typeof productSchema>, "categories" | "brand"> {
   slug: string;
-  // categories: Category[];
-  tags?: string[];
+  categories: CategoriesType<T>;
   variations: Variation[];
-  sku: string;
-  countInStock: number;
-  price: number;
-  sale_price?: number;
-  // dimensions?: Dimension;
-  // brand: Brand;
-  image?: string;
-  gallery?: string[];
+  brand: BrandType<T>;
   reviews?: string[];
-  status: ProductStatus;
 }

@@ -30,10 +30,9 @@ export const productSchema = z.object({
     .number()
     .min(0, { message: "Tax price must be at least 0" })
     .optional(),
-  category: z
-    .string({ required_error: "Category is required" })
-    .min(3)
-    .max(255),
+  categories: z.array(
+    z.string({ required_error: "Category is required" }).min(3).max(255)
+  ),
   brand: z.string({ required_error: "Brand is required" }).min(3).max(255),
   image: z
     .string({ required_error: "Image is required" })
