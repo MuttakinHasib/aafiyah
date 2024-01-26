@@ -80,7 +80,7 @@ export const useBrand = (options?: UseBrandOptions) => {
 
   return {
     data: {
-      attributes: query.data || [],
+      brands: query.data || [],
       ...omit(query, ["data"]),
     },
     form,

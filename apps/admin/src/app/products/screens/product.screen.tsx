@@ -21,7 +21,7 @@ import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import React from "react";
 import { MultiSelect, Select as MantineSelect, TagsInput } from "@mantine/core";
-import { useCategory } from "@/hooks";
+import { useBrand, useCategory } from "@/hooks";
 
 const defaultTags = [
   "Clothing",
@@ -47,7 +47,13 @@ const defaultTags = [
 ];
 
 export const ProductScreen = () => {
-  const { data } = useCategory({ fetch: true });
+  const {
+    data: { categories },
+  } = useCategory({ fetch: true });
+  const {
+    data: { brands },
+  } = useBrand({ fetch: true });
+
   return (
     <div className="grid grid-cols-3 gap-5">
       <div className="col-span-2 space-y-8">
@@ -255,6 +261,7 @@ export const ProductScreen = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
+                    <SelectItem value="archived">Archived</SelectItem>
                     <SelectItem value="draft">Draft</SelectItem>
                     <SelectItem value="publish">Publish</SelectItem>
                   </SelectGroup>
@@ -267,7 +274,7 @@ export const ProductScreen = () => {
                 id="category"
                 searchable
                 placeholder="Pick product categories"
-                data={data.categories.map((category) => ({
+                data={categories?.map((category) => ({
                   label: category.name,
                   value: category.id,
                 }))}
@@ -292,7 +299,10 @@ export const ProductScreen = () => {
               <MantineSelect
                 id="brand"
                 placeholder="Select product brand"
-                data={["React", "Angular", "Vue", "Svelte"]}
+                data={brands?.map((brand) => ({
+                  label: brand.name,
+                  value: brand.id,
+                }))}
                 searchable
               />
             </div>
