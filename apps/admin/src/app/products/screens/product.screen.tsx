@@ -2,6 +2,7 @@
 
 import "@mantine/tiptap/styles.css";
 import {
+  Button,
   DropZone,
   Input,
   Label,
@@ -19,9 +20,12 @@ import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
-import React from "react";
+import React, { memo, useEffect, useMemo } from "react";
 import { MultiSelect, Select as MantineSelect, TagsInput } from "@mantine/core";
-import { useBrand, useCategory, useProduct } from "@/hooks";
+import { useAttribute, useBrand, useCategory, useProduct } from "@/hooks";
+import { preventNonNumeric } from "@/validations";
+import { IAttribute } from "@/types";
+import { XIcon } from "lucide-react";
 
 const defaultTags = [
   "Clothing",
@@ -46,13 +50,16 @@ const defaultTags = [
   "GiftIdeas",
 ];
 
-export const ProductScreen = () => {
+export const ProductScreen = memo(() => {
   const {
     createProduct,
     form: {
       register,
+      unregister,
       formState: { errors },
       setValue,
+      watch,
+      variants,
     },
   } = useProduct();
   const {
@@ -61,15 +68,67 @@ export const ProductScreen = () => {
   const {
     data: { brands },
   } = useBrand({ fetch: true });
+  const {
+    data: { attributes },
+  } = useAttribute({ fetch: true });
+
+  const type = watch("type");
+  const variantsData = watch("variants");
+
+  useEffect(() => {
+    if (type === "simple") {
+    } else {
+      unregister("sku");
+      unregister("quantity");
+    }
+  }, [type, unregister]);
+
+  const filterAttributes = useMemo(() => {
+    const res = attributes?.filter((el) => {
+      return !variantsData?.find((variant: any) => {
+        return variant?.attribute === el?.id;
+      });
+    });
+
+    return res?.map((attribute) => ({
+      label: attribute.name,
+      value: attribute.id,
+    }));
+  }, [attributes, variantsData]);
 
   return (
     <form className="grid grid-cols-3 gap-5" onSubmit={createProduct}>
       <div className="col-span-2 space-y-8">
         <div className="bg-white rounded p-6 shadow-box">
-          <h3 className="text-xl font-medium">General</h3>
-          <p className="text-sm mt-1 text-gray-500 pb-5">
-            Customize the basic information of your product
-          </p>
+          <div className="flex justify-between gap-5 flex-wrap pb-5">
+            <div className="space-y-1">
+              <h3 className="text-xl font-medium">General</h3>
+              <p className="text-sm mt-1 text-gray-500 pb-5">
+                Customize the basic information of your product
+              </p>
+            </div>
+            <Select
+              value={type}
+              onValueChange={(value) =>
+                setValue("type", value as "simple" | "variant")
+              }
+            >
+              <SelectTrigger
+                id="type"
+                className="bg-slate-50 border-gray-100 max-w-xs w-full"
+                onChange={(value) => console.log("UNIT:", value)}
+              >
+                <SelectValue placeholder="Select product type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Product Type</SelectLabel>
+                  <SelectItem value="simple">Simple</SelectItem>
+                  <SelectItem value="variant">Variant</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
@@ -82,31 +141,35 @@ export const ProductScreen = () => {
                 {...register("name")}
               />
             </div>
-            <div className="flex gap-5">
-              <div className="space-y-2 w-full">
-                <Label htmlFor="sku">SKU</Label>
-                <Input
-                  id="sku"
-                  type="text"
-                  placeholder="Enter product SKU"
-                  className="text-sm bg-slate-50"
-                  error={errors?.sku?.message}
-                  {...register("sku")}
-                />
+            {type === "simple" && (
+              <div className="flex gap-5">
+                <div className="space-y-2 w-full">
+                  <Label htmlFor="sku">SKU</Label>
+                  <Input
+                    id="sku"
+                    type="text"
+                    placeholder="Enter product SKU"
+                    className="text-sm bg-slate-50"
+                    error={errors?.sku?.message}
+                    {...register("sku")}
+                  />
+                </div>
+                <div className="space-y-2 w-full">
+                  <Label htmlFor="quantity">Quantity</Label>
+                  <Input
+                    id="quantity"
+                    type="number"
+                    min={0}
+                    defaultValue={0}
+                    placeholder="Enter product quantity"
+                    className="text-sm bg-slate-50"
+                    error={errors?.quantity?.message}
+                    onKeyDown={preventNonNumeric}
+                    {...register("quantity")}
+                  />
+                </div>
               </div>
-              <div className="space-y-2 w-full">
-                <Label htmlFor="quantity">Quantity</Label>
-                <Input
-                  id="quantity"
-                  type="number"
-                  min={0}
-                  placeholder="Enter product quantity"
-                  className="text-sm bg-slate-50"
-                  error={errors?.quantity?.message}
-                  {...register("quantity")}
-                />
-              </div>
-            </div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="description">Description</Label>
               <DescriptionEditor />
@@ -129,6 +192,8 @@ export const ProductScreen = () => {
                   placeholder="Set the product regular price"
                   className="text-sm bg-slate-50"
                   error={errors?.price?.message}
+                  onKeyDown={preventNonNumeric}
+                  defaultValue={0}
                   {...register("price")}
                 />
               </div>
@@ -141,6 +206,8 @@ export const ProductScreen = () => {
                   placeholder="Set the product offer price"
                   className="text-sm bg-slate-50"
                   error={errors?.salePrice?.message}
+                  onKeyDown={preventNonNumeric}
+                  defaultValue={0}
                   {...register("salePrice")}
                 />
               </div>
@@ -151,10 +218,12 @@ export const ProductScreen = () => {
                 <Input
                   id="cost_price"
                   type="number"
-                  min={10}
+                  min={0}
                   placeholder="Set the cost price of the product"
                   className="text-sm bg-slate-50"
                   error={errors?.costPrice?.message}
+                  onKeyDown={preventNonNumeric}
+                  defaultValue={0}
                   {...register("costPrice")}
                 />
               </div>
@@ -167,6 +236,8 @@ export const ProductScreen = () => {
                   placeholder="Set the product tax amount in percentage (%)"
                   className="text-sm bg-slate-50"
                   error={errors?.taxPrice?.message}
+                  onKeyDown={preventNonNumeric}
+                  defaultValue={0}
                   {...register("taxPrice")}
                 />
               </div>
@@ -216,10 +287,12 @@ export const ProductScreen = () => {
                 <Input
                   id="height"
                   type="number"
-                  min={10}
+                  min={0}
                   placeholder="Set the product height"
                   className="text-sm bg-slate-50"
                   error={errors?.dimensions?.height?.message}
+                  onKeyDown={preventNonNumeric}
+                  defaultValue={0}
                   {...register("dimensions.height")}
                 />
               </div>
@@ -232,6 +305,8 @@ export const ProductScreen = () => {
                   placeholder="Set the product width"
                   className="text-sm bg-slate-50"
                   error={errors?.dimensions?.width?.message}
+                  onKeyDown={preventNonNumeric}
+                  defaultValue={0}
                   {...register("dimensions.width")}
                 />
               </div>
@@ -242,10 +317,12 @@ export const ProductScreen = () => {
                 <Input
                   id="weight"
                   type="number"
-                  min={10}
+                  min={0}
                   placeholder="Set the weight of the product"
                   className="text-sm bg-slate-50"
                   error={errors?.dimensions?.weight?.message}
+                  onKeyDown={preventNonNumeric}
+                  defaultValue={0}
                   {...register("dimensions.weight")}
                 />
               </div>
@@ -258,6 +335,8 @@ export const ProductScreen = () => {
                   placeholder="Set the length of the product"
                   className="text-sm bg-slate-50"
                   error={errors?.dimensions?.length?.message}
+                  onKeyDown={preventNonNumeric}
+                  defaultValue={0}
                   {...register("dimensions.length")}
                 />
               </div>
@@ -265,87 +344,156 @@ export const ProductScreen = () => {
           </div>
         </div>
         {/* ************** VARIATIONS SECTION ************** */}
+        {type === "variant" && (
+          <div className="bg-white rounded p-6 shadow-box">
+            <h3 className="text-xl font-medium">Variations</h3>
+            <p className="text-sm mt-1 text-gray-500 pb-5">
+              Customize products with versatile options like colors, sizes, and
+              unique features
+            </p>
+            <div className="space-y-5">
+              {variants.fields.map((variant, index) => (
+                <div key={variant.id} className="flex gap-5">
+                  <MantineSelect
+                    id="attribute"
+                    placeholder="Select attribute"
+                    data={filterAttributes}
+                    searchable
+                    value={variantsData[index].attribute}
+                    onChange={(value) => {
+                      if (value) {
+                        setValue(`variants.${index}.values`, []);
+                        setValue(`variants.${index}.attribute`, value);
+                        const options = attributes
+                          .find((attribute) => attribute.id === value)
+                          ?.values.map((value) => value.name);
 
-        <div className="bg-white rounded p-6 shadow-box">
-          <h3 className="text-xl font-medium">Variations</h3>
-          <p className="text-sm mt-1 text-gray-500 pb-5">
-            Customize products with versatile options like colors, sizes, and
-            unique features
-          </p>
-        </div>
+                        if (options?.length) {
+                          setValue(`variants.${index}.options`, options);
+                        }
+                      }
+                    }}
+                  />
+                  <div className="flex-1">
+                    <MultiSelect
+                      id="values"
+                      searchable
+                      placeholder="Pick attribute values"
+                      value={variantsData[index].values}
+                      onChange={(value) => {
+                        setValue(`variants.${index}.values`, value);
+                      }}
+                      data={variantsData[index].options}
+                      comboboxProps={{
+                        transitionProps: { transition: "pop", duration: 200 },
+                      }}
+                    />
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="mt-8 inline-block border-red-400"
+                    onClick={() => variants.remove(index)}
+                  >
+                    <XIcon className="w-5 h-5" />
+                  </Button>
+                </div>
+              ))}
+              {filterAttributes.length > 1 && (
+                <Button
+                  type="button"
+                  onClick={() => {
+                    variants.append({ attribute: "", values: [], options: [] });
+                  }}
+                >
+                  Add option
+                </Button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
       <div className="col-span-1">
-        <div className="bg-white rounded p-6 shadow-box sticky top-20">
-          <h3 className="text-xl font-medium">Organization</h3>
-          <p className="text-sm mt-1 text-gray-500 pb-5">
-            Better organize your product
-          </p>
-          <div className="space-y-5">
-            <div className="space-y-2">
-              <Label htmlFor="status">Status</Label>
-              <Select onValueChange={(value) => console.log("STATUS:", value)}>
-                <SelectTrigger
-                  id="status"
-                  className="w-full bg-slate-50 border-gray-100"
+        <div className="sticky top-20 space-y-5">
+          <div className="bg-white rounded p-6 shadow-box">
+            <h3 className="text-xl font-medium">Organization</h3>
+            <p className="text-sm mt-1 text-gray-500 pb-5">
+              Better organize your product
+            </p>
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="status">Status</Label>
+                <Select
+                  onValueChange={(value) => console.log("STATUS:", value)}
                 >
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="archived">Archived</SelectItem>
-                    <SelectItem value="draft">Draft</SelectItem>
-                    <SelectItem value="published">Published</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+                  <SelectTrigger
+                    id="status"
+                    className="w-full bg-slate-50 border-gray-100"
+                  >
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="archived">Archived</SelectItem>
+                      <SelectItem value="draft">Draft</SelectItem>
+                      <SelectItem value="published">Published</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="category">Category</Label>
+                <MultiSelect
+                  id="category"
+                  searchable
+                  placeholder="Pick product categories"
+                  onChange={(value) => setValue("categories", value)}
+                  data={categories?.map((category) => ({
+                    label: category.name,
+                    value: category.id,
+                  }))}
+                  comboboxProps={{
+                    transitionProps: { transition: "pop", duration: 200 },
+                  }}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="tags">Tags</Label>
+                <TagsInput
+                  id="tags"
+                  placeholder="Pick product tags"
+                  data={defaultTags}
+                  comboboxProps={{
+                    transitionProps: { transition: "pop", duration: 200 },
+                  }}
+                  onChange={(value) => console.log("TAGS:", value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="brand">Brand</Label>
+                <MantineSelect
+                  id="brand"
+                  placeholder="Select product brand"
+                  data={brands?.map((brand) => ({
+                    label: brand.name,
+                    value: brand.id,
+                  }))}
+                  searchable
+                  onChange={(value) => console.log("BRAND:", value)}
+                />
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="category">Category</Label>
-              <MultiSelect
-                id="category"
-                searchable
-                placeholder="Pick product categories"
-                onChange={(value) => console.log("CATEGORY:", value)}
-                data={categories?.map((category) => ({
-                  label: category.name,
-                  value: category.id,
-                }))}
-                comboboxProps={{
-                  transitionProps: { transition: "pop", duration: 200 },
-                }}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="tags">Tags</Label>
-              <TagsInput
-                id="tags"
-                placeholder="Pick product tags"
-                data={defaultTags}
-                comboboxProps={{
-                  transitionProps: { transition: "pop", duration: 200 },
-                }}
-                onChange={(value) => console.log("TAGS:", value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="brand">Brand</Label>
-              <MantineSelect
-                id="brand"
-                placeholder="Select product brand"
-                data={brands?.map((brand) => ({
-                  label: brand.name,
-                  value: brand.id,
-                }))}
-                searchable
-                onChange={(value) => console.log("BRAND:", value)}
-              />
-            </div>
+          </div>
+          <div className="flex justify-end">
+            <Button type="submit">Create Product</Button>
           </div>
         </div>
       </div>
     </form>
   );
-};
+});
+
+ProductScreen.displayName = "ProductScreen";
 
 const content =
   '<h2 style="text-align: center;">Welcome to Mantine rich text editor</h2><p><code>RichTextEditor</code> component focuses on usability and is designed to be as simple as possible to bring a familiar editing experience to regular users. <code>RichTextEditor</code> is based on <a href="https://tiptap.dev/" rel="noopener noreferrer" target="_blank">Tiptap.dev</a> and supports all of its features:</p><ul><li>General text formatting: <strong>bold</strong>, <em>italic</em>, <u>underline</u>, <s>strike-through</s> </li><li>Headings (h1-h6)</li><li>Sub and super scripts (<sup>&lt;sup /&gt;</sup> and <sub>&lt;sub /&gt;</sub> tags)</li><li>Ordered and bullet lists</li><li>Text align&nbsp;</li><li>And all <a href="https://tiptap.dev/extensions" target="_blank" rel="noopener noreferrer">other extensions</a></li></ul>';

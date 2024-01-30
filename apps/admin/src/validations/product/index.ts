@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const productSchema = z.object({
+  type: z.enum(["simple", "variant"]),
   name: z
     .string({ required_error: "Name is required" })
     .min(3, { message: "Name must be at least 3 characters long" })
@@ -8,27 +9,26 @@ export const productSchema = z.object({
   description: z
     .string({ required_error: "Description is required" })
     .min(3, { message: "Description must be at least 3 characters long" }),
-  sku: z
-    .string({ required_error: "SKU is required" })
-    .min(3, { message: "SKU must be at least 3 characters long" })
-    .max(255, { message: "SKU must be at most 255 characters long" })
-    .optional(),
-  quantity: z
-    .number({ required_error: "Quantity is required" })
-    .min(0, { message: "Quantity must be at least 0" })
-    .optional(),
-  price: z.number().min(0, { message: "Price must be at least 0" }).optional(),
-  salePrice: z
+  sku: z.coerce.string().optional(),
+  quantity: z.coerce
     .number()
-    .min(0, { message: "Sale price must be at least 0" })
+    .transform((v) => (v === 0 ? undefined : v))
     .optional(),
-  costPrice: z
+  price: z.coerce
     .number()
-    .min(0, { message: "Cost price must be at least 0" })
+    .transform((v) => (v === 0 ? undefined : v))
     .optional(),
-  taxPrice: z
+  salePrice: z.coerce
     .number()
-    .min(0, { message: "Tax price must be at least 0" })
+    .transform((v) => (v === 0 ? undefined : v))
+    .optional(),
+  costPrice: z.coerce
+    .number()
+    .transform((v) => (v === 0 ? undefined : v))
+    .optional(),
+  taxPrice: z.coerce
+    .number()
+    .transform((v) => (v === 0 ? undefined : v))
     .optional(),
   categories: z.array(
     z.string({ required_error: "Category is required" }).min(3).max(255)
@@ -47,22 +47,53 @@ export const productSchema = z.object({
   status: z.enum(["draft", "published", "archived"]),
   tags: z.array(z.string()).optional(),
   dimensions: z.object({
-    width: z
+    width: z.coerce
       .number()
-      .min(0, { message: "Width must be at least 0" })
+      .transform((v) => (v === 0 ? undefined : v))
       .optional(),
-    height: z
+    height: z.coerce
       .number()
-      .min(0, { message: "Height must be at least 0" })
+      .transform((v) => (v === 0 ? undefined : v))
       .optional(),
-    weight: z
+    weight: z.coerce
       .number()
-      .min(0, { message: "Weight must be at least 0" })
+      .transform((v) => (v === 0 ? undefined : v))
       .optional(),
-    length: z
+    length: z.coerce
       .number()
-      .min(0, { message: "Weight must be at least 0" })
+      .transform((v) => (v === 0 ? undefined : v))
       .optional(),
     unit: z.string().optional(),
   }),
+  variants: z.array(
+    z.object({
+      attribute: z.string(),
+      values: z.array(z.string()),
+      options: z.array(z.string()),
+    })
+  ),
+  variantsOptions: z.array(
+    z.object({
+      name: z.string({ required_error: "Name is required" }).min(1),
+      sku: z.coerce.string({ required_error: "SKU is required" }),
+      quantity: z.coerce
+        .number({ required_error: "Quantity is required" })
+        .nonnegative(),
+      price: z.coerce
+        .number({ required_error: "Price is required" })
+        .nonnegative()
+        .optional(),
+      salePrice: z.coerce
+        .number({ required_error: "Sale price is required" })
+        .positive(),
+      costPrice: z.coerce
+        .number()
+        .transform((v) => (v === 0 ? undefined : v))
+        .optional(),
+      taxPrice: z.coerce
+        .number()
+        .transform((v) => (v === 0 ? undefined : v))
+        .optional(),
+    })
+  ),
 });

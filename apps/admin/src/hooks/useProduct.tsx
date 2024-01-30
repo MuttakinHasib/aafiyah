@@ -1,7 +1,7 @@
 import { PRODUCTS } from "@/constants";
 import { PRODUCT_API } from "@/services";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/libs";
@@ -24,8 +24,19 @@ export const useProduct = (options?: UseProductOptions) => {
 
   const form = useForm<FormFields>({
     mode: "all",
-    reValidateMode: "onChange",
     resolver: zodResolver(productSchema),
+    defaultValues: { type: "variant" },
+  });
+
+  const variants = useFieldArray({
+    shouldUnregister: true,
+    control: form.control,
+    name: "variants",
+  });
+
+  const variantsOptions = useFieldArray({
+    control: form.control,
+    name: "variantsOptions",
   });
 
   const query = useQuery({
@@ -56,7 +67,10 @@ export const useProduct = (options?: UseProductOptions) => {
       products: query.data || [],
       ...omit(query, ["data"]),
     },
-    form,
+    form: {
+      ...form,
+      variants,
+    },
     createProduct,
     isCreatingProduct,
   };
