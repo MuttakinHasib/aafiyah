@@ -4,6 +4,7 @@ import "@mantine/tiptap/styles.css";
 import {
   Button,
   DropZone,
+  ErrorMessage,
   Input,
   Label,
   Select,
@@ -24,8 +25,10 @@ import React, { memo, useEffect, useMemo } from "react";
 import { MultiSelect, Select as MantineSelect, TagsInput } from "@mantine/core";
 import { useAttribute, useBrand, useCategory, useProduct } from "@/hooks";
 import { preventNonNumeric } from "@/validations";
-import { IAttribute } from "@/types";
+
 import { XIcon } from "lucide-react";
+import { getCartesianProduct } from "@/helpers";
+import { Controller } from "react-hook-form";
 
 const defaultTags = [
   "Clothing",
@@ -56,12 +59,14 @@ export const ProductScreen = memo(() => {
     form: {
       register,
       unregister,
-      formState: { errors },
+      control,
       setValue,
       watch,
       variants,
+      formState: { errors },
     },
   } = useProduct();
+
   const {
     data: { categories },
   } = useCategory({ fetch: true });
@@ -77,9 +82,9 @@ export const ProductScreen = memo(() => {
 
   useEffect(() => {
     if (type === "simple") {
+      unregister(["variants", "variantsOptions"]);
     } else {
-      unregister("sku");
-      unregister("quantity");
+      unregister(["sku", "quantity", "price", "salePrice"]);
     }
   }, [type, unregister]);
 
@@ -95,6 +100,27 @@ export const ProductScreen = memo(() => {
       value: attribute.id,
     }));
   }, [attributes, variantsData]);
+
+  const cartesianProduct = getCartesianProduct(variantsData);
+
+  useEffect(() => {
+    if (cartesianProduct.length > 0) {
+      cartesianProduct.forEach((item, index) => {
+        const name = Array.isArray(item)
+          ? item.map((i) => i.value).join("/")
+          : item.value;
+
+        const options = Array.isArray(item)
+          ? JSON.stringify(item)
+          : JSON.stringify([item]);
+
+        register(`variantsOptions.${index}.name`);
+        register(`variantsOptions.${index}.options`);
+        setValue(`variantsOptions.${index}.name`, name);
+        setValue(`variantsOptions.${index}.options`, options);
+      });
+    }
+  }, [cartesianProduct.length]);
 
   return (
     <form className="grid grid-cols-3 gap-5" onSubmit={createProduct}>
@@ -182,36 +208,38 @@ export const ProductScreen = memo(() => {
             Set your pricing strategies to stay ahead of the competition
           </p>
           <div className="space-y-5">
-            <div className="flex gap-5">
-              <div className="space-y-2 w-full">
-                <Label htmlFor="price">Price</Label>
-                <Input
-                  id="price"
-                  type="number"
-                  min={0}
-                  placeholder="Set the product regular price"
-                  className="text-sm bg-slate-50"
-                  error={errors?.price?.message}
-                  onKeyDown={preventNonNumeric}
-                  defaultValue={0}
-                  {...register("price")}
-                />
+            {type === "simple" && (
+              <div className="flex gap-5">
+                <div className="space-y-2 w-full">
+                  <Label htmlFor="price">Price</Label>
+                  <Input
+                    id="price"
+                    type="number"
+                    min={0}
+                    placeholder="Set the product regular price"
+                    className="text-sm bg-slate-50"
+                    error={errors?.price?.message}
+                    onKeyDown={preventNonNumeric}
+                    defaultValue={0}
+                    {...register("price")}
+                  />
+                </div>
+                <div className="space-y-2 w-full">
+                  <Label htmlFor="sale_price">Sale Price</Label>
+                  <Input
+                    id="sale_price"
+                    type="number"
+                    min={0}
+                    placeholder="Set the product offer price"
+                    className="text-sm bg-slate-50"
+                    error={errors?.salePrice?.message}
+                    onKeyDown={preventNonNumeric}
+                    defaultValue={0}
+                    {...register("salePrice")}
+                  />
+                </div>
               </div>
-              <div className="space-y-2 w-full">
-                <Label htmlFor="sale_price">Sale Price</Label>
-                <Input
-                  id="sale_price"
-                  type="number"
-                  min={0}
-                  placeholder="Set the product offer price"
-                  className="text-sm bg-slate-50"
-                  error={errors?.salePrice?.message}
-                  onKeyDown={preventNonNumeric}
-                  defaultValue={0}
-                  {...register("salePrice")}
-                />
-              </div>
-            </div>
+            )}
             <div className="flex gap-5">
               <div className="space-y-2 w-full">
                 <Label htmlFor="cost_price">Cost Price</Label>
@@ -353,7 +381,7 @@ export const ProductScreen = memo(() => {
             </p>
             <div className="space-y-5">
               {variants.fields.map((variant, index) => (
-                <div key={variant.id} className="flex gap-5">
+                <div key={variant.id} className="flex gap-5 items-center">
                   <MantineSelect
                     id="attribute"
                     placeholder="Select attribute"
@@ -374,7 +402,7 @@ export const ProductScreen = memo(() => {
                       }
                     }}
                   />
-                  <div className="flex-1">
+                  <div className="flex-1 flex items-center gap-5">
                     <MultiSelect
                       id="values"
                       searchable
@@ -383,23 +411,24 @@ export const ProductScreen = memo(() => {
                       onChange={(value) => {
                         setValue(`variants.${index}.values`, value);
                       }}
+                      className="w-full"
                       data={variantsData[index].options}
                       comboboxProps={{
                         transitionProps: { transition: "pop", duration: 200 },
                       }}
                     />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="inline-block border-red-400"
+                      onClick={() => variants.remove(index)}
+                    >
+                      <XIcon className="w-5 h-5" />
+                    </Button>
                   </div>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="mt-8 inline-block border-red-400"
-                    onClick={() => variants.remove(index)}
-                  >
-                    <XIcon className="w-5 h-5" />
-                  </Button>
                 </div>
               ))}
-              {filterAttributes.length > 1 && (
+              {attributes?.length !== variantsData?.length && (
                 <Button
                   type="button"
                   onClick={() => {
@@ -410,6 +439,97 @@ export const ProductScreen = memo(() => {
                 </Button>
               )}
             </div>
+            {cartesianProduct.length > 0 && (
+              <div className="space-y-5">
+                {cartesianProduct?.map((item, index) => (
+                  <div
+                    key={index}
+                    className="space-y-5 !mt-8 pt-8 border-t-2 border-dashed"
+                  >
+                    <div className="flex text-lg font-medium gap-3">
+                      <span className="border min-w-8 flex items-center justify-center tabular-nums">
+                        {index + 1}
+                      </span>{" "}
+                      Variant:{" "}
+                      <div className="text-brand border flex items-center divide-x">
+                        {Array.isArray(item) ? (
+                          item?.map((i) => (
+                            <span key={i.value} className="px-1">
+                              {i.value}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="px-1">{item?.value}</span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex gap-5">
+                      <div className="space-y-2 w-full">
+                        <Label htmlFor="price">Price</Label>
+                        <Input
+                          id="price"
+                          type="number"
+                          min={0}
+                          placeholder="Set the product regular price"
+                          className="text-sm bg-slate-50"
+                          error={
+                            errors?.variantsOptions?.[index]?.price?.message
+                          }
+                          onKeyDown={preventNonNumeric}
+                          defaultValue={0}
+                          {...register(`variantsOptions.${index}.price`)}
+                        />
+                      </div>
+                      <div className="space-y-2 w-full">
+                        <Label htmlFor="sale_price">Sale Price</Label>
+                        <Input
+                          id="sale_price"
+                          type="number"
+                          min={0}
+                          placeholder="Set the product offer price"
+                          className="text-sm bg-slate-50"
+                          error={
+                            errors?.variantsOptions?.[index]?.salePrice?.message
+                          }
+                          onKeyDown={preventNonNumeric}
+                          defaultValue={0}
+                          {...register(`variantsOptions.${index}.salePrice`)}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-5">
+                      <div className="space-y-2 w-full">
+                        <Label htmlFor="sku">SKU</Label>
+                        <Input
+                          id="sku"
+                          type="text"
+                          placeholder="Enter product SKU"
+                          className="text-sm bg-slate-50"
+                          error={errors?.variantsOptions?.[index]?.sku?.message}
+                          {...register(`variantsOptions.${index}.sku`)}
+                        />
+                      </div>
+                      <div className="space-y-2 w-full">
+                        <Label htmlFor="quantity">Quantity</Label>
+                        <Input
+                          id="quantity"
+                          type="text"
+                          min={0}
+                          defaultValue={0}
+                          placeholder="Enter product quantity"
+                          className="text-sm bg-slate-50"
+                          error={
+                            errors?.variantsOptions?.[index]?.quantity?.message
+                          }
+                          onKeyDown={preventNonNumeric}
+                          {...register(`variantsOptions.${index}.quantity`)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -423,64 +543,90 @@ export const ProductScreen = memo(() => {
             <div className="space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="status">Status</Label>
-                <Select
-                  onValueChange={(value) => console.log("STATUS:", value)}
-                >
-                  <SelectTrigger
-                    id="status"
-                    className="w-full bg-slate-50 border-gray-100"
-                  >
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="archived">Archived</SelectItem>
-                      <SelectItem value="draft">Draft</SelectItem>
-                      <SelectItem value="published">Published</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <Controller
+                  name="status"
+                  {...{ control }}
+                  render={({ field: { onChange, value, ref } }) => (
+                    <Select {...{ value, ref }} onValueChange={onChange}>
+                      <SelectTrigger
+                        id="status"
+                        className="w-full bg-slate-50 border-gray-100"
+                      >
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="archived">Archived</SelectItem>
+                          <SelectItem value="draft">Draft</SelectItem>
+                          <SelectItem value="published">Published</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                <ErrorMessage errors={errors} name="status" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="category">Category</Label>
-                <MultiSelect
-                  id="category"
-                  searchable
-                  placeholder="Pick product categories"
-                  onChange={(value) => setValue("categories", value)}
-                  data={categories?.map((category) => ({
-                    label: category.name,
-                    value: category.id,
-                  }))}
-                  comboboxProps={{
-                    transitionProps: { transition: "pop", duration: 200 },
-                  }}
+                <Controller
+                  name="categories"
+                  {...{ control }}
+                  render={({ field: { onChange, value, ref } }) => (
+                    <MultiSelect
+                      id="category"
+                      searchable
+                      placeholder="Pick product categories"
+                      {...{ onChange, value, ref }}
+                      data={categories?.map((category) => ({
+                        label: category.name,
+                        value: category.id,
+                      }))}
+                      comboboxProps={{
+                        transitionProps: { transition: "pop", duration: 200 },
+                      }}
+                    />
+                  )}
                 />
+                <ErrorMessage errors={errors} name="categories" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="tags">Tags</Label>
-                <TagsInput
-                  id="tags"
-                  placeholder="Pick product tags"
-                  data={defaultTags}
-                  comboboxProps={{
-                    transitionProps: { transition: "pop", duration: 200 },
-                  }}
-                  onChange={(value) => console.log("TAGS:", value)}
+                <Controller
+                  name="tags"
+                  {...{ control }}
+                  render={({ field }) => (
+                    <TagsInput
+                      id="tags"
+                      placeholder="Pick product tags"
+                      data={defaultTags}
+                      comboboxProps={{
+                        transitionProps: { transition: "pop", duration: 200 },
+                      }}
+                      {...field}
+                    />
+                  )}
                 />
+                <ErrorMessage errors={errors} name="tags" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="brand">Brand</Label>
-                <MantineSelect
-                  id="brand"
-                  placeholder="Select product brand"
-                  data={brands?.map((brand) => ({
-                    label: brand.name,
-                    value: brand.id,
-                  }))}
-                  searchable
-                  onChange={(value) => console.log("BRAND:", value)}
+                <Controller
+                  name="brand"
+                  {...{ control }}
+                  render={({ field }) => (
+                    <MantineSelect
+                      id="brand"
+                      placeholder="Select product brand"
+                      data={brands?.map((brand) => ({
+                        label: brand.name,
+                        value: brand.id,
+                      }))}
+                      searchable
+                      {...field}
+                    />
+                  )}
                 />
+                <ErrorMessage errors={errors} name="brand" />
               </div>
             </div>
           </div>
