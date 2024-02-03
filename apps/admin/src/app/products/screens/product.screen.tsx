@@ -24,11 +24,11 @@ import TextAlign from "@tiptap/extension-text-align";
 import React, { memo, useEffect, useMemo } from "react";
 import { MultiSelect, Select as MantineSelect, TagsInput } from "@mantine/core";
 import { useAttribute, useBrand, useCategory, useProduct } from "@/hooks";
-import { preventNonNumeric } from "@/validations";
+import { ProductFormFields, preventNonNumeric } from "@/validations";
 
 import { XIcon } from "lucide-react";
 import { getCartesianProduct } from "@/helpers";
-import { Controller } from "react-hook-form";
+import { Controller, UseFormSetValue } from "react-hook-form";
 
 const defaultTags = [
   "Clothing",
@@ -198,7 +198,10 @@ export const ProductScreen = memo(() => {
             )}
             <div className="space-y-2">
               <Label htmlFor="description">Description</Label>
-              <DescriptionEditor />
+              <DescriptionEditor
+                value={watch("description")}
+                {...{ setValue }}
+              />
             </div>
           </div>
         </div>
@@ -644,7 +647,12 @@ ProductScreen.displayName = "ProductScreen";
 const content =
   '<h2 style="text-align: center;">Welcome to Mantine rich text editor</h2><p><code>RichTextEditor</code> component focuses on usability and is designed to be as simple as possible to bring a familiar editing experience to regular users. <code>RichTextEditor</code> is based on <a href="https://tiptap.dev/" rel="noopener noreferrer" target="_blank">Tiptap.dev</a> and supports all of its features:</p><ul><li>General text formatting: <strong>bold</strong>, <em>italic</em>, <u>underline</u>, <s>strike-through</s> </li><li>Headings (h1-h6)</li><li>Sub and super scripts (<sup>&lt;sup /&gt;</sup> and <sub>&lt;sub /&gt;</sub> tags)</li><li>Ordered and bullet lists</li><li>Text align&nbsp;</li><li>And all <a href="https://tiptap.dev/extensions" target="_blank" rel="noopener noreferrer">other extensions</a></li></ul>';
 
-function DescriptionEditor() {
+interface DescriptionEditorProps {
+  setValue: UseFormSetValue<ProductFormFields>;
+  value: string;
+}
+
+function DescriptionEditor({ setValue, value }: DescriptionEditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -655,6 +663,18 @@ function DescriptionEditor() {
     ],
     content,
   });
+
+  useEffect(() => {
+    if (editor?.getHTML()) {
+      setValue("description", editor.getHTML());
+    }
+  }, [editor]);
+
+  useEffect(() => {
+    if (value) {
+      editor?.commands.setContent(value);
+    }
+  }, [value, editor]);
 
   return (
     <RichTextEditor editor={editor}>
