@@ -6,13 +6,11 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/libs";
 import { omit } from "lodash";
-import { productSchema } from "@/validations";
+import { ProductFormFields, productSchema } from "@/validations";
 
 type UseProductOptions = {
   fetch?: boolean;
 };
-
-type FormFields = z.infer<typeof productSchema>;
 
 export const useProduct = (options?: UseProductOptions) => {
   const { fetch = false } = options || {};
@@ -22,12 +20,11 @@ export const useProduct = (options?: UseProductOptions) => {
     mutationKey: ["CREATE_PRODUCT"],
   });
 
-  const form = useForm<FormFields>({
+  const form = useForm<ProductFormFields>({
     mode: "all",
     resolver: zodResolver(productSchema),
     defaultValues: { type: "variant" },
   });
-
   const variants = useFieldArray({
     shouldUnregister: true,
     control: form.control,
@@ -46,20 +43,20 @@ export const useProduct = (options?: UseProductOptions) => {
   });
 
   const createProduct = form.handleSubmit(
-    async (data) =>
-      await mutateAsync(data, {
-        onSuccess: (message) => {
-          toast({
-            title: message,
-          });
-        },
-        onError: (error) => {
-          toast({
-            title: error.message,
-            icon: "error",
-          });
-        },
-      })
+    async (data) => console.log(data)
+    // await mutateAsync(data, {
+    //   onSuccess: (message) => {
+    //     toast({
+    //       title: message,
+    //     });
+    //   },
+    //   onError: (error) => {
+    //     toast({
+    //       title: error.message,
+    //       icon: "error",
+    //     });
+    //   },
+    // })
   );
 
   return {
