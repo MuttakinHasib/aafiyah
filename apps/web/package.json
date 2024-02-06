@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
@@ -37,6 +38,7 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.294.0",
     "next": "14.0.4",
+    "next-sitemap": "^4.2.3",
     "nextjs-toploader": "^1.6.4",
     "react": "^18",
     "react-dom": "^18",
