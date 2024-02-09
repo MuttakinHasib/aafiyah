@@ -1,18 +1,21 @@
 import { api } from "@/api";
 import { UPLOAD } from "@/constants";
-import { TImage } from "@/types";
+import { TFile } from "@/types";
+import { UploadApiResponse } from "cloudinary";
 
 export const UPLOAD_API = {
-  uploadFile: async (data: FormData): Promise<TImage> =>
+  uploadFile: async (data: FormData): Promise<TFile> =>
     await api.post(UPLOAD + "/file", data, {
       headers: { "Content-Type": "multipart/form-data" },
     }),
 
-  uploadFiles: async (data: FormData): Promise<TImage[]> =>
+  uploadFiles: async (data: FormData): Promise<TFile[]> =>
     await api.post(UPLOAD + "/files", data, {
       headers: { "Content-Type": "multipart/form-data" },
     }),
 
-  deleteFiles: async (public_ids: string[]): Promise<any> =>
-    await api.patch(UPLOAD + "/files", { public_ids }),
+  deleteFiles: async (files: TFile[]): Promise<any> =>
+    await api.patch(UPLOAD + "/files", {
+      public_ids: files.map((file) => file.public_id),
+    }),
 };
