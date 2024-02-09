@@ -14,7 +14,7 @@ export const UPLOAD_API = {
     }),
 
   deleteFiles: async (files: TFile[]): Promise<any> =>
-    await api.patch(UPLOAD + "/files", {
+    await api.put(UPLOAD + "/files", {
       public_ids: files.map((file) => file.public_id),
     }),
 };
