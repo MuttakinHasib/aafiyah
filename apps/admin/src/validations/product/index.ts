@@ -17,26 +17,31 @@ const commonSchema = z.object({
     { required_error: "Categories is required" }
   ),
   brand: z.string({ required_error: "Brand is required" }).min(3).max(255),
-  image: z.object({
-    public_id: z.string({ required_error: "Image is required" }),
-    secure_url: z
-      .string({ required_error: "Image is required" })
-      .url({ message: "Image must be a valid URL" }),
-    height: z.coerce.number().nonnegative(),
-    width: z.coerce.number().nonnegative(),
-  }),
+  image: z.object(
+    {
+      public_id: z.string({ required_error: "Image is required" }),
+      secure_url: z
+        .string({ required_error: "Image is required" })
+        .url({ message: "Image must be a valid URL" }),
+      height: z.coerce.number().nonnegative(),
+      width: z.coerce.number().nonnegative(),
+    },
+    { required_error: "Feature image is required" }
+  ),
   gallery: z
-    .array(
-      z.object({
+    .object(
+      {
         public_id: z.string({ required_error: "Image is required" }),
         secure_url: z
           .string({ required_error: "Image is required" })
           .url({ message: "Image must be a valid URL" }),
         height: z.coerce.number().nonnegative(),
         width: z.coerce.number().nonnegative(),
-      })
+      },
+      { required_error: "Please provide at least one image for the gallery." }
     )
-    .optional(),
+    .array(),
+
   status: z.enum(["draft", "published", "archived"], {
     required_error: "Status is required",
   }),
