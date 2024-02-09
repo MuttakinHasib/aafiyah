@@ -19,6 +19,7 @@ import { Accept } from "react-dropzone-esm";
 import { TFile } from "@/types";
 import Image from "next/image";
 import { TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { differenceWith, isEqual } from "lodash";
 
 interface Options extends PropsWithChildren {
   onUpload: (data: TFile | TFile[]) => void;
@@ -42,7 +43,7 @@ export const Uploader = (props: Options) => {
     title,
   } = props;
 
-  const { uploadFile, uploadFiles } = useUploader();
+  const { uploadFile, uploadFiles, deleteFiles } = useUploader();
 
   const onDrop = useCallback(
     async (files: FileWithPath[]) => {
@@ -74,6 +75,16 @@ export const Uploader = (props: Options) => {
 
   const onReject = useCallback(async () => {}, []);
 
+  const onDeleteFile = async (files: TFile[]) => {
+    if (!files.length) return;
+
+    await deleteFiles.mutateAsync(files, {
+      onSuccess: () => {
+        onUpload(differenceWith(images, files, isEqual));
+      },
+    });
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
@@ -82,6 +93,7 @@ export const Uploader = (props: Options) => {
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription className="space-y-5">
             <DropZone
+              multiple={maxFiles > 1}
               disabled={images.length >= maxFiles}
               loading={uploadFile.isPending || uploadFiles.isPending}
               {...{ onDrop, onReject, maxFiles, maxSize, accept }}
@@ -109,13 +121,26 @@ export const Uploader = (props: Options) => {
                         </div>
                         <h4 className="text-medium">{image?.public_id}</h4>
                       </div>
-                      <Button variant="outline">
-                        <XMarkIcon strokeWidth={1.2} className="w-5 h-5" />
+                      <Button
+                        type="button"
+                        title="Delete"
+                        variant="outline"
+                        loading={deleteFiles.isPending}
+                        onClick={() => onDeleteFile([image])}
+                      >
+                        <XMarkIcon className="w-5 h-5 stroke-[2]" />
                       </Button>
                     </div>
                   ))}
                 </div>
-                <Button className="w-full" variant="outline">
+                <Button
+                  title="Remove All"
+                  type="button"
+                  className="w-full"
+                  variant="outline"
+                  loading={deleteFiles.isPending}
+                  onClick={() => onDeleteFile(images)}
+                >
                   <TrashIcon className="w-5 h-5 mr-3" /> Remove All
                 </Button>
               </>
@@ -125,7 +150,11 @@ export const Uploader = (props: Options) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            disabled={uploadFile.isPending || uploadFiles.isPending}
+            disabled={
+              uploadFile.isPending ||
+              uploadFiles.isPending ||
+              deleteFiles.isPending
+            }
           >
             Continue
           </AlertDialogAction>
