@@ -29,6 +29,8 @@ import { ProductFormFields, preventNonNumeric } from "@/validations";
 import { XIcon } from "lucide-react";
 import { getCartesianProduct } from "@/helpers";
 import { Controller, UseFormSetValue } from "react-hook-form";
+import Image from "next/image";
+import { IconCloudUpload } from "@tabler/icons-react";
 
 const defaultTags = [
   "Clothing",
@@ -282,8 +284,31 @@ export const ProductScreen = memo(() => {
           <p className="text-sm mt-1 text-gray-500 pb-5">
             Showcase your product with high-quality images
           </p>
-          <div className="max-w-[250px] w-full">
-            <DropZone />
+          <div className="space-y-5">
+            <div className="border-2 border-dashed rounded-md p-3 space-y-3">
+              <Label htmlFor="images">Feature Image</Label>
+              <div className="flex flex-wrap gap-5">
+                <div className="w-40 h-40 grid place-content-center border">
+                  <IconCloudUpload
+                    size={40}
+                    stroke={1.5}
+                    style={{ color: "var(--mantine-color-blue-6)" }}
+                  />
+                </div>
+                <div className="w-40 h-40">
+                  <Image
+                    src="/images/products/product-1-1.jpg"
+                    alt="Product"
+                    width={200}
+                    height={200}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="border-2 border-dashed rounded-md p-3 space-y-3">
+              <Label htmlFor="gallery">Gallery</Label>
+            </div>
           </div>
         </div>
         {/* ************** DIMENSIONS SECTION ************** */}
