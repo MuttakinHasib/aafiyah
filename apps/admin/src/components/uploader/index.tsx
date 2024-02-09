@@ -16,17 +16,18 @@ import { useUploader } from "@/hooks";
 import { FileWithPath } from "@mantine/dropzone";
 import { Accept } from "react-dropzone-esm";
 
-import { TImage } from "@/types";
+import { TFile } from "@/types";
 import Image from "next/image";
 import { TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 interface Options extends PropsWithChildren {
-  onUpload: (data: TImage | TImage[]) => void;
+  onUpload: (data: TFile | TFile[]) => void;
   folder?: string;
   maxSize?: number;
   maxFiles?: number;
   accept?: Accept | string[];
-  images: TImage[];
+  images: TFile[];
+  title: string;
 }
 
 export const Uploader = (props: Options) => {
@@ -38,6 +39,7 @@ export const Uploader = (props: Options) => {
     accept,
     onUpload,
     images = [],
+    title,
   } = props;
 
   const { uploadFile, uploadFiles } = useUploader();
@@ -54,7 +56,7 @@ export const Uploader = (props: Options) => {
 
         await uploadFiles.mutateAsync(formData, {
           onSuccess: (data) => {
-            onUpload(data);
+            onUpload([...images, ...data]);
           },
         });
       } else {
@@ -67,7 +69,7 @@ export const Uploader = (props: Options) => {
         });
       }
     },
-    [folder, maxFiles, onUpload, uploadFile, uploadFiles]
+    [folder, images, maxFiles, onUpload, uploadFile, uploadFiles]
   );
 
   const onReject = useCallback(async () => {}, []);
@@ -77,13 +79,16 @@ export const Uploader = (props: Options) => {
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription className="space-y-5">
             <DropZone
+              disabled={images.length >= maxFiles}
               loading={uploadFile.isPending || uploadFiles.isPending}
               {...{ onDrop, onReject, maxFiles, maxSize, accept }}
             />
-
+            <h4 className="text-center font-semibold">
+              You can upload up to {maxFiles} images
+            </h4>
             {images?.length > 0 && (
               <>
                 <div className="space-y-3">
