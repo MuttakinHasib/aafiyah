@@ -16,7 +16,7 @@ import { useUploader } from "@/hooks";
 import { FileWithPath } from "@mantine/dropzone";
 import { Accept } from "react-dropzone-esm";
 
-import { TImage } from "@/types/image";
+import { TImage } from "@/types";
 
 interface Options extends PropsWithChildren {
   onUpload: (data: TImage | TImage[]) => void;

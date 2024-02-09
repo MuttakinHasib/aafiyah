@@ -1,6 +1,6 @@
 import { api } from "@/api";
 import { UPLOAD } from "@/constants";
-import { TImage } from "@/types/image";
+import { TImage } from "@/types";
 
 export const UPLOAD_API = {
   uploadFile: async (data: FormData): Promise<TImage> =>
