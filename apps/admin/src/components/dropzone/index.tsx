@@ -11,6 +11,7 @@ import {
 interface DropZoneOptions extends Partial<DropzoneProps> {
   onDrop: (files: FileWithPath[]) => void;
   onReject: (fileRejections: FileRejection[]) => void;
+  loading?: boolean;
 }
 
 export const DropZone = (props: DropZoneOptions) => {
