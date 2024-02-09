@@ -80,7 +80,8 @@ export const Uploader = (props: Options) => {
 
     await deleteFiles.mutateAsync(files, {
       onSuccess: () => {
-        onUpload(differenceWith(images, files, isEqual));
+        const rest = differenceWith(images, files, isEqual);
+        onUpload(maxFiles <= 1 ? rest[0] : rest);
       },
     });
   };
