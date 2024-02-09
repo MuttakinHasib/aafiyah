@@ -14,6 +14,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
+  Uploader,
 } from "@/components";
 import { RichTextEditor, Link } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
@@ -288,13 +289,15 @@ export const ProductScreen = memo(() => {
             <div className="border-2 border-dashed rounded-md p-3 space-y-3">
               <Label htmlFor="images">Feature Image</Label>
               <div className="flex flex-wrap gap-5">
-                <div className="w-40 h-40 grid place-content-center border">
-                  <IconCloudUpload
-                    size={40}
-                    stroke={1.5}
-                    style={{ color: "var(--mantine-color-blue-6)" }}
-                  />
-                </div>
+                <Uploader onUpload={(data) => setValue("image", data)}>
+                  <div className="w-40 h-40 grid place-content-center border">
+                    <IconCloudUpload
+                      size={40}
+                      stroke={1.5}
+                      style={{ color: "var(--mantine-color-blue-6)" }}
+                    />
+                  </div>
+                </Uploader>
                 <div className="w-40 h-40">
                   <Image
                     src="/images/products/product-1-1.jpg"

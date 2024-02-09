@@ -5,3 +5,4 @@ export * from "./sidebar";
 export * from "./product";
 export * from "./attribute";
 export * from "./dropzone";
+export * from "./uploader";
