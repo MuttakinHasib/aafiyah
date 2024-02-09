@@ -12,8 +12,14 @@ export const useUploader = () => {
     mutationFn: UPLOAD_API.uploadFiles,
   });
 
+  const deleteFiles = useMutation({
+    mutationKey: ["DELETE_FILES"],
+    mutationFn: UPLOAD_API.deleteFiles,
+  });
+
   return {
     uploadFile,
     uploadFiles,
+    deleteFiles,
   };
 };
