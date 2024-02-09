@@ -3,7 +3,6 @@
 import "@mantine/tiptap/styles.css";
 import {
   Button,
-  DropZone,
   ErrorMessage,
   Input,
   Label,
@@ -31,7 +30,6 @@ import { UploadIcon, XIcon } from "lucide-react";
 import { getCartesianProduct } from "@/helpers";
 import { Controller, UseFormSetValue } from "react-hook-form";
 import Image from "next/image";
-import { IconCloudUpload } from "@tabler/icons-react";
 import { TFile } from "@/types";
 
 const defaultTags = [
