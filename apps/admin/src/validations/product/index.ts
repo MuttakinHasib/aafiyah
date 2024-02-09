@@ -27,9 +27,14 @@ const commonSchema = z.object({
   }),
   gallery: z
     .array(
-      z
-        .string({ required_error: "Image is required" })
-        .url({ message: "Image must be a valid URL" })
+      z.object({
+        public_id: z.string({ required_error: "Image is required" }),
+        secure_url: z
+          .string({ required_error: "Image is required" })
+          .url({ message: "Image must be a valid URL" }),
+        height: z.coerce.number().nonnegative(),
+        width: z.coerce.number().nonnegative(),
+      })
     )
     .optional(),
   status: z.enum(["draft", "published", "archived"], {
