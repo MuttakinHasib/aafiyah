@@ -1,7 +1,6 @@
 import { api } from "@/api";
 import { UPLOAD } from "@/constants";
 import { TFile } from "@/types";
-import { UploadApiResponse } from "cloudinary";
 
 export const UPLOAD_API = {
   uploadFile: async (data: FormData): Promise<TFile> =>
