@@ -6,6 +6,9 @@ const nextConfig = {
         hostname: "example.com",
       },
       {
+        hostname: "res.cloudinary.com",
+      },
+      {
         hostname: "www.flaticon.com",
       },
       {
