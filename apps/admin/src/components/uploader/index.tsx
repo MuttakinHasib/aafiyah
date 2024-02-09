@@ -9,14 +9,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  Button,
   DropZone,
 } from "..";
-import { UseFormSetValue } from "react-hook-form";
 import { useUploader } from "@/hooks";
 import { FileWithPath } from "@mantine/dropzone";
 import { Accept } from "react-dropzone-esm";
 
 import { TImage } from "@/types";
+import Image from "next/image";
+import { TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 interface Options extends PropsWithChildren {
   onUpload: (data: TImage | TImage[]) => void;
@@ -24,6 +26,7 @@ interface Options extends PropsWithChildren {
   maxSize?: number;
   maxFiles?: number;
   accept?: Accept | string[];
+  images: TImage[];
 }
 
 export const Uploader = (props: Options) => {
@@ -34,6 +37,7 @@ export const Uploader = (props: Options) => {
     maxSize,
     accept,
     onUpload,
+    images = [],
   } = props;
 
   const { uploadFile, uploadFiles } = useUploader();
@@ -74,13 +78,52 @@ export const Uploader = (props: Options) => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            <DropZone {...{ onDrop, onReject, maxFiles, maxSize, accept }} />
+          <AlertDialogDescription className="space-y-5">
+            <DropZone
+              loading={uploadFile.isPending || uploadFiles.isPending}
+              {...{ onDrop, onReject, maxFiles, maxSize, accept }}
+            />
+
+            {images?.length > 0 && (
+              <>
+                <div className="space-y-3">
+                  {images?.map((image) => (
+                    <div
+                      key={image?.public_id}
+                      className="flex items-center justify-between gap-5 flex-wrap"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-14 h-14 overflow-hidden rounded-md border-2 border-dashed">
+                          <Image
+                            src={image?.secure_url}
+                            alt={image?.public_id}
+                            width={image?.width}
+                            height={image?.height}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <h4 className="text-medium">{image?.public_id}</h4>
+                      </div>
+                      <Button variant="outline">
+                        <XMarkIcon strokeWidth={1.2} className="w-5 h-5" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+                <Button className="w-full" variant="outline">
+                  <TrashIcon className="w-5 h-5 mr-3" /> Remove All
+                </Button>
+              </>
+            )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction
+            disabled={uploadFile.isPending || uploadFiles.isPending}
+          >
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
