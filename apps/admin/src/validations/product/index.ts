@@ -23,7 +23,7 @@ const commonSchema = z.object({
       .string({ required_error: "Image is required" })
       .url({ message: "Image must be a valid URL" }),
     height: z.coerce.number().nonnegative(),
-    weight: z.coerce.number().nonnegative(),
+    width: z.coerce.number().nonnegative(),
   }),
   gallery: z
     .array(
