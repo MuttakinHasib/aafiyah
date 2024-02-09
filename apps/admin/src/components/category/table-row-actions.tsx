@@ -1,7 +1,7 @@
 "use client";
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { Row } from "@tanstack/react-table";
+
 import {
   Button,
   DropdownMenu,
@@ -12,13 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "..";
 
-interface DataTableRowActionsProps<TData> {
-  row: Row<TData>;
-}
-
-export function CategoryTableRowActions<
-  TData
->({}: DataTableRowActionsProps<TData>) {
+export function CategoryTableRowActions() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
