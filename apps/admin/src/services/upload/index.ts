@@ -12,4 +12,7 @@ export const UPLOAD_API = {
     await api.post(UPLOAD + "/files", data, {
       headers: { "Content-Type": "multipart/form-data" },
     }),
+
+  deleteFiles: async (public_ids: string[]): Promise<any> =>
+    await api.patch(UPLOAD + "/files", { public_ids }),
 };
