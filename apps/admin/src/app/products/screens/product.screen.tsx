@@ -32,6 +32,7 @@ import { getCartesianProduct } from "@/helpers";
 import { Controller, UseFormSetValue } from "react-hook-form";
 import Image from "next/image";
 import { IconCloudUpload } from "@tabler/icons-react";
+import { TImage } from "@/types";
 
 const defaultTags = [
   "Clothing",
@@ -81,6 +82,7 @@ export const ProductScreen = memo(() => {
   } = useAttribute({ fetch: true });
 
   const type = watch("type");
+  const image = watch("image");
   const variantsData = watch("variants");
 
   useEffect(() => {
@@ -289,7 +291,10 @@ export const ProductScreen = memo(() => {
             <div className="border-2 border-dashed rounded-md p-3 space-y-3">
               <Label htmlFor="images">Feature Image</Label>
               <div className="flex flex-wrap gap-5">
-                <Uploader onUpload={(data) => setValue("image", data)}>
+                <Uploader
+                  images={image ? [image] : []}
+                  onUpload={(data) => setValue("image", data as TImage)}
+                >
                   <div className="w-40 h-40 grid place-content-center border">
                     <IconCloudUpload
                       size={40}
@@ -298,15 +303,17 @@ export const ProductScreen = memo(() => {
                     />
                   </div>
                 </Uploader>
-                <div className="w-40 h-40">
-                  <Image
-                    src="/images/products/product-1-1.jpg"
-                    alt="Product"
-                    width={200}
-                    height={200}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+                {image && (
+                  <div className="w-40 h-40">
+                    <Image
+                      src={image.secure_url}
+                      alt="Product"
+                      width={image.width}
+                      height={image.height}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
               </div>
             </div>
             <div className="border-2 border-dashed rounded-md p-3 space-y-3">
