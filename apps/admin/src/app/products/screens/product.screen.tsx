@@ -27,12 +27,12 @@ import { MultiSelect, Select as MantineSelect, TagsInput } from "@mantine/core";
 import { useAttribute, useBrand, useCategory, useProduct } from "@/hooks";
 import { ProductFormFields, preventNonNumeric } from "@/validations";
 
-import { XIcon } from "lucide-react";
+import { UploadIcon, XIcon } from "lucide-react";
 import { getCartesianProduct } from "@/helpers";
 import { Controller, UseFormSetValue } from "react-hook-form";
 import Image from "next/image";
 import { IconCloudUpload } from "@tabler/icons-react";
-import { TImage } from "@/types";
+import { TFile } from "@/types";
 
 const defaultTags = [
   "Clothing",
@@ -82,7 +82,7 @@ export const ProductScreen = memo(() => {
   } = useAttribute({ fetch: true });
 
   const type = watch("type");
-  const image = watch("image");
+  const [image, gallery] = watch(["image", "gallery"]);
   const variantsData = watch("variants");
 
   useEffect(() => {
@@ -287,24 +287,22 @@ export const ProductScreen = memo(() => {
           <p className="text-sm mt-1 text-gray-500 pb-5">
             Showcase your product with high-quality images
           </p>
-          <div className="space-y-5">
-            <div className="border-2 border-dashed rounded-md p-3 space-y-3">
+          <div>
+            <div className="rounded-md p-5 space-y-3 border-2 border-dashed">
               <Label htmlFor="images">Feature Image</Label>
               <div className="flex flex-wrap gap-5">
                 <Uploader
+                  title="Upload Feature Image"
                   images={image ? [image] : []}
-                  onUpload={(data) => setValue("image", data as TImage)}
+                  onUpload={(data) => setValue("image", data as TFile)}
                 >
-                  <div className="w-40 h-40 grid place-content-center border">
-                    <IconCloudUpload
-                      size={40}
-                      stroke={1.5}
-                      style={{ color: "var(--mantine-color-blue-6)" }}
-                    />
+                  <div className="w-28 h-28 grid place-content-center border-2 border-dotted cursor-pointer transition duration-300 hover:bg-gray-50">
+                    <UploadIcon className="w-8 h-8 mx-auto inline-block" />
+                    Upload
                   </div>
                 </Uploader>
                 {image && (
-                  <div className="w-40 h-40">
+                  <div className="w-28 h-28">
                     <Image
                       src={image.secure_url}
                       alt="Product"
@@ -316,8 +314,32 @@ export const ProductScreen = memo(() => {
                 )}
               </div>
             </div>
-            <div className="border-2 border-dashed rounded-md p-3 space-y-3">
-              <Label htmlFor="gallery">Gallery</Label>
+            <div className="rounded-md p-5 space-y-3 border-2 border-dashed border-t-0">
+              <Label htmlFor="gallery">Gallery Images</Label>
+              <div className="flex flex-wrap gap-5">
+                <Uploader
+                  title="Upload Gallery Images"
+                  images={gallery || []}
+                  maxFiles={5}
+                  onUpload={(data) => setValue("gallery", data as TFile[])}
+                >
+                  <div className="w-28 h-28 grid place-content-center border-2 border-dotted cursor-pointer transition duration-300 hover:bg-gray-50">
+                    <UploadIcon className="w-8 h-8 mx-auto inline-block" />
+                    Upload
+                  </div>
+                </Uploader>
+                {gallery?.map((image) => (
+                  <div key={image.public_id} className="w-28 h-28">
+                    <Image
+                      src={image.secure_url}
+                      alt="Product"
+                      width={image.width}
+                      height={image.height}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
