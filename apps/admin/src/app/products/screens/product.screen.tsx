@@ -311,6 +311,7 @@ export const ProductScreen = memo(() => {
                   </div>
                 )}
               </div>
+              <ErrorMessage name="image" {...{ errors }} />
             </div>
             <div className="rounded-md p-5 space-y-3 border-2 border-dashed border-t-0">
               <Label htmlFor="gallery">Gallery Images</Label>
@@ -338,6 +339,7 @@ export const ProductScreen = memo(() => {
                   </div>
                 ))}
               </div>
+              <ErrorMessage name="gallery" {...{ errors }} />
             </div>
           </div>
         </div>
