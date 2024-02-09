@@ -15,10 +15,11 @@ import { UseFormSetValue } from "react-hook-form";
 import { useUploader } from "@/hooks";
 import { FileWithPath } from "@mantine/dropzone";
 import { Accept } from "react-dropzone-esm";
-import { UploadApiResponse } from "cloudinary";
+
+import { TImage } from "@/types/image";
 
 interface Options extends PropsWithChildren {
-  onUpload: (data: UploadApiResponse | UploadApiResponse[]) => void;
+  onUpload: (data: TImage | TImage[]) => void;
   folder?: string;
   maxSize?: number;
   maxFiles?: number;
