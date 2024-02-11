@@ -64,8 +64,8 @@ export const ProductScreen = memo(() => {
       control,
       setValue,
       watch,
-      variants,
       formState: { errors },
+      attributes: variantAttributes,
     },
   } = useProduct();
 
@@ -81,20 +81,20 @@ export const ProductScreen = memo(() => {
 
   const type = watch("type");
   const [image, gallery] = watch(["image", "gallery"]);
-  const variantsData = watch("variants");
+  const variantAttributesData = watch("attributes");
 
   useEffect(() => {
     if (type === "simple") {
-      unregister(["variants", "variantsOptions"]);
+      unregister(["attributes", "variants"]);
     } else {
-      unregister(["sku", "quantity", "price", "salePrice"]);
+      unregister(["sku", "quantity", "price", "sale_price"]);
     }
   }, [type, unregister]);
 
   const filterAttributes = useMemo(() => {
     const res = attributes?.filter((el) => {
-      return !variantsData?.find((variant: any) => {
-        return variant?.attribute === el?.id;
+      return !variantAttributesData?.find((variant: any) => {
+        return variant?.id === el?.id;
       });
     });
 
@@ -102,9 +102,9 @@ export const ProductScreen = memo(() => {
       label: attribute.name,
       value: attribute.id,
     }));
-  }, [attributes, variantsData]);
+  }, [attributes, variantAttributesData]);
 
-  const cartesianProduct = getCartesianProduct(variantsData);
+  const cartesianProduct = getCartesianProduct(variantAttributesData);
 
   useEffect(() => {
     if (cartesianProduct.length > 0) {
@@ -113,14 +113,12 @@ export const ProductScreen = memo(() => {
           ? item.map((i) => i.value).join("/")
           : item.value;
 
-        const options = Array.isArray(item)
-          ? JSON.stringify(item)
-          : JSON.stringify([item]);
+        const options = Array.isArray(item) ? item : [item];
 
-        register(`variantsOptions.${index}.name`);
-        register(`variantsOptions.${index}.options`);
-        setValue(`variantsOptions.${index}.name`, name);
-        setValue(`variantsOptions.${index}.options`, options);
+        register(`variants.${index}.name`);
+        register(`variants.${index}.options`);
+        setValue(`variants.${index}.name`, name);
+        setValue(`variants.${index}.options`, options);
       });
     }
   }, [cartesianProduct.length]);
@@ -238,10 +236,10 @@ export const ProductScreen = memo(() => {
                     min={0}
                     placeholder="Set the product offer price"
                     className="text-sm bg-slate-50"
-                    error={errors?.salePrice?.message}
+                    error={errors?.sale_price?.message}
                     onKeyDown={preventNonNumeric}
                     defaultValue={0}
-                    {...register("salePrice")}
+                    {...register("sale_price")}
                   />
                 </div>
               </div>
@@ -255,10 +253,10 @@ export const ProductScreen = memo(() => {
                   min={0}
                   placeholder="Set the cost price of the product"
                   className="text-sm bg-slate-50"
-                  error={errors?.costPrice?.message}
+                  error={errors?.cost_price?.message}
                   onKeyDown={preventNonNumeric}
                   defaultValue={0}
-                  {...register("costPrice")}
+                  {...register("cost_price")}
                 />
               </div>
               <div className="space-y-2 w-full">
@@ -269,10 +267,10 @@ export const ProductScreen = memo(() => {
                   min={0}
                   placeholder="Set the product tax amount in percentage (%)"
                   className="text-sm bg-slate-50"
-                  error={errors?.taxPrice?.message}
+                  error={errors?.tax_price?.message}
                   onKeyDown={preventNonNumeric}
                   defaultValue={0}
-                  {...register("taxPrice")}
+                  {...register("tax_price")}
                 />
               </div>
             </div>
@@ -352,21 +350,30 @@ export const ProductScreen = memo(() => {
                 Details regarding size are provided below:
               </p>
             </div>
-            <Select defaultValue="MKS">
-              <SelectTrigger
-                id="unit"
-                className="bg-slate-50 border-gray-100 max-w-xs w-full"
-                onChange={(value) => console.log("UNIT:", value)}
-              >
-                <SelectValue placeholder="Select Unit" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Unit Type</SelectLabel>
-                  <SelectItem value="MKS">MKS (Meter KG Second)</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            <Controller
+              name="dimensions.unit"
+              {...{ control }}
+              render={({ field: { onChange, value } }) => (
+                <Select
+                  {...{ value }}
+                  defaultValue="MKS"
+                  onValueChange={(value) => onChange(value)}
+                >
+                  <SelectTrigger
+                    id="unit"
+                    className="bg-slate-50 border-gray-100 max-w-xs w-full"
+                  >
+                    <SelectValue placeholder="Select Unit" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Unit Type</SelectLabel>
+                      <SelectItem value="MKS">MKS (Meter KG Second)</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+            />
           </div>
           <div className="space-y-5">
             <div className="flex gap-5">
@@ -440,24 +447,24 @@ export const ProductScreen = memo(() => {
               unique features
             </p>
             <div className="space-y-5">
-              {variants.fields.map((variant, index) => (
+              {variantAttributes.fields.map((variant, index) => (
                 <div key={variant.id} className="flex gap-5 items-center">
                   <MantineSelect
                     id="attribute"
                     placeholder="Select attribute"
                     data={filterAttributes}
                     searchable
-                    value={variantsData[index].attribute}
+                    value={variantAttributesData[index].id}
                     onChange={(value) => {
                       if (value) {
-                        setValue(`variants.${index}.values`, []);
-                        setValue(`variants.${index}.attribute`, value);
+                        setValue(`attributes.${index}.values`, []);
+                        setValue(`attributes.${index}.id`, value);
                         const options = attributes
                           .find((attribute) => attribute.id === value)
                           ?.values.map((value) => value.name);
 
                         if (options?.length) {
-                          setValue(`variants.${index}.options`, options);
+                          setValue(`attributes.${index}.options`, options);
                         }
                       }
                     }}
@@ -467,12 +474,12 @@ export const ProductScreen = memo(() => {
                       id="values"
                       searchable
                       placeholder="Pick attribute values"
-                      value={variantsData[index].values}
+                      value={variantAttributesData[index].values}
                       onChange={(value) => {
-                        setValue(`variants.${index}.values`, value);
+                        setValue(`attributes.${index}.values`, value);
                       }}
                       className="w-full"
-                      data={variantsData[index].options}
+                      data={variantAttributesData[index].options}
                       comboboxProps={{
                         transitionProps: { transition: "pop", duration: 200 },
                       }}
@@ -481,18 +488,22 @@ export const ProductScreen = memo(() => {
                       type="button"
                       variant="outline"
                       className="inline-block border-red-400"
-                      onClick={() => variants.remove(index)}
+                      onClick={() => variantAttributes.remove(index)}
                     >
                       <XIcon className="w-5 h-5" />
                     </Button>
                   </div>
                 </div>
               ))}
-              {attributes?.length !== variantsData?.length && (
+              {attributes?.length !== variantAttributesData?.length && (
                 <Button
                   type="button"
                   onClick={() => {
-                    variants.append({ attribute: "", values: [], options: [] });
+                    variantAttributes.append({
+                      id: "",
+                      values: [],
+                      options: [],
+                    });
                   }}
                 >
                   Add option
@@ -532,12 +543,10 @@ export const ProductScreen = memo(() => {
                           min={0}
                           placeholder="Set the product regular price"
                           className="text-sm bg-slate-50"
-                          error={
-                            errors?.variantsOptions?.[index]?.price?.message
-                          }
+                          error={errors?.variants?.[index]?.price?.message}
                           onKeyDown={preventNonNumeric}
                           defaultValue={0}
-                          {...register(`variantsOptions.${index}.price`)}
+                          {...register(`variants.${index}.price`)}
                         />
                       </div>
                       <div className="space-y-2 w-full">
@@ -548,12 +557,10 @@ export const ProductScreen = memo(() => {
                           min={0}
                           placeholder="Set the product offer price"
                           className="text-sm bg-slate-50"
-                          error={
-                            errors?.variantsOptions?.[index]?.salePrice?.message
-                          }
+                          error={errors?.variants?.[index]?.sale_price?.message}
                           onKeyDown={preventNonNumeric}
                           defaultValue={0}
-                          {...register(`variantsOptions.${index}.salePrice`)}
+                          {...register(`variants.${index}.sale_price`)}
                         />
                       </div>
                     </div>
@@ -565,8 +572,8 @@ export const ProductScreen = memo(() => {
                           type="text"
                           placeholder="Enter product SKU"
                           className="text-sm bg-slate-50"
-                          error={errors?.variantsOptions?.[index]?.sku?.message}
-                          {...register(`variantsOptions.${index}.sku`)}
+                          error={errors?.variants?.[index]?.sku?.message}
+                          {...register(`variants.${index}.sku`)}
                         />
                       </div>
                       <div className="space-y-2 w-full">
@@ -578,11 +585,9 @@ export const ProductScreen = memo(() => {
                           defaultValue={0}
                           placeholder="Enter product quantity"
                           className="text-sm bg-slate-50"
-                          error={
-                            errors?.variantsOptions?.[index]?.quantity?.message
-                          }
+                          error={errors?.variants?.[index]?.quantity?.message}
                           onKeyDown={preventNonNumeric}
-                          {...register(`variantsOptions.${index}.quantity`)}
+                          {...register(`variants.${index}.quantity`)}
                         />
                       </div>
                     </div>
