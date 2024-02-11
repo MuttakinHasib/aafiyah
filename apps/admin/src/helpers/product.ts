@@ -8,11 +8,11 @@ export const cartesian = (...a: any) =>
   );
 
 export const getCartesianProduct = (
-  variants: ProductFormFields["variants"] = []
+  attributes: ProductFormFields["attributes"] = []
 ): any[] => {
-  const values = variants
-    .map((variant) =>
-      variant.values.map((value) => ({ attribute: variant.attribute, value }))
+  const values = attributes
+    .map((attribute) =>
+      attribute.values.map((value) => ({ attribute: attribute.id, value }))
     )
     .filter(Boolean);
 
