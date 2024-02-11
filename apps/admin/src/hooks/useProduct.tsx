@@ -2,7 +2,7 @@ import { PRODUCTS } from "@/constants";
 import { PRODUCT_API } from "@/services";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useFieldArray, useForm } from "react-hook-form";
-import { z } from "zod";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/libs";
 import { omit } from "lodash";
@@ -23,17 +23,12 @@ export const useProduct = (options?: UseProductOptions) => {
   const form = useForm<ProductFormFields>({
     mode: "all",
     resolver: zodResolver(productSchema),
-    defaultValues: { type: "variant" },
+    defaultValues: { type: "variant", dimensions: { unit: "MKS" } },
   });
-  const variants = useFieldArray({
+  const attributes = useFieldArray({
     shouldUnregister: true,
     control: form.control,
-    name: "variants",
-  });
-
-  const variantsOptions = useFieldArray({
-    control: form.control,
-    name: "variantsOptions",
+    name: "attributes",
   });
 
   const query = useQuery({
@@ -43,20 +38,20 @@ export const useProduct = (options?: UseProductOptions) => {
   });
 
   const createProduct = form.handleSubmit(
-    async (data) => console.log(data)
-    // await mutateAsync(data, {
-    //   onSuccess: (message) => {
-    //     toast({
-    //       title: message,
-    //     });
-    //   },
-    //   onError: (error) => {
-    //     toast({
-    //       title: error.message,
-    //       icon: "error",
-    //     });
-    //   },
-    // })
+    async (data) =>
+      await mutateAsync(data, {
+        onSuccess: (message) => {
+          toast({
+            title: message,
+          });
+        },
+        onError: (error) => {
+          toast({
+            title: error.message,
+            icon: "error",
+          });
+        },
+      })
   );
 
   return {
@@ -66,7 +61,7 @@ export const useProduct = (options?: UseProductOptions) => {
     },
     form: {
       ...form,
-      variants,
+      attributes,
     },
     createProduct,
     isCreatingProduct,
