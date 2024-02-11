@@ -10,8 +10,8 @@ const commonSchema = z.object({
   description: z
     .string({ required_error: "Description is required" })
     .min(3, { message: "Description must be at least 3 characters long" }),
-  costPrice: z.coerce.number().nonnegative(),
-  taxPrice: z.coerce.number().nonnegative(),
+  cost_price: z.coerce.number().nonnegative(),
+  tax_price: z.coerce.number().nonnegative(),
   categories: z.array(
     z.string({ required_error: "Category is required" }).min(3).max(255),
     { required_error: "Categories is required" }
@@ -78,24 +78,24 @@ const simple = z.object({
   price: z.coerce
     .number({ required_error: "Price is required" })
     .positive({ message: "Price must be greater than 0" }),
-  salePrice: z.coerce
+  sale_price: z.coerce
     .number({ required_error: "Sale price is required" })
     .positive({ message: "Sale price must be greater than 0" }),
 });
 
 const variant = z.object({
   type: z.literal(productType.enum.variant),
-  variants: z.array(
+  attributes: z.array(
     z.object({
-      attribute: z.string(),
+      id: z.string(),
       values: z.array(z.string()),
       options: z.array(z.string()),
     })
   ),
-  variantsOptions: z.array(
+  variants: z.array(
     z.object({
       name: z.string({ required_error: "Name is required" }).min(1),
-      options: z.string(),
+      options: z.array(z.any()),
       sku: z.coerce
         .string({ required_error: "SKU is required" })
         .min(3, { message: "SKU must be at least 3 characters long" }),
@@ -105,7 +105,7 @@ const variant = z.object({
       price: z.coerce
         .number({ required_error: "Price is required" })
         .positive({ message: "Price must be greater than 0" }),
-      salePrice: z.coerce
+      sale_price: z.coerce
         .number({ required_error: "Sale price is required" })
         .positive({ message: "Sale price must be greater than 0" }),
     })
