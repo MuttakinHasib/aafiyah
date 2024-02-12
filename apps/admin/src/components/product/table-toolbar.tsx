@@ -1,32 +1,40 @@
 "use client";
 
 import { Table } from "@tanstack/react-table";
-import React from "react";
-import {
-  CheckCircledIcon,
-  Cross2Icon,
-  CrossCircledIcon,
-  StopwatchIcon,
-} from "@radix-ui/react-icons";
+import React, { useCallback } from "react";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { Button, Input } from "..";
 import ProductTableFilter from "./table-faceted-filter";
+import { Archive, CheckCircle, NotebookPen } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const statuses = [
   {
-    value: "in progress",
-    label: "In Progress",
-    icon: StopwatchIcon,
+    value: "archived",
+    label: "Archived",
+    icon: Archive,
   },
   {
-    value: "done",
-    label: "Done",
-    icon: CheckCircledIcon,
+    value: "draft",
+    label: "Draft",
+    icon: NotebookPen,
   },
   {
-    value: "canceled",
-    label: "Canceled",
-    icon: CrossCircledIcon,
+    value: "published",
+    label: "Published",
+    icon: CheckCircle,
+  },
+];
+
+export const types = [
+  {
+    value: "simple",
+    label: "Simple",
+  },
+  {
+    value: "variant",
+    label: "Variant",
   },
 ];
 
@@ -37,7 +45,24 @@ interface DataTableToolbarProps<TData> {
 const ProductTableToolbar = <TData,>({
   table,
 }: DataTableToolbarProps<TData>) => {
-  const isFiltered = table.getState().columnFilters.length > 0;
+  const filteredColumns = table.getState().columnFilters;
+  const isFiltered = filteredColumns.length > 0;
+  const searchParams = useSearchParams();
+  // const pathname = usePathname();
+  const { push } = useRouter();
+
+  const clearFilteredParams = () => {
+    const query = new URLSearchParams(Array.from(searchParams.entries()));
+    filteredColumns.forEach((column) => {
+      query.delete(column.id);
+    });
+    table.resetColumnFilters();
+
+    setTimeout(() => {
+      // @ts-ignore
+      push(`?${query.toString()}`);
+    }, 0);
+  };
 
   return (
     <div className="flex items-center justify-between space-x-5">
@@ -50,6 +75,13 @@ const ProductTableToolbar = <TData,>({
           }
           className="max-w-xs bg-white"
         />
+        {table.getColumn("type") && (
+          <ProductTableFilter
+            column={table.getColumn("type")}
+            title="Type"
+            options={types}
+          />
+        )}
         {table.getColumn("status") && (
           <ProductTableFilter
             column={table.getColumn("status")}
@@ -60,7 +92,7 @@ const ProductTableToolbar = <TData,>({
         {isFiltered && (
           <Button
             variant="ghost"
-            onClick={() => table.resetColumnFilters()}
+            onClick={clearFilteredParams}
             className="h-8 px-2 lg:px-3"
           >
             Reset

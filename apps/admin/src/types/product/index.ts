@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { IBrand, ICategory } from "..";
 import { IBase } from "../base";
-import { productSchema } from "@/validations";
+import { ProductFormFields, productSchema } from "@/validations";
 
 interface VariationOption {
   name: string;
@@ -18,10 +18,9 @@ type CategoriesType<T> = T extends "create" ? string[] : ICategory[];
 
 export interface IProduct<T extends "create" | undefined = undefined>
   extends IBase,
-    Omit<z.infer<typeof productSchema>, "categories" | "brand"> {
+    Omit<ProductFormFields, "categories" | "brand"> {
   slug: string;
   categories: CategoriesType<T>;
-  variations: Variation[];
   brand: BrandType<T>;
   reviews?: string[];
 }

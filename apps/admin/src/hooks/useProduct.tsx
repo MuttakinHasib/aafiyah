@@ -7,12 +7,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/libs";
 import { omit } from "lodash";
 import { ProductFormFields, productSchema } from "@/validations";
+import { useSearchParams } from "next/navigation";
+import { getQueries } from "@/utils";
 
 type UseProductOptions = {
   fetch?: boolean;
 };
 
 export const useProduct = (options?: UseProductOptions) => {
+  const searchParams = useSearchParams();
   const { fetch = false } = options || {};
 
   const { mutateAsync, isPending: isCreatingProduct } = useMutation({
@@ -23,8 +26,9 @@ export const useProduct = (options?: UseProductOptions) => {
   const form = useForm<ProductFormFields>({
     mode: "all",
     resolver: zodResolver(productSchema),
-    defaultValues: { type: "variant", dimensions: { unit: "MKS" } },
+    defaultValues: { type: "simple", dimensions: { unit: "MKS" } },
   });
+
   const attributes = useFieldArray({
     shouldUnregister: true,
     control: form.control,
@@ -32,8 +36,8 @@ export const useProduct = (options?: UseProductOptions) => {
   });
 
   const query = useQuery({
-    queryKey: [PRODUCTS],
-    queryFn: PRODUCT_API.getProducts,
+    queryKey: [PRODUCTS, getQueries(searchParams)],
+    queryFn: async () => await PRODUCT_API.getProducts(searchParams.toString()),
     enabled: fetch,
   });
 
@@ -44,6 +48,7 @@ export const useProduct = (options?: UseProductOptions) => {
           toast({
             title: message,
           });
+          form.reset();
         },
         onError: (error) => {
           toast({

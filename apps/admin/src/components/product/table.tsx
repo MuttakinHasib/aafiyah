@@ -25,16 +25,14 @@ import {
   TableRow,
 } from "..";
 import { DataTablePagination } from "./table-pagination";
+import { IProduct } from "@/types";
 
-interface ProductTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface ProductTableProps {
+  columns: ColumnDef<IProduct, any>[];
+  data: IProduct[];
 }
 
-export const ProductTable = <TData, TValue>({
-  columns,
-  data,
-}: ProductTableProps<TData, TValue>) => {
+export const ProductTable = ({ columns, data }: ProductTableProps) => {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -68,7 +66,7 @@ export const ProductTable = <TData, TValue>({
   return (
     <div className="space-y-4">
       <ProductTableToolbar table={table} />
-      <div className="rounded-md border bg-white">
+      <div className="rounded-md bg-white">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
