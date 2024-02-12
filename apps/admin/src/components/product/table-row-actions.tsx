@@ -8,11 +8,18 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-DropdownMenuShortcut,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "..";
+import { Row } from "@tanstack/react-table";
+import Link from "next/link";
+import { IProduct } from "@/types";
 
-export function ProductTableRowActions() {
+interface DataTableRowActionsProps {
+  row: Row<IProduct>;
+}
+
+export function ProductTableRowActions({ row }: DataTableRowActionsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -25,7 +32,9 @@ export function ProductTableRowActions() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <Link href={{ pathname: "/products/" + row.original.id }}>
+          <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           Delete

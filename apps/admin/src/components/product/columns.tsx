@@ -1,11 +1,21 @@
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import React from "react";
-import { statuses } from "./table-toolbar";
+import { statuses, types } from "./table-toolbar";
 import { ProductTableRowActions } from "./table-row-actions";
 import { IProduct } from "@/types";
 import Image from "next/image";
 import { ProductColumnHeader } from "./column-header";
 import { Checkbox } from "..";
+import { cn } from "@/utils";
+
+const columnHelper = createColumnHelper<IProduct[]>();
+
+// const defaultColumns = [
+//   columnHelper.display({
+//     id: "select",
+//     cell:
+//   }),
+// ];
 
 export const productColumns: ColumnDef<IProduct>[] = [
   {
@@ -45,9 +55,9 @@ export const productColumns: ColumnDef<IProduct>[] = [
           <div className="h-11 w-11 flex-shrink-0">
             <Image
               className="rounded-full"
-              width={44}
-              height={44}
-              src={row.getValue("image")}
+              width={row.original.image.width}
+              height={row.original.image.height}
+              src={row.original.image.secure_url}
               alt={row.getValue("name")}
             />
           </div>
@@ -55,7 +65,7 @@ export const productColumns: ColumnDef<IProduct>[] = [
             <div className="font-medium text-gray-900">
               {row.getValue("name")}
             </div>
-            <div className="mt-1 text-gray-500">Category</div>
+            {/* <div className="mt-1 text-gray-500">Category</div> */}
           </div>
         </div>
       );
@@ -67,12 +77,40 @@ export const productColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="truncate font-medium">{row.getValue("sku")}</span>
+          <span className="truncate font-medium">
+            {row.original.type === "simple"
+              ? row.getValue("sku")
+              : row.original.variants.map((variant) => variant.sku).join(" / ")}
+          </span>
         </div>
       );
     },
     enableHiding: false,
     enableSorting: false,
+  },
+  {
+    enableHiding: false,
+    enableSorting: false,
+    accessorKey: "type",
+    header: ({ column }) => (
+      <ProductColumnHeader column={column} title="Type" />
+    ),
+    cell: ({ row }) => {
+      const type = types.find((t) => t.value === row.getValue("type"));
+
+      if (!type) {
+        return null;
+      }
+
+      return (
+        <div className="flex w-[100px] items-center">
+          <span>{type.label}</span>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     accessorKey: "price",
@@ -82,13 +120,19 @@ export const productColumns: ColumnDef<IProduct>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="truncate font-medium">{row.getValue("price")}</span>
+          <span className="truncate font-medium">
+            {row.original.type === "simple"
+              ? row.getValue("price")
+              : row.original.variants
+                  .map((variant) => variant.price)
+                  .join(", ")}
+          </span>
         </div>
       );
     },
   },
   {
-    accessorKey: "countInStock",
+    accessorKey: "quantity",
     header: ({ column }) => (
       <ProductColumnHeader column={column} title="Quantity" />
     ),
@@ -96,7 +140,12 @@ export const productColumns: ColumnDef<IProduct>[] = [
       return (
         <div className="flex space-x-2">
           <span className="truncate font-medium">
-            {row.getValue("countInStock")}
+            {row.original.type === "simple"
+              ? row.getValue("quantity")
+              : row.original.variants?.reduce(
+                  (acc, variant) => acc + variant.quantity,
+                  0
+                )}
           </span>
         </div>
       );
@@ -105,6 +154,8 @@ export const productColumns: ColumnDef<IProduct>[] = [
     enableSorting: false,
   },
   {
+    enableHiding: false,
+    enableSorting: false,
     accessorKey: "status",
     header: ({ column }) => (
       <ProductColumnHeader column={column} title="Status" />
@@ -119,10 +170,17 @@ export const productColumns: ColumnDef<IProduct>[] = [
       }
 
       return (
-        <div className="flex w-[100px] items-center">
-          {status.icon && (
-            <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+        <div
+          className={cn(
+            "flex items-center justify-center py-1 px-2 rounded-lg overflow-hidden space-x-2",
+            {
+              "bg-muted-foreground text-white": status.value === "archived",
+              "bg-muted": status.value === "draft",
+              "bg-green-100 text-green-600": status.value === "published",
+            }
           )}
+        >
+          {status.icon && <status.icon className="h-4 w-4" />}
           <span>{status.label}</span>
         </div>
       );
@@ -133,6 +191,6 @@ export const productColumns: ColumnDef<IProduct>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <ProductTableRowActions row={row} />,
+    cell: ({ row }) => <ProductTableRowActions {...{ row }} />,
   },
 ];

@@ -1,7 +1,8 @@
-import { cn } from "@/utils";
+import { cn, getQueries } from "@/utils";
+import queryString from "query-string";
 import { PlusCircledIcon, CheckIcon } from "@radix-ui/react-icons";
 import { Column } from "@tanstack/react-table";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   Badge,
   Button,
@@ -17,6 +18,7 @@ import {
   PopoverTrigger,
   Separator,
 } from "..";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
@@ -33,8 +35,39 @@ const ProductTableFilter = <TData, TValue>({
   title,
   options,
 }: DataTableFacetedFilterProps<TData, TValue>) => {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
   const facets = column?.getFacetedUniqueValues();
-  const selectedValues = new Set(column?.getFilterValue() as string[]);
+
+  const selectedValues = useMemo(
+    () => new Set(column?.getFilterValue() as string[]),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [column?.getFilterValue()]
+  );
+
+  useEffect(() => {
+    const currentQueries = getQueries(searchParams);
+    column?.setFilterValue(currentQueries[column?.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const currentQueries = getQueries(searchParams);
+    const filterValues = Array.from(selectedValues);
+
+    const query = queryString.stringify(
+      {
+        ...currentQueries,
+        [String(column?.id)]: filterValues,
+      },
+      { arrayFormat: "comma" }
+    );
+
+    // @ts-ignore
+    replace(`${pathname}?${query}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedValues, column?.id, searchParams]);
 
   return (
     <Popover>
@@ -83,7 +116,10 @@ const ProductTableFilter = <TData, TValue>({
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0" align="start">
         <Command>
-          <CommandInput placeholder={title} />
+          <CommandInput
+            className="border-none focus:ring-0"
+            placeholder={title}
+          />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
