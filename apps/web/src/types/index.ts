@@ -10,3 +10,4 @@ export * from "./category";
 export * from "./toast";
 export * from "./file";
 export * from "./attribute";
+export * from "./link";
