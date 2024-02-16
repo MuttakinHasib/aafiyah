@@ -1,0 +1,9 @@
+export const AUTH_ROUTE = "auth";
+export const USERS_ROUTE = "users";
+export const ADDRESSES_ROUTE = "addresses";
+export const LOGGED_IN = "LOGGED_IN";
+export const CATEGORIES = "categories";
+export const ATTRIBUTES = "attributes";
+export const BRANDS = "brands";
+export const PRODUCTS = "products";
+export const UPLOAD = "upload";
