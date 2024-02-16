@@ -12,7 +12,7 @@ import {
 import { Navigation } from "./navigation";
 import { UserMenu } from "../menu";
 import { useReadLocalStorage } from "usehooks-ts";
-import { LOGGED_IN } from "@/constant";
+import { LOGGED_IN } from "@/constants";
 import { useProfile } from "@/hooks";
 
 export const Header = () => {

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import toast from 'react-hot-toast';
-import { useForm } from 'react-hook-form';
-import { AUTH_API } from '../services';
-import { ILogin, IRegister } from '@/types';
-import { useLocalStorage } from 'usehooks-ts';
-import { LOGGED_IN } from '../constant';
-import { useRouter } from 'next/navigation';
-import { useQueryClient } from '@tanstack/react-query';
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { AUTH_API } from "../services";
+import { ILogin, IRegister } from "@/types";
+import { useLocalStorage } from "usehooks-ts";
+import { LOGGED_IN } from "../constants";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const useAuth = () => {
   const { push } = useRouter();
@@ -15,17 +15,17 @@ export const useAuth = () => {
   const queryClient = useQueryClient();
 
   const { handleSubmit, ...form } = useForm<ILogin & IRegister>({
-    mode: 'all',
+    mode: "all",
   });
 
   const login = handleSubmit(async (data: ILogin) => {
     try {
       toast.promise(AUTH_API.login(data), {
-        loading: 'Logging in...',
+        loading: "Logging in...",
         success: (data) => {
           setLoggedIn(true);
-          push('/dashboard');
-          return 'Logged in!';
+          push("/dashboard");
+          return "Logged in!";
         },
         error: (err) => {
           return err.message;
@@ -39,15 +39,15 @@ export const useAuth = () => {
   const signUp = handleSubmit(async (data: IRegister) => {
     try {
       toast.promise(AUTH_API.register(data), {
-        loading: 'Registering...',
+        loading: "Registering...",
         success: (message) => {
-          push('/login');
+          push("/login");
 
           return message;
         },
         error: (message) => {
           console.log(message);
-          return message || 'Something went wrong';
+          return message || "Something went wrong";
         },
       });
     } catch (error) {
@@ -58,12 +58,12 @@ export const useAuth = () => {
   const logout = async () => {
     try {
       toast.promise(AUTH_API.logout(), {
-        loading: 'Logging out...',
+        loading: "Logging out...",
         success: () => {
           setLoggedIn(false);
-          push('/');
-          queryClient.removeQueries({ queryKey: ['me'], exact: true });
-          return 'Logged out!';
+          push("/");
+          queryClient.removeQueries({ queryKey: ["me"], exact: true });
+          return "Logged out!";
         },
         error: (err) => {
           console.log(err);

@@ -1,13 +1,13 @@
 "use client";
 
 import { Table } from "@tanstack/react-table";
-import React, { useCallback } from "react";
+import React from "react";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { Button, Input } from "..";
 import ProductTableFilter from "./table-faceted-filter";
 import { Archive, CheckCircle, NotebookPen } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const statuses = [
   {

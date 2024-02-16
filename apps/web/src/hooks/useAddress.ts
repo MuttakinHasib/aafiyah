@@ -3,7 +3,7 @@
 import { useReadLocalStorage } from "usehooks-ts";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { LOGGED_IN } from "../constant";
+import { LOGGED_IN } from "../constants";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { IAddress } from "@/types";

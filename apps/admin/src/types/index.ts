@@ -8,5 +8,5 @@ export * from "./mail";
 export * from "./product";
 export * from "./category";
 export * from "./toast";
-export * from "./image";
+export * from "./file";
 export * from "./attribute";

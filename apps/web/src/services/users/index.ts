@@ -1,6 +1,6 @@
 import { IUser } from "@/types";
 import { api } from "../../api";
-import { USERS_ROUTE } from "../../constant";
+import { USERS_ROUTE } from "../../constants";
 
 export const USERS_API = {
   getMe: async (): Promise<IUser> => await api.get(`${USERS_ROUTE}/me`),

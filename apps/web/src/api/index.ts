@@ -1,7 +1,7 @@
-import { capitalize, isArray } from 'lodash';
-import axios, { AxiosResponse } from 'axios';
-import toast from 'react-hot-toast';
-export const baseURL = process.env.NEXT_PUBLIC_API_URL;
+import { capitalize, isArray } from "lodash";
+import axios, { AxiosResponse } from "axios";
+import toast from "react-hot-toast";
+export const baseURL = process.env.NEXT_PUBLIC_API_URL + "/";
 
 const api = axios.create({
   baseURL,

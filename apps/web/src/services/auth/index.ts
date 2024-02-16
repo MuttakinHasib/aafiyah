@@ -1,6 +1,6 @@
 import { ILogin, IRegister } from "@/types";
 import { api } from "../../api";
-import { AUTH_ROUTE } from "../../constant";
+import { AUTH_ROUTE } from "../../constants";
 
 export const AUTH_API = {
   login: async (data: ILogin) => await api.post(`${AUTH_ROUTE}/login`, data),

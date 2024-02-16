@@ -1,6 +1,6 @@
 import { IAddress } from "@/types";
 import { api } from "../../api";
-import { ADDRESSES_ROUTE } from "../../constant";
+import { ADDRESSES_ROUTE } from "../../constants";
 
 export const ADDRESSES_API = {
   create: async (data: IAddress): Promise<string> =>
