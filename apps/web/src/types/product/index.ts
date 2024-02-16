@@ -1,35 +1,11 @@
-import { IBase } from '../base';
+import { ProductFormFields } from "@/validations";
+import { IBase, IBrand, ICategory } from "..";
 
-interface VariationOption {
-  name: string;
-  value: string;
-}
-
-interface Variation {
-  name: string;
-  options: VariationOption[];
-}
-
-export enum ProductStatus {
-  PUBLISH = 'publish',
-  DRAFT = 'draft',
-}
-
-export interface IProduct extends IBase {
-  name: string;
-  description: string;
+export interface IProduct
+  extends IBase,
+    Omit<ProductFormFields, "categories" | "brand"> {
   slug: string;
-  // categories: Category[];
-  tags?: string[];
-  variations: Variation[];
-  sku: string;
-  countInStock: number;
-  price: number;
-  sale_price?: number;
-  // dimensions?: Dimension;
-  // brand: Brand;
-  image?: string;
-  gallery?: string[];
+  categories: ICategory[];
+  brand: IBrand;
   reviews?: string[];
-  status: ProductStatus;
 }
