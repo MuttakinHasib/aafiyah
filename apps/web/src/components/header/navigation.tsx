@@ -8,6 +8,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "..";
+import { useCategory } from "@/hooks";
 
 export const NAVIGATION = [
   {
@@ -29,6 +30,9 @@ export const NAVIGATION = [
 ];
 
 export const Navigation = () => {
+  const {
+    data: { categories },
+  } = useCategory({ fetch: true });
   return (
     <nav className="container py-2 flex justify-between items-center">
       <div className="flex items-center divide-x gap-x-2">
@@ -39,16 +43,20 @@ export const Navigation = () => {
                 <Bars3Icon className="w-6 h-6" /> Shop By Category
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                  <Link href="/docs" title="Introduction">
-                    Re-usable components built using Radix UI and Tailwind CSS.
-                  </Link>
-                  <Link href="/docs/installation" title="Installation">
-                    How to install dependencies and structure your app.
-                  </Link>
-                  <Link href="/docs/primitives/typography" title="Typography">
-                    Styles for headings, paragraphs, lists...etc
-                  </Link>
+                <ul className="grid gap-3 p-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  {categories.map((category) => (
+                    <Link
+                      className="font-medium py-2 px-3 transition duration-300 hover:bg-gray-100 rounded"
+                      key={category.id}
+                      href={{
+                        pathname: "/products",
+                        query: { categories: category.slug },
+                      }}
+                      title={category.name}
+                    >
+                      {category.name}
+                    </Link>
+                  ))}
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
