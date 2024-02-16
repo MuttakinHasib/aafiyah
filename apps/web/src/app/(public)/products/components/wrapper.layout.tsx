@@ -5,6 +5,7 @@ import { ILink } from "@/types";
 import { usePathname } from "next/navigation";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import { ProductsFilter } from "./filter.component";
+import { ProductViewOptions } from "./view-options.component";
 
 export const ProductLayoutWrapper = ({ children }: PropsWithChildren) => {
   const pathname = usePathname();
@@ -25,7 +26,10 @@ export const ProductLayoutWrapper = ({ children }: PropsWithChildren) => {
       </div>
       <div className="pb-16 pt-[calc(4rem-40px)] flex lg:space-x-8 xxl:space-x-12">
         <ProductsFilter />
-        {children}
+        <div className="space-y-5 flex-1">
+          <ProductViewOptions />
+          {children}
+        </div>
       </div>
     </div>
   );
