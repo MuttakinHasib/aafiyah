@@ -11,3 +11,4 @@ export * from "./badge";
 export * from "./checkbox";
 export * from "./select";
 export * from "./navigation-menu";
+export * from "./collapsible";
