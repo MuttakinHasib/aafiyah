@@ -23,7 +23,7 @@
     --border: 20 5.9% 90%;
     --input: 20 5.9% 90%;
     --ring: 24.6 95% 53.1%;
-    --radius: 0.5rem;
+    --radius: 0.35rem;
   }
 
   .dark {
@@ -59,26 +59,29 @@
   }
   body {
     @apply bg-gray-100 text-foreground;
-    font-feature-settings: 'rlig' 1, 'calt' 1;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
 @layer components {
-  .loader{
+  .loader {
     font-size: 25px;
     color: transparent;
-    overflow:hidden;
+    overflow: hidden;
     display: inline-block;
     font-family: Arial, Helvetica, sans-serif;
-    text-shadow:0 0 #000, 5em 0 #000;
-    animation:marquee 2s infinite ease;
+    text-shadow: 0 0 #000, 5em 0 #000;
+    animation: marquee 2s infinite ease;
   }
   .loader:before {
-    content:"Loading...";
+    content: "Loading...";
   }
 
-  @keyframes marquee {to{text-shadow:-5em 0 #000, 0 0 #000}}
-
+  @keyframes marquee {
+    to {
+      text-shadow: -5em 0 #000, 0 0 #000;
+    }
+  }
 }
 
 .slick-dots {
