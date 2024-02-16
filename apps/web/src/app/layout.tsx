@@ -1,9 +1,9 @@
 import { Analytics } from "@vercel/analytics/react";
 import { StyledComponentsRegistry } from "./registry";
-import "../styles/global.css";
 import "animate.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "../styles/global.css";
 
 import { Roboto } from "next/font/google";
 import RootLayoutWrapper from "./components/wrapper.layout";
