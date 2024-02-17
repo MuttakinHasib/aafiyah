@@ -3,32 +3,13 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  Input,
   Label,
 } from "@/components";
-import { useBrand, useCategory, useQueryParams } from "@/hooks";
-import { buildQuery, ensureArrayValues, getQueries } from "@/utils";
-import { isEmpty } from "lodash";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useCallback, useEffect, useState } from "react";
-
-type HandleFilterToggle = { name: "categories" | "brands"; slug: string };
-
-interface FilterState {
-  categories: string[];
-  brands: string[];
-}
-
-const INITIAL_FILTER = {
-  categories: [],
-  brands: [],
-};
+import { useBrand, useCategory, useProductFilter } from "@/hooks";
+import React from "react";
 
 export const ProductsFilter = () => {
-  const [filter, setFilter] = useState<FilterState>(INITIAL_FILTER);
-  const searchParams = useSearchParams();
-  const { setQuery } = useQueryParams();
-
+  const { filter, handleFilterToggle } = useProductFilter();
   const {
     data: { categories },
   } = useCategory({ fetch: true });
@@ -36,32 +17,6 @@ export const ProductsFilter = () => {
   const {
     data: { brands },
   } = useBrand({ fetch: true });
-
-  useEffect(() => {
-    const queries = ensureArrayValues<FilterState>(getQueries(searchParams));
-    setFilter(isEmpty(queries) ? INITIAL_FILTER : queries);
-  }, [searchParams]);
-
-  useEffect(() => {
-    setQuery(filter);
-  }, [filter, setQuery]);
-
-  const handleFilterToggle = useCallback(
-    ({ slug, name }: HandleFilterToggle) => {
-      if (filter[name]?.includes(slug)) {
-        setFilter((prev) => ({
-          ...prev,
-          [name]: prev[name].filter((item) => item !== slug),
-        }));
-      } else {
-        setFilter((prev) => ({
-          ...prev,
-          [name]: [...(isEmpty(prev[name]) ? [] : prev[name]), slug],
-        }));
-      }
-    },
-    [filter]
-  );
 
   return (
     <div className="shadow-box lg:w-64 xxl:w-72 bg-white">
