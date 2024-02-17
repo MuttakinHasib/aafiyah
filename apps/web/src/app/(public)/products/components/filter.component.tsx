@@ -21,7 +21,7 @@ export const ProductsFilter = () => {
   return (
     <div className="shadow-box lg:w-64 xxl:w-72 bg-white">
       <div className="divide-y">
-        <div className="py-5 px-6">
+        <div className="py-4 px-6">
           <h4 className="text-xl font-medium">Filters</h4>
         </div>
         {categories.length > 0 && (
