@@ -9,11 +9,11 @@ import {
   ShoppingBagIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { Navigation } from "./navigation";
 import { UserMenu } from "../menu";
 import { useReadLocalStorage } from "usehooks-ts";
 import { LOGGED_IN } from "@/constants";
 import { useProfile } from "@/hooks";
+import Navigation from "./navigation";
 
 export const Header = () => {
   const loggedIn = useReadLocalStorage<boolean>(LOGGED_IN);

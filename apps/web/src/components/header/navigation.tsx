@@ -4,7 +4,6 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "..";
@@ -29,7 +28,7 @@ export const NAVIGATION = [
   },
 ];
 
-export const Navigation = () => {
+const Navigation = () => {
   const {
     data: { categories },
   } = useCategory({ fetch: true });
@@ -84,3 +83,5 @@ export const Navigation = () => {
     </nav>
   );
 };
+
+export default Navigation;
