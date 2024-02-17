@@ -17,5 +17,5 @@ export const useQueryParams = () => {
     [pathname, replace, searchParams]
   );
 
-  return { setQuery };
+  return { setQuery, queries: getQueries(searchParams) };
 };
