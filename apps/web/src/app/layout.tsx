@@ -1,5 +1,8 @@
 import { Analytics } from "@vercel/analytics/react";
 import { StyledComponentsRegistry } from "./registry";
+import "@mantine/core/styles.css";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+
 import "animate.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -28,14 +31,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={roboto.variable} suppressHydrationWarning>
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body>
         <ReactQueryProviders>
           <StyledComponentsRegistry>
-            <RootLayoutWrapper>
-              <Analytics />
-              {children}
-              <Toaster position="top-right" />
-            </RootLayoutWrapper>
+            <MantineProvider theme={{ fontFamily: roboto.style.fontFamily }}>
+              <RootLayoutWrapper>
+                <Analytics />
+                {children}
+                <Toaster position="top-right" />
+              </RootLayoutWrapper>
+            </MantineProvider>
           </StyledComponentsRegistry>
         </ReactQueryProviders>
       </body>
