@@ -40,6 +40,23 @@ export const ProductCard = memo(({ product }: Props) => {
           priority
         />
       </Link>
+      <div className="px-4 pt-2 bg-white">
+        <div className="space-y-1">
+          <div className="text-xs text-gray-500 uppercase">
+            SKU:{" "}
+            {product.type === "simple" ? product.sku : product.variants[0]?.sku}
+          </div>
+          <div>
+            <Link
+              href={`/products/${product.slug}`}
+              className="text-gray-800 font-medium"
+            >
+              {product.name}
+            </Link>
+          </div>
+        </div>
+        <div className="py-4"></div>
+      </div>
     </div>
   );
 });
