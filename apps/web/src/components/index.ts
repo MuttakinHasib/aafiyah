@@ -8,3 +8,4 @@ export * from "./loader";
 export * from "./ui";
 export * from "./breadcrumb";
 export * from "./product";
+export * from "./showcase";

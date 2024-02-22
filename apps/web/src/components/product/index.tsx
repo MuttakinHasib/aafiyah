@@ -13,7 +13,7 @@ interface Props {
 
 export const ProductCard = memo(({ product }: Props) => {
   return (
-    <div className="w-[calc((100%-60px)/4)] shadow-box bg-white rounded-sm relative group flex flex-col">
+    <div className="w-[calc((100%-40px)/3)] xl:w-[calc((100%-60px)/4)] shadow-box bg-white rounded-sm relative group flex flex-col">
       <div className="absolute top-0 right-0 z-50 flex flex-col overflow-hidden">
         <button
           type="button"

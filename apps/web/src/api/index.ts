@@ -19,18 +19,18 @@ api.interceptors.response.use(
     return response.data;
   },
   async (error) => {
-    if (error.response.data.message) {
-      if (isArray(error.response.data.message)) {
+    if (error.response?.data?.message) {
+      if (isArray(error.response?.data?.message)) {
         error.response.data.message.forEach((message: string) =>
           toast.error(capitalize(message))
         );
       }
     }
-    if (error.response.status === 401 || error.response.status === 403) {
+    if (error.response?.status === 401 || error.response?.status === 403) {
       // window.location.reload()
     }
 
-    return Promise.reject(error.response.data);
+    return Promise.reject(error.response?.data);
   }
 );
 
