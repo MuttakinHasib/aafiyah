@@ -76,8 +76,8 @@ One of the best Al Quran Desktop applications for macOS, Windows... with Dark & 
 ### Built With
 
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [React](https://reactjs.org/)
-* [Electron](https://www.electronjs.org/)
+* [NextJs](https://nextjs.org/)
+* [NestJs](https://nestjs.com/)
 * [TailwindCSS](tailwindcss.com/)
 
 
