@@ -102,10 +102,6 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    git clone --recurse-submodules https://github.com/muttakinhasib/aafiyah.git
    ```
-2. Clone the private repo (API)
-   ```sh
-   git submodule update --init
-   ```
 2. Install NPM packages
    ```sh
    npm install
