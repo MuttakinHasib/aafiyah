@@ -100,7 +100,7 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/muttakinhasib/aafiyah.git
+   git clone --recurse-submodules https://github.com/muttakinhasib/aafiyah.git
    ```
 2. Clone the private repo (API)
    ```sh
