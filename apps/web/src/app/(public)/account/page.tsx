@@ -1,6 +1,6 @@
 "use client";
 
-import { LOGGED_IN } from "@/constant";
+import { LOGGED_IN } from "@/constants";
 import { AUTH_API } from "@/services";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
